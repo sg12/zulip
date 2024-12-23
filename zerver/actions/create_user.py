@@ -341,16 +341,16 @@ def process_new_human_user(
 
     # Schedule an initial email with the user's
     # new account details and log-in information.
-    send_account_registered_email(user_profile, realm_creation)
+    #send_account_registered_email(user_profile, realm_creation)
 
     # We have an import loop here; it's intentional, because we want
     # to keep all the onboarding code in zerver/lib/onboarding.py.
-    from zerver.lib.onboarding import send_initial_direct_message
+    #from zerver.lib.onboarding import send_initial_direct_message
 
-    message_id = send_initial_direct_message(user_profile)
-    UserMessage.objects.filter(user_profile=user_profile, message_id=message_id).update(
-        flags=F("flags").bitor(UserMessage.flags.starred)
-    )
+    #message_id = send_initial_direct_message(user_profile)
+    #UserMessage.objects.filter(user_profile=user_profile, message_id=message_id).update(
+    #    flags=F("flags").bitor(UserMessage.flags.starred)
+    #)
 
     # The 'visibility_policy_banner' is only displayed to existing users.
     # Mark it as read for a new user.
@@ -548,6 +548,7 @@ def do_create_user(
         source_profile=source_profile,
         enable_marketing_emails=enable_marketing_emails,
         email_address_visibility=email_address_visibility,
+        is_active=True,
     )
 
     event_time = user_profile.date_joined
