@@ -146,7 +146,7 @@ if __name__ == "__main__":
     log_management_command("------Hello World from manage.py - 1", settings.MANAGEMENT_LOG_PATH)
 
     logging.basicConfig(level=logging.DEBUG)
-    logging.debug("------Hello World from manage.py - 2")
+    logging.debug("------Hello World from manage.py - version 24.12.24 15-17")
 
     os.environ.setdefault("PYTHONSTARTUP", os.path.join(BASE_DIR, "scripts/lib/pythonrc.py"))
     if "--no-traceback" not in sys.argv and len(sys.argv) > 1:
