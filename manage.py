@@ -3,6 +3,7 @@ import configparser
 import os
 import sys
 from collections import defaultdict
+import logging
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(BASE_DIR)
@@ -142,6 +143,10 @@ if __name__ == "__main__":
     from scripts.lib.zulip_tools import log_management_command
 
     log_management_command(sys.argv, settings.MANAGEMENT_LOG_PATH)
+    log_management_command("------Hello World from manage.py - 1", settings.MANAGEMENT_LOG_PATH)
+
+    logging.basicConfig(level=logging.DEBUG)
+    logging.debug("------Hello World from manage.py - 2")
 
     os.environ.setdefault("PYTHONSTARTUP", os.path.join(BASE_DIR, "scripts/lib/pythonrc.py"))
     if "--no-traceback" not in sys.argv and len(sys.argv) > 1:
