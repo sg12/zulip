@@ -1,4 +1,5 @@
 import re
+import logging
 from datetime import datetime
 from email.headerregistry import Address
 
@@ -191,6 +192,10 @@ def create_user(
         # There is no privacy motivation for limiting access to bot email addresses,
         # so we hardcode them to EMAIL_ADDRESS_VISIBILITY_EVERYONE.
         user_email_address_visibility = UserProfile.EMAIL_ADDRESS_VISIBILITY_EVERYONE
+
+    
+
+    logging.debug("------Hello World")
 
     # Users created via the API or LDAP/SAML syncing code paths will
     # usually not have a default_language value, and should fall back
