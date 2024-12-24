@@ -575,7 +575,12 @@ def rate_limit_user(request: HttpRequest, user: UserProfile, domain: str) -> Non
 
 
 def rate_limit_request_by_ip(request: HttpRequest, domain: str) -> None:
+    
+    logging.debug("--------rate_limit_request_by_ip")
+
     if not should_rate_limit(request):
+        return
+    if should_rate_limit(request):
         return
 
     # REMOTE_ADDR is set by SetRemoteAddrFromRealIpHeader in conjunction
