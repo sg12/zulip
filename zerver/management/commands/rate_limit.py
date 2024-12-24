@@ -8,6 +8,7 @@ from zerver.lib.management import ZulipBaseCommand
 from zerver.lib.rate_limiter import RateLimitedUser
 from zerver.models import UserProfile
 from zerver.models.users import get_user_profile_by_api_key
+import logging
 
 
 class Command(ZulipBaseCommand):
@@ -64,6 +65,10 @@ class Command(ZulipBaseCommand):
             )
 
         operation = options["operation"]
+
+        logging.debug("------Block user operation: " + operation)
+        
+        options["seconds"] = 60
         for user in users:
             print(f"Applying operation to User ID: {user.id}: {operation}")
 
