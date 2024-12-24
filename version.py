@@ -13,7 +13,7 @@ if os.path.exists(zulip_git_version_file):
 ZULIP_VERSION = lines.pop(0).strip()
 ZULIP_MERGE_BASE = lines.pop(0).strip()
 
-ZULIP_VERSION = ZULIP_VERSION + ".0.1d"
+ZULIP_VERSION = ZULIP_VERSION + ".0.2d"
 
 LATEST_MAJOR_VERSION = "9.0"
 LATEST_RELEASE_VERSION = "9.3"
