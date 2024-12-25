@@ -826,6 +826,7 @@ def generate_confirmation_link_for_server_deactivation(
 def check_rate_limits(
     request: HttpRequest, remote_server: RemoteZulipServer
 ) -> HttpResponse | None:
+    logging.info("-------check_rate_limits-------")
     try:
         rate_limit_request_by_ip(request, domain="sends_email_by_ip")
     except RateLimitedError as e:

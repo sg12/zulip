@@ -241,7 +241,7 @@ def registration_helper(
         prereg_object, realm_creation = check_prereg_key(request, key)
     except ConfirmationKeyError as e:
         return render_confirmation_key_error(request, e)
-
+    logging.info("-------registration_helper-------")
     email = prereg_object.email
     prereg_realm = None
     prereg_user = None
@@ -756,6 +756,8 @@ def registration_helper(
 
 
 def login_and_go_to_home(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
+    logging.info("-------login_and_go_to_home-------")
+    
     mobile_flow_otp = get_expirable_session_var(
         request.session, "registration_mobile_flow_otp", delete=True
     )
@@ -798,6 +800,9 @@ def prepare_activation_url(
     Send an email with a confirmation link to the provided e-mail so the user
     can complete their registration.
     """
+
+    logging.info("-------prepare_activation_url-------")
+
     prereg_user = create_preregistration_user(email, realm, multiuse_invite=multiuse_invite)
 
     if streams is not None:
@@ -836,6 +841,8 @@ def prepare_realm_activation_url(
         prereg_realm, Confirmation.REALM_CREATION, no_associated_realm_object=True
     )
 
+    logging.info("-------prepare_realm_activation_url-------")
+
     if settings.DEVELOPMENT:
         session["confirmation_key"] = {"confirmation_key": activation_url.split("/")[-1]}
     return activation_url
@@ -852,6 +859,9 @@ def send_confirm_registration_email(
 ) -> None:
     org_url = ""
     org_type = ""
+
+    logging.info("-------send_confirm_registration_email-------")
+
     if realm is None:
         assert realm_subdomain is not None
         org_url = f"{realm_subdomain}.{settings.EXTERNAL_HOST}"
@@ -875,6 +885,8 @@ def send_confirm_registration_email(
 
 
 def redirect_to_email_login_url(email: str) -> HttpResponseRedirect:
+
+    logging.info("-------redirect_to_email_login_url-------")
     login_url = reverse("login")
     redirect_url = append_url_query_string(
         login_url, urlencode({"email": email, "already_registered": 1})
@@ -988,6 +1000,7 @@ def create_realm(request: HttpRequest, creation_key: str | None = None) -> HttpR
 
 @typed_endpoint
 def signup_send_confirm(request: HttpRequest, *, email: str) -> HttpResponse:
+    logging.info("-------signup_send_confirm-------")
     try:
         # Because we interpolate the email directly into the template
         # from the query parameter, do a simple validation that it
@@ -1040,6 +1053,7 @@ def accounts_home(
     multiuse_object_key: str = "",
     multiuse_object: MultiuseInvite | None = None,
 ) -> HttpResponse:
+    logging.info("-------accounts_home-------")
     try:
         realm = get_realm(get_subdomain(request))
     except Realm.DoesNotExist:
@@ -1073,16 +1087,16 @@ def accounts_home(
             invited_as=invited_as,
         )
         if form.is_valid():
-            try:
-                rate_limit_request_by_ip(request, domain="sends_email_by_ip")
-            except RateLimitedError as e:
-                assert e.secs_to_freedom is not None
-                return render(
-                    request,
-                    "zerver/portico_error_pages/rate_limit_exceeded.html",
-                    context={"retry_after": int(e.secs_to_freedom)},
-                    status=429,
-                )
+            # try:
+            #     rate_limit_request_by_ip(request, domain="sends_email_by_ip")
+            # except RateLimitedError as e:
+            #     assert e.secs_to_freedom is not None
+            #     return render(
+            #         request,
+            #         "zerver/portico_error_pages/rate_limit_exceeded.html",
+            #         context={"retry_after": int(e.secs_to_freedom)},
+            #         status=429,
+            #     )
 
             email = form.cleaned_data["email"]
 
@@ -1101,16 +1115,17 @@ def accounts_home(
                 include_realm_default_subscriptions=include_realm_default_subscriptions,
                 multiuse_invite=multiuse_object,
             )
-            try:
-                send_confirm_registration_email(email, activation_url, request=request, realm=realm)
-            except EmailNotDeliveredError:
-                logging.exception("Failed to deliver email during user registration")
-                if settings.CORPORATE_ENABLED:
-                    return server_error(request)
-                return config_error(request, "smtp")
+            # try:
+            #     send_confirm_registration_email(email, activation_url, request=request, realm=realm)
+            # except EmailNotDeliveredError:
+            #     logging.exception("Failed to deliver email during user registration")
+            #     if settings.CORPORATE_ENABLED:
+            #         return server_error(request)
+            #     return config_error(request, "smtp")
             signup_send_confirm_url = reverse("signup_send_confirm")
             query = urlencode({"email": email})
             url = append_url_query_string(signup_send_confirm_url, query)
+            logging.info("-----------accounts_home activation_url:" + activation_url)
             return HttpResponseRedirect(url)
 
     else:
@@ -1128,6 +1143,7 @@ def accounts_home(
 def accounts_home_from_multiuse_invite(request: HttpRequest, confirmation_key: str) -> HttpResponse:
     realm = get_realm_from_request(request)
     multiuse_object: MultiuseInvite | None = None
+    logging.info("-------accounts_home_from_multiuse_invite-------")
     try:
         confirmation_obj = get_object_from_key(
             confirmation_key, [Confirmation.MULTIUSE_INVITE], mark_object_used=False

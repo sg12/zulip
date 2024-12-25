@@ -1,3 +1,4 @@
+import logging
 from collections import defaultdict
 from collections.abc import Iterable, Sequence
 from contextlib import suppress
@@ -280,6 +281,7 @@ def process_new_human_user(
 ) -> None:
     # subscribe to default/invitation streams and
     # fill in some recent historical messages
+    logging.info("-------process_new_human_user-------")
     set_up_streams_and_groups_for_new_human_user(
         user_profile=user_profile,
         prereg_user=prereg_user,
@@ -369,7 +371,7 @@ def process_new_human_user(
 
 def notify_created_user(user_profile: UserProfile, notify_user_ids: list[int]) -> None:
     user_row = user_profile_to_user_row(user_profile)
-
+    logging.info("-------notify_created_user-------")
     format_user_row_kwargs: dict[str, Any] = {
         "realm_id": user_profile.realm_id,
         "row": user_row,
@@ -529,7 +531,7 @@ def do_create_user(
 ) -> UserProfile:
     if settings.BILLING_ENABLED:
         from corporate.lib.stripe import RealmBillingSession
-
+    logging.info("-------do_create_user-------")
     user_profile = create_user(
         email=email,
         password=password,
@@ -548,7 +550,6 @@ def do_create_user(
         source_profile=source_profile,
         enable_marketing_emails=enable_marketing_emails,
         email_address_visibility=email_address_visibility,
-        is_active=True,
     )
 
     event_time = user_profile.date_joined
@@ -659,6 +660,9 @@ def do_activate_mirror_dummy_user(
     parallel code path to do_create_user; e.g. it likely does not
     handle preferences or default streams properly.
     """
+
+    logging.info("-------do_activate_mirror_dummy_user-------")
+
     if settings.BILLING_ENABLED:
         from corporate.lib.stripe import RealmBillingSession
 

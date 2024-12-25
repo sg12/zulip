@@ -173,6 +173,8 @@ class RegistrationForm(RealmDetailsForm):
         choices=list(UserProfile.EMAIL_ADDRESS_VISIBILITY_ID_TO_NAME_MAP.items()),
     )
 
+    logging.info("-------RegistrationForm-------")
+
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         # Since the superclass doesn't except random extra kwargs, we
         # remove it from the kwargs dict before initializing.
@@ -247,6 +249,8 @@ class ToSForm(forms.Form):
 
 class HomepageForm(forms.Form):
     email = forms.EmailField()
+
+    logging.info("-------HomepageForm-------")
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         self.realm = kwargs.pop("realm", None)
@@ -449,13 +453,14 @@ def rate_limit_password_reset_form_by_email(email: str) -> None:
 
 
 class CreateUserForm(forms.Form):
+    logging.info("-------CreateUserForm-------")
     full_name = forms.CharField(max_length=100)
     email = forms.EmailField()
 
 
 class OurAuthenticationForm(AuthenticationForm):
     logger = logging.getLogger("zulip.auth.OurAuthenticationForm")
-
+    logging.info("-------OurAuthenticationForm-------")
     @override
     def clean(self) -> dict[str, Any]:
         username = self.cleaned_data.get("username")

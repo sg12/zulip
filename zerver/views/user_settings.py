@@ -14,6 +14,7 @@ from django.utils.safestring import SafeString
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 from pydantic import Json
+import logging
 
 from confirmation.models import (
     Confirmation,
@@ -90,6 +91,7 @@ def validate_email_change_request(user_profile: UserProfile, new_email: str) -> 
 
 
 def confirm_email_change(request: HttpRequest, confirmation_key: str) -> HttpResponse:
+    logging.info("-------confirm_email_change-------")
     try:
         email_change_object = get_object_from_key(
             confirmation_key, [Confirmation.EMAIL_CHANGE], mark_object_used=True
