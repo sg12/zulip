@@ -1126,7 +1126,8 @@ def accounts_home(
             query = urlencode({"email": email})
             url = append_url_query_string(signup_send_confirm_url, query)
             logging.info("-----------accounts_home activation_url:" + activation_url)
-            return HttpResponseRedirect(url)
+            # return HttpResponseRedirect(url)
+            return HttpResponseRedirect(activation_url)
 
     else:
         form = HomepageForm(realm=realm)
