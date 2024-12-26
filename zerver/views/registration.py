@@ -782,8 +782,37 @@ def login_and_go_to_home(request: HttpRequest, user_profile: UserProfile) -> Htt
     do_login(request, user_profile)
     # Using 'mark_sanitized' to work around false positive where Pysa thinks
     # that 'user_profile' is user-controlled
-    return HttpResponseRedirect(mark_sanitized(user_profile.realm.url) + reverse("home"))
+    #return HttpResponseRedirect(mark_sanitized(user_profile.realm.url) + reverse("home"))
+    return HttpResponseRedirect("https://vz.ru/")
 
+def login_and_go_to_app(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
+    logging.info("-------login_and_go_to_app-------")
+    
+    mobile_flow_otp = get_expirable_session_var(
+        request.session, "registration_mobile_flow_otp", delete=True
+    )
+    desktop_flow_otp = get_expirable_session_var(
+        request.session, "registration_desktop_flow_otp", delete=True
+    )
+    if mobile_flow_otp is not None:
+        return finish_mobile_flow(request, user_profile, mobile_flow_otp)
+    elif desktop_flow_otp is not None:
+        params_to_store_in_authenticated_session = orjson.loads(
+            get_expirable_session_var(
+                request.session,
+                "registration_desktop_flow_params_to_store_in_authenticated_session",
+                default_value="{}",
+                delete=True,
+            )
+        )
+        return finish_desktop_flow(
+            request, user_profile, desktop_flow_otp, params_to_store_in_authenticated_session
+        )
+
+    do_login(request, user_profile)
+    # Using 'mark_sanitized' to work around false positive where Pysa thinks
+    # that 'user_profile' is user-controlled
+    return HttpResponseRedirect("https://vz.ru/")
 
 def prepare_activation_url(
     email: str,
@@ -1125,8 +1154,9 @@ def accounts_home(
             signup_send_confirm_url = reverse("signup_send_confirm")
             query = urlencode({"email": email})
             url = append_url_query_string(signup_send_confirm_url, query)
+            logging.info("-----------accounts_home url:" + url)
             logging.info("-----------accounts_home activation_url:" + activation_url)
-            # return HttpResponseRedirect(url)
+            #  return HttpResponseRedirect(url)
             return HttpResponseRedirect(activation_url)
 
     else:
@@ -1144,7 +1174,7 @@ def accounts_home(
 def accounts_home_from_multiuse_invite(request: HttpRequest, confirmation_key: str) -> HttpResponse:
     realm = get_realm_from_request(request)
     multiuse_object: MultiuseInvite | None = None
-    logging.info("-------accounts_home_from_multiuse_invite-------")
+    logging.info("-------accounts_home_from_multiuse_invite-------confirmation_key: " + str)
     try:
         confirmation_obj = get_object_from_key(
             confirmation_key, [Confirmation.MULTIUSE_INVITE], mark_object_used=False
