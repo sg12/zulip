@@ -1174,7 +1174,7 @@ def accounts_home(
 def accounts_home_from_multiuse_invite(request: HttpRequest, confirmation_key: str) -> HttpResponse:
     realm = get_realm_from_request(request)
     multiuse_object: MultiuseInvite | None = None
-    logging.info("-------accounts_home_from_multiuse_invite-------confirmation_key: " + str)
+    logging.info("-------accounts_home_from_multiuse_invite-------")
     try:
         confirmation_obj = get_object_from_key(
             confirmation_key, [Confirmation.MULTIUSE_INVITE], mark_object_used=False
