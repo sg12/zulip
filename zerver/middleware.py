@@ -742,12 +742,21 @@ class ZulipSCIMAuthCheckMiddleware(SCIMAuthCheckMiddleware):
 
 
 class CorsMiddleware(MiddlewareMixin):
-    def process_response(self, request: HttpRequest, response: HttpResponseBase) -> HttpResponseBase:
-        # Add headers CORS
+    def process_request(self, request):
+        if request.method == "OPTIONS":
+            response = HttpResponse()
+            response["Access-Control-Allow-Origin"] = "*"
+            response["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+            response["Access-Control-Allow-Headers"] = (
+                "Origin, Content-Type, Accept, Authorization, X-Requested-With"
+            )
+            return response
+
+    def process_response(self, request, response):
         response["Access-Control-Allow-Origin"] = "*"
-        response["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS, PUT, DELETE"
+        response["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
         response["Access-Control-Allow-Headers"] = (
-            "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range"
+            "Origin, Content-Type, Accept, Authorization, X-Requested-With"
         )
-        response["Access-Control-Expose-Headers"] = "Content-Length,Content-Range"
+        response["Access-Control-Expose-Headers"] = "Content-Length, Content-Range"
         return response
