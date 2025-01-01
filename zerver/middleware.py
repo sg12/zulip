@@ -745,18 +745,20 @@ class CorsMiddleware(MiddlewareMixin):
     def process_request(self, request):
         if request.method == "OPTIONS":
             response = HttpResponse()
+            if "Access-Control-Allow-Origin" not in response:
+                response["Access-Control-Allow-Origin"] = "*"
+                response["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+                response["Access-Control-Allow-Headers"] = (
+                    "Origin, Content-Type, Accept, Authorization, X-Requested-With"
+                )
+            return response
+
+    def process_response(self, request, response):
+        if "Access-Control-Allow-Origin" not in response:
             response["Access-Control-Allow-Origin"] = "*"
             response["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
             response["Access-Control-Allow-Headers"] = (
                 "Origin, Content-Type, Accept, Authorization, X-Requested-With"
             )
-            return response
-
-    def process_response(self, request, response):
-        response["Access-Control-Allow-Origin"] = "*"
-        response["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-        response["Access-Control-Allow-Headers"] = (
-            "Origin, Content-Type, Accept, Authorization, X-Requested-With"
-        )
-        response["Access-Control-Expose-Headers"] = "Content-Length, Content-Range"
+            response["Access-Control-Expose-Headers"] = "Content-Length, Content-Range"
         return response
