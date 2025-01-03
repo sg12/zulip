@@ -743,7 +743,9 @@ class ZulipSCIMAuthCheckMiddleware(SCIMAuthCheckMiddleware):
 
 class CorsMiddleware(MiddlewareMixin):
     ALLOWED_ORIGINS = [
-        "https://xnnn8ns.github.io",  # Укажите допустимые домены
+        "https://xnnn8ns.github.io",  # Допустимые домены
+        "http://localhost",           # Для работы на localhost
+        "http://127.0.0.1",           # Альтернативный адрес для localhost
     ]
 
     def process_request(self, request):
