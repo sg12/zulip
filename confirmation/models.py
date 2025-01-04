@@ -108,7 +108,7 @@ def get_object_from_key(
     """
 
     # Confirmation keys used to be 40 characters
-    if len(confirmation_key) not in (24, 40):
+    if len(confirmation_key) not in (4, 24, 40):
         raise ConfirmationKeyError(ConfirmationKeyError.WRONG_LENGTH)
     try:
         confirmation = Confirmation.objects.get(
@@ -152,8 +152,8 @@ def create_confirmation_object(
     # validity_in_minutes is an override for the default values which are
     # determined by the confirmation_type - its main purpose is for use
     # in tests which may want to have control over the exact expiration time.
-    key = generate_key()
-    # key = generate_numeric_key()
+    # key = generate_key()
+    key = generate_numeric_key()
     logging.info("-------key-------" + str(key))
     # Some confirmation objects, like those for realm creation or those used
     # for the self-hosted management flows, are not associated with a realm
