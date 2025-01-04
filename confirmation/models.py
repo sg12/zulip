@@ -152,9 +152,9 @@ def create_confirmation_object(
     # validity_in_minutes is an override for the default values which are
     # determined by the confirmation_type - its main purpose is for use
     # in tests which may want to have control over the exact expiration time.
-    key = generate_key()
-    # key = generate_numeric_key()
-    logging.info("-------key-------" + str(key))
+    # key = generate_key()
+    ey = generate_numeric_key()
+    logging.info("-------key-1-------" + str(key))
     # Some confirmation objects, like those for realm creation or those used
     # for the self-hosted management flows, are not associated with a realm
     # hosted by this Zulip server.
