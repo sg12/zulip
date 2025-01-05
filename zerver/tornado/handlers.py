@@ -92,7 +92,7 @@ class AsyncDjangoHandler(tornado.web.RequestHandler):
     handler_id: int
 
     # SUPPORTED_METHODS: Collection[str] = {"GET", "POST", "DELETE"}  
-    SUPPORTED_METHODS: Collection[str] = {"GET", "POST", "DELETE", "OPTIONS"} # type: ignore[assignment]  # https://github.com/tornadoweb/tornado/pull/3354
+    SUPPORTED_METHODS: Collection[str] = {"GET", "POST", "DELETE"} # type: ignore[assignment]  # https://github.com/tornadoweb/tornado/pull/3354
     @override
     def initialize(self, django_handler: base.BaseHandler) -> None:
         self.django_handler = django_handler
@@ -148,29 +148,10 @@ class AsyncDjangoHandler(tornado.web.RequestHandler):
         return self._request
 
     async def write_django_response_as_tornado_response(self, response: HttpResponse) -> None:
-        # Set CORS headers if the origin is allowed
-        origin = self.request.headers.get("Origin")
-        allowed_origins = {"https://xnnn8ns.github.io", "http://localhost"}
-        if origin in allowed_origins:
-            cors_headers = {
-                "Access-Control-Allow-Origin": origin,
-                "Access-Control-Allow-Methods": "GET, POST, OPTIONS, DELETE",
-                "Access-Control-Allow-Headers": "Origin, Content-Type, Accept, Authorization, X-Requested-With",
-                "Access-Control-Allow-Credentials": "true",
-            }
-            
-            # Add CORS headers to the response
-            for header, value in cors_headers.items():
-                response[header] = value
-
-            # Add CORS headers to Tornado's response
-            for header, value in cors_headers.items():
-                self.set_header(header, value)
-
-        # Copy the HTTP status code
+        # Copy the HTTP status code.
         self.set_status(response.status_code)
 
-        # Copy headers from Django's response to Tornado
+        # Copy headers
         for h in response.items():
             self.set_header(h[0], h[1])
 
@@ -188,15 +169,6 @@ class AsyncDjangoHandler(tornado.web.RequestHandler):
 
 
     async def write_django_response_as_tornado_response_old_old(self, response: HttpResponse) -> None:
-        # Set CORS headers if the origin is allowed
-        origin = self.request.headers.get("Origin")
-        allowed_origins = {"https://xnnn8ns.github.io", "http://localhost"}
-        if origin in allowed_origins:
-            self.set_header("Access-Control-Allow-Origin", origin)
-            self.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, DELETE")
-            self.set_header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization, X-Requested-With")
-            self.set_header("Access-Control-Allow-Credentials", "true")
-
         # Copy the HTTP status code.
         self.set_status(response.status_code)
 
@@ -216,18 +188,6 @@ class AsyncDjangoHandler(tornado.web.RequestHandler):
         with suppress(StreamClosedError):
             await self.finish()
     
-    @override
-    async def options(self, *args: Any, **kwargs: Any) -> None:
-        origin = self.request.headers.get("Origin")
-        allowed_origins = {"https://xnnn8ns.github.io", "http://localhost"}
-        if origin in allowed_origins:
-            self.set_status(204)
-            self.set_header("Access-Control-Allow-Origin", origin)
-            self.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, DELETE")
-            self.set_header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization, X-Requested-With")
-            self.set_header("Access-Control-Allow-Credentials", "true")
-        await self.finish()
-
     @override
     async def get(self, *args: Any, **kwargs: Any) -> None:
         request = await self.convert_tornado_request_to_django_request()
