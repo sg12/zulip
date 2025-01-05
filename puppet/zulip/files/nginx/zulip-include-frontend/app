@@ -64,7 +64,7 @@ location /api/v1/events {
         return 405;
     }
 
-    include /etc/nginx/zulip-include/tornado_cors_headers;
+    # include /etc/nginx/zulip-include/tornado_cors_headers;
     proxy_pass $tornado_server;
     include /etc/nginx/zulip-include/proxy_longpolling;
 }
