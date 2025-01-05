@@ -249,7 +249,7 @@ ALLOWED_HOSTS += [EXTERNAL_HOST_WITHOUT_PORT, "." + EXTERNAL_HOST_WITHOUT_PORT]
 ALLOWED_HOSTS += REALM_HOSTS.values()
 
 MIDDLEWARE = [
-    #"zerver.middleware.CorsMiddleware",  # Add CorsMiddleware at the start
+    "zerver.middleware.CorsMiddleware",  # Add CorsMiddleware at the start
     # "corsheaders.middleware.CorsMiddleware",  # Add CorsMiddleware at the start
     "zerver.middleware.TagRequests",
     "zerver.middleware.SetRemoteAddrFromRealIpHeader",
