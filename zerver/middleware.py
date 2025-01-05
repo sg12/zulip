@@ -744,12 +744,9 @@ class ZulipSCIMAuthCheckMiddleware(SCIMAuthCheckMiddleware):
 class CorsMiddleware(MiddlewareMixin):
     ALLOWED_ORIGINS = [
         "https://xnnn8ns.github.io",  # Допустимые домены
-        "http://localhost",           # Для работы на localhost
-        "http://127.0.0.1",           # Альтернативный адрес для localhost
+        "http://localhost:5173",           # Для работы на localhost
+        "http://127.0.0.1:5173",           # Альтернативный адрес для localhost
         "https://connectrm-svz.ru",
-        "https://localhost", 
-        "https://127.0.0.1",  
-        "http://localhost:5173",
     ]
 
     def process_request(self, request):
@@ -763,7 +760,7 @@ class CorsMiddleware(MiddlewareMixin):
                     "Origin, Content-Type, Accept, Authorization, X-Requested-With"
                 )
                 response["Access-Control-Allow-Credentials"] = "true"
-            return response
+            return response    
 
     def process_response(self, request, response):
         origin = request.headers.get("Origin")
