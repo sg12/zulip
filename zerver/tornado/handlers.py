@@ -91,8 +91,8 @@ def finish_handler(handler_id: int, event_queue_id: str, contents: list[dict[str
 class AsyncDjangoHandler(tornado.web.RequestHandler):
     handler_id: int
 
-    SUPPORTED_METHODS: Collection[str] = {"GET", "POST", "DELETE"}  # type: ignore[assignment]  # https://github.com/tornadoweb/tornado/pull/3354
-
+    # SUPPORTED_METHODS: Collection[str] = {"GET", "POST", "DELETE"}  
+    SUPPORTED_METHODS: Collection[str] = {"GET", "POST", "DELETE", "OPTIONS"} # type: ignore[assignment]  # https://github.com/tornadoweb/tornado/pull/3354
     @override
     def initialize(self, django_handler: base.BaseHandler) -> None:
         self.django_handler = django_handler
@@ -148,6 +148,35 @@ class AsyncDjangoHandler(tornado.web.RequestHandler):
         return self._request
 
     async def write_django_response_as_tornado_response(self, response: HttpResponse) -> None:
+        # Set CORS headers if the origin is allowed
+        origin = self.request.headers.get("Origin")
+        allowed_origins = {"https://xnnn8ns.github.io", "http://localhost"}
+        if origin in allowed_origins:
+            self.set_header("Access-Control-Allow-Origin", origin)
+            self.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, DELETE")
+            self.set_header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization, X-Requested-With")
+            self.set_header("Access-Control-Allow-Credentials", "true")
+
+        # Copy the HTTP status code.
+        self.set_status(response.status_code)
+
+        # Copy headers
+        for h in response.items():
+            self.set_header(h[0], h[1])
+
+        # Copy cookies
+        if not hasattr(self, "_new_cookies"):
+            self._new_cookies: list[http.cookie.SimpleCookie] = []
+        self._new_cookies.append(response.cookies)
+
+        # Write the response content
+        self.write(response.content)
+
+        # Finish response
+        with suppress(StreamClosedError):
+            await self.finish()
+    
+    async def write_django_response_as_tornado_response_old(self, response: HttpResponse) -> None:
         # This takes a Django HttpResponse and copies its HTTP status
         # code, headers, cookies, and content onto this
         # tornado.web.RequestHandler (which is how Tornado prepares a
@@ -174,6 +203,18 @@ class AsyncDjangoHandler(tornado.web.RequestHandler):
         # user already closed the connection; that is fine.
         with suppress(StreamClosedError):
             await self.finish()
+
+    @override
+    async def options(self, *args: Any, **kwargs: Any) -> None:
+        origin = self.request.headers.get("Origin")
+        allowed_origins = {"https://xnnn8ns.github.io", "http://localhost"}
+        if origin in allowed_origins:
+            self.set_status(204)
+            self.set_header("Access-Control-Allow-Origin", origin)
+            self.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, DELETE")
+            self.set_header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization, X-Requested-With")
+            self.set_header("Access-Control-Allow-Credentials", "true")
+        await self.finish()
 
     @override
     async def get(self, *args: Any, **kwargs: Any) -> None:
