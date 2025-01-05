@@ -58,13 +58,15 @@ location /api/v1/events {
         return 204;
     }
 
-    if ($request_method !~ ^(GET|DELETE)$ ) {
+    if ($request_method !~ ^(GET|POST|DELETE)$ ) {
         include /etc/nginx/zulip-include/headers;
-        add_header Allow 'OPTIONS, GET, DELETE' always;
+        add_header Allow 'OPTIONS, GET, POST, DELETE' always;
         return 405;
     }
 
     # include /etc/nginx/zulip-include/tornado_cors_headers;
+    include /etc/nginx/zulip-include/headers;
+    
     proxy_pass $tornado_server;
     include /etc/nginx/zulip-include/proxy_longpolling;
 }
