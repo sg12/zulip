@@ -745,22 +745,22 @@ class CorsMiddleware(MiddlewareMixin):
     ALLOWED_ORIGINS = [
         "https://xnnn8ns.github.io",  # Допустимые домены
         "http://localhost:5173",           # Для работы на localhost
-        "http://127.0.0.1:5173",           # Альтернативный адрес для localhost
+        "http://127.0.0.1",           # Альтернативный адрес для localhost
         "https://connectrm-svz.ru",
     ]
 
     def process_request(self, request):
-        if request.method == "OPTIONS":
-            response = HttpResponse()
-            origin = request.headers.get("Origin")
-            if origin and origin in self.ALLOWED_ORIGINS:
-                response["Access-Control-Allow-Origin"] = origin
-                response["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-                response["Access-Control-Allow-Headers"] = (
-                    "Origin, Content-Type, Accept, Authorization, X-Requested-With"
-                )
-                response["Access-Control-Allow-Credentials"] = "true"
-            return response    
+        origin = request.headers.get("Origin")
+        if origin and origin in self.ALLOWED_ORIGINS:
+            response = HttpResponse() if request.method == "OPTIONS" else None
+            response = response or HttpResponse()
+            response["Access-Control-Allow-Origin"] = origin
+            response["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+            response["Access-Control-Allow-Headers"] = (
+                "Origin, Content-Type, Accept, Authorization, X-Requested-With"
+            )
+            response["Access-Control-Allow-Credentials"] = "true"
+            return response 
 
     def process_response(self, request, response):
         origin = request.headers.get("Origin")
