@@ -741,10 +741,10 @@ class ZulipSCIMAuthCheckMiddleware(SCIMAuthCheckMiddleware):
         return None
 
 
-class CorsMiddleware(MiddlewareMixin):
+class CorsMiddlewareOld(MiddlewareMixin):
     ALLOWED_ORIGINS = [
         "https://xnnn8ns.github.io",  # Допустимые домены
-        "http://localhost:5173",           # Для работы на localhost
+        "http://localhost",           # Для работы на localhost
         "http://127.0.0.1",           # Альтернативный адрес для localhost
         "https://connectrm-svz.ru",
     ]
@@ -764,6 +764,43 @@ class CorsMiddleware(MiddlewareMixin):
 
     def process_response(self, request, response):
         origin = request.headers.get("Origin")
+        if origin and origin in self.ALLOWED_ORIGINS:
+            response["Access-Control-Allow-Origin"] = origin
+            response["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+            response["Access-Control-Allow-Headers"] = (
+                "Origin, Content-Type, Accept, Authorization, X-Requested-With"
+            )
+            response["Access-Control-Expose-Headers"] = "Content-Length, Content-Range"
+            response["Access-Control-Allow-Credentials"] = "true"
+        return response
+
+class CorsMiddleware(MiddlewareMixin):
+    ALLOWED_ORIGINS = [
+        "https://xnnn8ns.github.io",  # Допустимые домены
+        "http://localhost",           # Для работы на localhost
+        "http://127.0.0.1",           # Альтернативный адрес для localhost
+        "https://connectrm-svz.ru",
+    ]
+
+    def process_request(self, request):
+        origin = request.headers.get("Origin")
+        # Проверяем допустимые домены
+        if origin and origin in self.ALLOWED_ORIGINS:
+            # Обработка preflight-запросов (OPTIONS)
+            if request.method == "OPTIONS":
+                response = HttpResponse()
+                response["Access-Control-Allow-Origin"] = origin
+                response["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+                response["Access-Control-Allow-Headers"] = (
+                    "Origin, Content-Type, Accept, Authorization, X-Requested-With"
+                )
+                response["Access-Control-Allow-Credentials"] = "true"
+                return response
+        # Если это не OPTIONS, не возвращаем Response, чтобы запрос обрабатывался дальше
+
+    def process_response(self, request, response):
+        origin = request.headers.get("Origin")
+        # Проверяем допустимые домены
         if origin and origin in self.ALLOWED_ORIGINS:
             response["Access-Control-Allow-Origin"] = origin
             response["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
