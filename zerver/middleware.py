@@ -784,6 +784,48 @@ class CorsMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
         origin = request.headers.get("Origin")
+        if origin and origin in self.ALLOWED_ORIGINS:
+            if request.method == "OPTIONS":
+                response = HttpResponse()
+                if "Access-Control-Allow-Origin" not in response:
+                    response["Access-Control-Allow-Origin"] = origin
+                if "Access-Control-Allow-Methods" not in response:
+                    response["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+                if "Access-Control-Allow-Headers" not in response:
+                    response["Access-Control-Allow-Headers"] = (
+                        "Origin, Content-Type, Accept, Authorization, X-Requested-With"
+                    )
+                if "Access-Control-Allow-Credentials" not in response:
+                    response["Access-Control-Allow-Credentials"] = "true"
+                return response
+
+    def process_response(self, request, response):
+        origin = request.headers.get("Origin")
+        if origin and origin in self.ALLOWED_ORIGINS:
+            if "Access-Control-Allow-Origin" not in response:
+                response["Access-Control-Allow-Origin"] = origin
+            if "Access-Control-Allow-Methods" not in response:
+                response["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+            if "Access-Control-Allow-Headers" not in response:
+                response["Access-Control-Allow-Headers"] = (
+                    "Origin, Content-Type, Accept, Authorization, X-Requested-With"
+                )
+            if "Access-Control-Expose-Headers" not in response:
+                response["Access-Control-Expose-Headers"] = "Content-Length, Content-Range"
+            if "Access-Control-Allow-Credentials" not in response:
+                response["Access-Control-Allow-Credentials"] = "true"
+        return response
+
+class CorsMiddlewareOldOld(MiddlewareMixin):
+    ALLOWED_ORIGINS = [
+        "https://xnnn8ns.github.io",  # Допустимые домены
+        "http://localhost",           # Для работы на localhost
+        "http://127.0.0.1",           # Альтернативный адрес для localhost
+        "https://connectrm-svz.ru",
+    ]
+
+    def process_request(self, request):
+        origin = request.headers.get("Origin")
         # Проверяем допустимые домены
         if origin and origin in self.ALLOWED_ORIGINS:
             # Обработка preflight-запросов (OPTIONS)
