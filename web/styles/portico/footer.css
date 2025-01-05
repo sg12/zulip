@@ -116,7 +116,7 @@
     .footer__legal-container {
         max-width: 1132px;
         padding: 15px 0;
-        display: flex;
+        display: none;
         place-content: center space-between;
         flex-flow: row wrap;
         margin: 0 auto;
