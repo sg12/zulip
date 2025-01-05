@@ -1,1 +1,5 @@
 include /etc/nginx/zulip-include/headers;
+add_header Access-Control-Allow-Origin "https://xnnn8ns.github.io" always;
+add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, DELETE" always;
+add_header Access-Control-Allow-Headers "Origin, Content-Type, Accept, Authorization, X-Requested-With" always;
+add_header Access-Control-Allow-Credentials "true" always;
