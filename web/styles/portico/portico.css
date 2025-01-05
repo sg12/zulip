@@ -47,6 +47,7 @@ html {
 }
 
 .header {
+    display: none;
     position: relative;
 
     padding: 15px 0;
