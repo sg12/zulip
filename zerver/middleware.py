@@ -746,6 +746,7 @@ class CorsMiddleware(MiddlewareMixin):
         "https://xnnn8ns.github.io",  # Допустимые домены
         "http://localhost",           # Для работы на localhost
         "http://127.0.0.1",           # Альтернативный адрес для localhost
+        "https://connectrm-svz.ru",
     ]
 
     def process_request(self, request):
