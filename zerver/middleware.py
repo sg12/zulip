@@ -749,6 +749,7 @@ class CorsMiddleware(MiddlewareMixin):
         "https://connectrm-svz.ru",
         "https://localhost", 
         "https://127.0.0.1",  
+        "http://localhost:5173",
     ]
 
     def process_request(self, request):
