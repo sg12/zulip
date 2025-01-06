@@ -546,9 +546,6 @@ function edit_message($row: JQuery, raw_content: string): void {
     $form
         .find(".message-edit-feature-group .video_link")
         .toggle(compose_call.compute_show_video_chat_button());
-    $form
-        .find(".message-edit-feature-group .audio_link")
-        .toggle(compose_call.compute_show_audio_chat_button());
 
     const $message_edit_countdown_timer = $row.find(".message_edit_countdown_timer");
     const $copy_message = $row.find(".copy_message");

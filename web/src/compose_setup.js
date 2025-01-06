@@ -57,9 +57,6 @@ export function initialize() {
     $(".compose-control-buttons-container .video_link").toggle(
         compose_call.compute_show_video_chat_button(),
     );
-    $(".compose-control-buttons-container .audio_link").toggle(
-        compose_call.compute_show_audio_chat_button(),
-    );
 
     $("textarea#compose-textarea").on("keydown", (event) => {
         compose_ui.handle_keydown(event, $("textarea#compose-textarea").expectOne());
@@ -369,19 +366,6 @@ export function initialize() {
         }
 
         compose_call_ui.generate_and_insert_audio_or_video_call_link($(e.target), false);
-    });
-
-    $("body").on("click", ".audio_link", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const show_audio_chat_button = compose_call.compute_show_audio_chat_button();
-
-        if (!show_audio_chat_button) {
-            return;
-        }
-
-        compose_call_ui.generate_and_insert_audio_or_video_call_link($(e.target), true);
     });
 
     $("body").on("click", ".time_pick", function (e) {
