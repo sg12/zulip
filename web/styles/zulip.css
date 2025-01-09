@@ -188,6 +188,7 @@ p.n-margin {
 }
 
 .top-messages-logo {
+    display: none;
     /* Since padding under message header is not transparent
        we need to position it below the padding. */
     padding-top: var(--header-padding-bottom);
