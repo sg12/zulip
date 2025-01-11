@@ -4,8 +4,10 @@ import $ from "jquery";
 import assert from "minimalistic-assert";
 import * as tippy from "tippy.js";
 import {z} from "zod";
+import {$t_html} from "./i18n.ts";
 
 import render_buddy_list_tooltip_content from "../templates/buddy_list_tooltip_content.hbs";
+import render_create_topic_modal from "../templates/confirm_dialog/confirm_create_topic.hbs";
 
 import * as activity_ui from "./activity_ui.ts";
 import * as browser_history from "./browser_history.ts";
@@ -41,6 +43,7 @@ import * as topic_list from "./topic_list.ts";
 import * as ui_util from "./ui_util.ts";
 import {parse_html} from "./ui_util.ts";
 import * as util from "./util.ts";
+import * as confirm_dialog from "./confirm_dialog.ts";
 
 export function initialize(): void {
     // MESSAGE CLICKING
@@ -648,12 +651,23 @@ export function initialize(): void {
     $("body").on("click", ".channel-new-topic-button", function (this: HTMLElement, e) {
         e.stopPropagation();
         const stream_id = Number.parseInt(this.dataset.streamId!, 10);
-        compose_actions.start({
-            message_type: "stream",
-            stream_id,
-            topic: "",
-            trigger: "clear topic button",
-            keep_composebox_empty: true,
+        const html_body = render_create_topic_modal();
+
+        confirm_dialog.launch({
+            html_heading: $t_html({defaultMessage: "Создать тему"}),
+            html_body,
+            on_click() {
+                const topic_name = $("#new-topic-name").val();
+                if (topic_name) {
+                    compose_actions.start_and_send_message({
+                        message_type: "stream",
+                        stream_id,
+                        topic: topic_name,
+                        content: `Создана новая тема **${topic_name}**`,
+                        keep_composebox_empty: true,
+                    });
+                }
+            },
         });
     });
 
