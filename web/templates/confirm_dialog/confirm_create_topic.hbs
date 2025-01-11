@@ -1,3 +1,27 @@
+<p style="font-weight: 500">{{t "Тип темы"}}</p>
+<div class="channel-type-selection" style="display: flex; flex-direction: column; gap: 4px;">
+    <div class="channel-type-option" style="background-color: #1d1d1d; padding: 4px; border-radius: 5px; display: flex">
+        <input type="radio" id="text-channel" name="channel-type" value="text" checked class="setting_emojiset_choice">
+        <label for="text-channel" style="display: flex; align-items: center; cursor: pointer;">
+            <div class="channel-type-icon" style="margin: 0 8px;">✏️</div>
+            <div class="channel-type-text">
+                <strong>{{t "Текст"}}</strong>
+                <p>{{t "Удобный текстовый формат для переписок"}}</p>
+            </div>
+        </label>
+    </div>
+    <div class="channel-type-option" style="background-color: #1d1d1d; padding: 4px; border-radius: 5px; display: flex">
+        <input type="radio" id="audio-channel" name="channel-type" value="audio" class="setting_emojiset_choice">
+        <label for="audio-channel" style="display: flex; align-items: center; cursor: pointer;">
+            <div class="channel-type-icon" style="margin: 0 8px;">🎵</div>
+            <div class="channel-type-text">
+                <strong>{{t "Аудио"}}</strong>
+                <p>{{t "Аудио формат для переговоров"}}</p>
+            </div>
+        </label>
+    </div>
+</div>
+<br>
 <label for="new-topic-name">{{t "Введите имя новой темы"}}</label>
 <input type="text" name="new-topic-name" id="new-topic-name" class="settings_text_input"
-       placeholder="Название темы" value="" autocomplete="off" maxlength="60" required />
+        placeholder="Название темы" value="" autocomplete="off" maxlength="60" required />

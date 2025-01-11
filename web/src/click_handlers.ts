@@ -657,8 +657,16 @@ export function initialize(): void {
             html_heading: $t_html({defaultMessage: "Создать тему"}),
             html_body,
             on_click() {
-                const topic_name = $("#new-topic-name").val();
+                let topic_name = $("#new-topic-name").val();
+                const channel_type = $("input[name='channel-type']:checked").val();
+
                 if (topic_name) {
+                    if (channel_type === "audio") {
+                        topic_name = "🎵 " + topic_name;
+                    } else {
+                        topic_name = "✏️ " + topic_name;
+                    }
+
                     compose_actions.start_and_send_message({
                         message_type: "stream",
                         stream_id,
