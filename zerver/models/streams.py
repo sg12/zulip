@@ -33,6 +33,7 @@ class Stream(models.Model):
     deactivated = models.BooleanField(default=False)
     description = models.CharField(max_length=MAX_DESCRIPTION_LENGTH, default="")
     rendered_description = models.TextField(default="")
+    bbb_url = models.CharField(max_length=MAX_DESCRIPTION_LENGTH, default="")
 
     # Foreign key to the Recipient object for STREAM type messages to this stream.
     recipient = models.ForeignKey(Recipient, null=True, on_delete=models.SET_NULL)
