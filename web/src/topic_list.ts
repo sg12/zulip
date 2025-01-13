@@ -350,7 +350,7 @@ export function get_topic_search_term(): string {
 export function initialize({
     on_topic_click,
 }: {
-    on_topic_click: (stream_id: number, topic?: string) => void;
+    on_topic_click: (stream_id: number, topic?: string, is_audio_topic?: boolean) => void;
 }): void {
     $("#stream_filters").on(
         "click",
@@ -372,7 +372,8 @@ export function initialize({
             assert(stream_id_string !== undefined);
             const stream_id = Number.parseInt(stream_id_string, 10);
             const topic = $(e.target).parents("li").attr("data-topic-name");
-            on_topic_click(stream_id, topic);
+            const is_audio_topic = topic.startsWith("🔊");
+            on_topic_click(stream_id, topic, is_audio_topic);
 
             e.preventDefault();
             e.stopPropagation();

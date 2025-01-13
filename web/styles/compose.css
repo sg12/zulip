@@ -499,7 +499,7 @@
 }
 
 #compose_top {
-    display: flex;
+    display: none;
     justify-content: space-between;
     align-items: flex-start;
     /* Matched to 6px grid-gap on .messagebox grid. */

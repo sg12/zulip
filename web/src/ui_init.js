@@ -14,6 +14,7 @@ import * as activity from "./activity.ts";
 import * as activity_ui from "./activity_ui.ts";
 import * as add_stream_options_popover from "./add_stream_options_popover.ts";
 import * as alert_words from "./alert_words.ts";
+import * as audio_call from "./audio_call.ts";
 import {all_messages_data} from "./all_messages_data.ts";
 import * as audible_notifications from "./audible_notifications.ts";
 import * as blueslip from "./blueslip.ts";
@@ -575,6 +576,7 @@ export function initialize_everything(state_data) {
     overlays.initialize();
     invite.initialize();
     message_view_header.initialize();
+    audio_call.initialize();
     server_events.initialize(state_data.server_events);
     user_status.initialize(state_data.user_status);
     compose_recipient.initialize();
@@ -669,14 +671,14 @@ export function initialize_everything(state_data) {
     personal_menu_popover.initialize();
     pm_list.initialize();
     topic_list.initialize({
-        on_topic_click(stream_id, topic) {
+        on_topic_click(stream_id, topic, is_audio) {
             const sub = sub_store.get(stream_id);
             message_view.show(
                 [
                     {operator: "channel", operand: sub.stream_id.toString()},
                     {operator: "topic", operand: topic},
                 ],
-                {trigger: "sidebar"},
+                {trigger: "sidebar", is_audio: is_audio},
             );
         },
     });
