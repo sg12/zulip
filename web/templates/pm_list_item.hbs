@@ -1,4 +1,4 @@
-<li class="{{#if is_active}}active-sub-filter{{/if}} {{#if is_zero}}zero-dm-unreads{{/if}} dm-list-item bottom_left_row" data-user-ids-string="{{user_ids_string}}">
+<li class="{{#if is_active}}active-sub-filter{{/if}} {{#if is_zero}}zero-dm-unreads{{/if}} dm-list-item bottom_left_row" data-user-ids-string="{{user_ids_string}}" {{#if user_id}}data-user-id="{{user_id}}"{{/if}}>
     <div class="dm-box dm-user-status" data-user-ids-string="{{user_ids_string}}" data-is-group="{{is_group}}">
 
         {{#if is_group}}
@@ -16,5 +16,11 @@
         <span class="unread_count {{#if is_zero}}zero_count{{/if}}">
             {{unread}}
         </span>
+
+        {{!-- <span class="sidebar-menu-icon dm-sidebar-menu-icon">
+            <i class="zulip-icon zulip-icon-more-vertical" aria-hidden="true"></i>
+        </span> --}}
+
+        <span class="sidebar-menu-icon user-list-sidebar-menu-icon"><i class="zulip-icon zulip-icon-more-vertical" aria-hidden="true"></i></span>
     </div>
 </li>

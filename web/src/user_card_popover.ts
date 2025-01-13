@@ -835,6 +835,12 @@ function register_click_handlers(): void {
 
         toggle_sidebar_user_card_popover($target);
     });
+    $(".direct-messages-container").on("click", ".user-list-sidebar-menu-icon", (e) => {
+        e.stopPropagation();
+        const $target = $(e.currentTarget).closest("li");
+
+        toggle_sidebar_user_card_popover($target);
+    });
 
     $("body").on("click", ".sidebar-popover-mute-user", function (e) {
         const user_id = elem_to_user_id($(this).parents("ul"));

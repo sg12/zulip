@@ -13,6 +13,8 @@ import * as ui_util from "./ui_util.ts";
 import type {FullUnreadCountsData} from "./unread.ts";
 import * as vdom from "./vdom.ts";
 
+// import { toggle_sidebar_user_card_popover } from "./user_card_popover";
+
 let prior_dom: vdom.Tag<PMNode> | undefined;
 
 // This module manages the direct messages section in the upper
@@ -280,4 +282,22 @@ export function initialize(): void {
     $(".direct-messages-container").on("mouseleave", () => {
         $("#direct-messages-section-header").removeClass("hover-over-dm-section");
     });
+
+    // Добавляем обработчик для кнопки меню
+    // $(".direct-messages-container").on("click", ".dm-sidebar-menu-icon", (e) => {
+    //     e.stopPropagation();
+
+    //     const $target = $(e.currentTarget).closest("li");
+
+    //     // Вызов функции из user_card_popover.ts
+    //     toggle_sidebar_user_card_popover($target);
+    // });
+
+    // $(".buddy-list-section").on("click", ".user-list-sidebar-menu-icon", (e) => {
+    //     e.stopPropagation();
+    //     const $target = $(e.currentTarget).closest("li");
+
+    //     toggle_sidebar_user_card_popover($target);
+    // });
+
 }

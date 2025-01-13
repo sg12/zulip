@@ -101,6 +101,20 @@ export function get_conversations(search_string = ""): DisplayObject[] {
             }
         }
 
+
+        for (const user_id of people.user_ids_string_to_ids_array(user_ids_string)) {
+            // people.set_seen(user_id);
+            console.log("user_ids: " + user_id);
+        }
+        let user_id = 0;
+        for (const user of users) {
+            console.log("user: " + user.user_id + ", email: " +  user.email);
+            user_id = user.user_id;
+            break;
+        }
+        // console.log("user_ids_string: " + user_ids_string);
+
+
         const display_object = {
             recipients: recipients_string,
             user_ids_string,
@@ -112,10 +126,11 @@ export function get_conversations(search_string = ""): DisplayObject[] {
             user_circle_class,
             is_group,
             is_bot,
+            user_id,
         };
         display_objects.push(display_object);
+        
     }
-
     return display_objects;
 }
 
