@@ -662,7 +662,7 @@ export function initialize(): void {
 
                 if (topic_name) {
                     if (channel_type === "audio") {
-                        topic_name = "🎵 " + topic_name;
+                        topic_name = "🔊 " + topic_name;
                     } else {
                         topic_name = "✏️ " + topic_name;
                     }
