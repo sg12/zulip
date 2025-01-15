@@ -201,7 +201,7 @@ $("body").on("click", ".settings-sticky-footer #stream_creation_go_to_subscriber
 
     const stream_name = $<HTMLInputElement>("input#create_stream_name").val()!.trim();
     const is_stream_name_valid = stream_name_error.validate_for_submit(stream_name);
-    const privacy_type = $("#stream_creation_form input[type=radio][name=privacy]:checked").val();
+    const privacy_type = "invite-only-public-history";
     let invite_only = false;
     let is_web_public = false;
 
@@ -268,7 +268,7 @@ function update_announce_stream_state(): void {
     const $announce_stream_checkbox = $<HTMLInputElement>("#announce-new-stream input");
     const $announce_stream_label = $("#announce-new-stream");
     let disable_it = false;
-    const privacy_type = $("#stream_creation_form input[type=radio][name=privacy]:checked").val();
+    const privacy_type = "invite-only-public-history";
     const is_invite_only =
         privacy_type === "invite-only" || privacy_type === "invite-only-public-history";
     $announce_stream_label.removeClass("control-label-disabled");
@@ -315,7 +315,7 @@ function create_stream(): void {
     let invite_only;
     let history_public_to_subscribers;
     let is_web_public;
-    const privacy_setting = $("#stream_creation_form input[name=privacy]:checked").val();
+    const privacy_setting = "invite-only-public-history";
 
     switch (privacy_setting) {
         case "invite-only": {
