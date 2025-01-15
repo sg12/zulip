@@ -611,9 +611,9 @@ export function initialize_everything(state_data) {
     });
     compose_textarea.initialize();
     upload.initialize();
-    search.initialize({
-        on_narrow_search: message_view.show,
-    });
+    // search.initialize({
+    //     on_narrow_search: message_view.show,
+    // });
     desktop_notifications.initialize();
     audible_notifications.initialize();
     compose_notifications.initialize({
