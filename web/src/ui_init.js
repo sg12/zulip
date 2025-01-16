@@ -12,7 +12,6 @@ import render_navbar from "../templates/navbar.hbs";
 import * as about_zulip from "./about_zulip.ts";
 import * as activity from "./activity.ts";
 import * as activity_ui from "./activity_ui.ts";
-import * as add_stream_options_popover from "./add_stream_options_popover.ts";
 import * as alert_words from "./alert_words.ts";
 import * as audio_call from "./audio_call.ts";
 import {all_messages_data} from "./all_messages_data.ts";
@@ -569,7 +568,6 @@ export function initialize_everything(state_data) {
     sidebar_ui.initialize();
     user_profile.initialize();
     stream_popover.initialize();
-    add_stream_options_popover.initialize();
     click_handlers.initialize();
     scheduled_messages_overlay_ui.initialize();
     copy_and_paste.initialize();
