@@ -12,11 +12,9 @@ function delay(ms: number) {
 // Извлекаем последнюю ссылку на видеозвонок из чата
 function searchForLink() {
     const messageLinks = $(".message_content a").get().reverse(); // Перебираем элементы в обратном порядке
-    console.log("messageLinks", messageLinks);
     for (const link of messageLinks) {
         const href = $(link).attr("href");
-        // todo: заменить на bbb
-        if (href && href.includes("meet.jit.si")) {
+        if (href && href.includes("jitsi-connectrm.ru")) {
             callUrl = href;
             break; // Прерываем цикл, если нашли ссылку
         }
@@ -61,7 +59,7 @@ export async function enterAudioChannel() {
         $("#bottom_whitespace").hide();
         $(".recipient_row").hide();
 
-        // todo: добавить отловку ошибок внутри iframe из bbb
+        // todo: добавить отловку ошибок внутри iframe
     } catch (error) {
         console.error("Error creating call:", error);
     }
