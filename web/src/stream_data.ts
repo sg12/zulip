@@ -796,6 +796,7 @@ export function create_sub_from_server_data(
         subscribed,
         previously_subscribed,
         ...attrs,
+        bbb_url: attrs.bbb_url
     };
 
     peer_data.set_subscribers(sub.stream_id, subscriber_user_ids ?? []);
