@@ -11,6 +11,8 @@ import {current_user, realm} from "./state_data.ts";
 import * as ui_report from "./ui_report.ts";
 import * as util from "./util.ts";
 
+import { SignJWT } from 'jose';
+
 const call_response_schema = z.object({
     msg: z.string(),
     result: z.string(),
@@ -138,30 +140,106 @@ export function generate_and_insert_audio_or_video_call_link(
     } else {
         // TODO: Use `new URL` to generate the URLs here.
         const video_call_id = util.random_int(100000000000000, 999999999999999);
-        const video_call_link = compose_call.get_jitsi_server_url() + "/" + video_call_id;
-        if (is_audio_call) {
-            insert_audio_call_url(
-                video_call_link + "#config.startWithVideoMuted=true",
-                $target_textarea,
-            );
-        } else {
-            /* Because Jitsi remembers what last call type you joined
-               in browser local storage, we need to specify that video
-               should not be muted in the video call case, or your
-               next call will also join without video after joining an
-               audio-only call.
+        // const token = generate_jitsi_jwt(current_user.email, current_user.full_name);
+        // console.log("token", token);
+        generateToken()
+        .then((token) => generate_call_link(video_call_id,$target_textarea,token))
+        .catch(() => generate_call_link(video_call_id,$target_textarea,""));
 
-               This has the annoying downside that it requires users
-               who have a personal preference to disable video every
-               time, but Jitsi's UI makes that very easy to do, and
-               that inconvenience is probably less important than letting
-               the person organizing a call specify their intended
-               call type (video vs audio).
-           */
-            insert_video_call_url(
-                video_call_link + "#config.startWithVideoMuted=false",
-                $target_textarea,
-            );
-        }
+        // const video_call_link = compose_call.get_jitsi_server_url() + "/" + video_call_id;
+        // // if (is_audio_call) {
+        // insert_audio_call_url(
+        //     video_call_link + "?jwt=" + token + "#config.startWithVideoMuted=true",
+        //     $target_textarea,
+        // );
+        // } else {
+        //     /* Because Jitsi remembers what last call type you joined
+        //        in browser local storage, we need to specify that video
+        //        should not be muted in the video call case, or your
+        //        next call will also join without video after joining an
+        //        audio-only call.
+
+        //        This has the annoying downside that it requires users
+        //        who have a personal preference to disable video every
+        //        time, but Jitsi's UI makes that very easy to do, and
+        //        that inconvenience is probably less important than letting
+        //        the person organizing a call specify their intended
+        //        call type (video vs audio).
+        //    */
+        //     insert_video_call_url(
+        //         video_call_link + "#config.startWithVideoMuted=false",
+        //         $target_textarea,
+        //     );
+        // }
+    }
+}
+
+function generate_call_link(video_call_id: number, $target_textarea: JQuery<HTMLTextAreaElement>, token: String){
+    const video_call_link = compose_call.get_jitsi_server_url() + "/" + video_call_id;
+    console.log('Generated JWT:', token)
+    if (token.length>0) {
+        insert_audio_call_url(
+            video_call_link + "?jwt=" + token + "#config.startWithVideoMuted=true",
+            $target_textarea,
+        );
+    }else{
+        insert_audio_call_url(
+            video_call_link + "#config.startWithVideoMuted=true",
+            $target_textarea,
+        );
+    }
+}
+
+
+// function generate_jitsi_jwt(userEmail: string, full_name: string): string {
+//     const appId = "connectrm_svz";
+//     const appSecret = "HguV/8QBrJdCih2Ycpoz0g5q5m85apT3Nu6E+lDvufg=";
+//     const payload = {
+//         aud: appId,
+//         iss: appId,
+//         sub: "joinrm-svz.ru",
+//         room: "*",
+//         exp: Math.floor(Date.now() / 1000) + 3600, // Текущее время + 1 час (в секундах)
+//         context: {
+//             user: {
+//                 email: userEmail,
+//                 name: full_name,
+//                 id: userEmail,
+//                 avatar: "https://e7.pngegg.com/pngimages/971/686/png-clipart-computer-icons-social-media-blog-avatar-material-service-logo.png",
+//             }
+//         }
+//     };
+
+//     // Генерация токена
+//     const token = jwt.sign(payload, appSecret, { algorithm: "HS256" });
+//     return token;
+// }
+
+// async function generateToken(): Promise<string> {
+//     const secret = new TextEncoder().encode("HguV/8QBrJdCih2Ycpoz0g5q5m85apT3Nu6E+lDvufg=");
+//     const token = await new SignJWT({
+//         app_id: 'connectrm_svz',
+//     })
+//       .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+//       .setIssuedAt()
+//       .setExpirationTime('20h')
+//       .sign(secret);
+//     return token;
+// }
+
+async function generateToken(): Promise<string> {
+    try {
+        const secret = new TextEncoder().encode("HguV/8QBrJdCih2Ycpoz0g5q5m85apT3Nu6E+lDvufg="); // Используйте переменную окружения
+        const token = await new SignJWT({
+            app_id: 'connectrm_svz',
+        })
+            .setProtectedHeader({ alg: 'HS256', typ: 'JWT' }) // Заголовок
+            .setIssuedAt() // Время выпуска
+            .setExpirationTime('20h') // Срок действия
+            .sign(secret); // Подпись
+        return token;
+    } catch (error) {
+        console.error('Error generating token:', error);
+        return "";
     }
 }
