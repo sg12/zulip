@@ -36,6 +36,7 @@
             </a>
         </span>
         <span class="recipient_bar_controls no-select">
+            {{#unless (eq display_recipient "Администрация RM")}}
             <span class="topic_edit hidden-for-spectators">
                 <span class="topic_edit_form"></span>
             </span>
@@ -82,6 +83,7 @@
             {{/if}}
         </span>
         <span class="recipient_row_date {{#if (and (not always_display_date) date_unchanged )}}recipient_row_date_unchanged{{/if}}">{{{date}}}</span>
+        {{/unless}}
     </div>
 </div>
 {{else}}

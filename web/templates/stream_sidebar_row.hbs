@@ -11,11 +11,13 @@
             <a href="{{url}}" class="stream-name">{{name}}</a>
 
             <div class="left-sidebar-controls">
+                {{#unless (eq name "Администрация RM")}}
                 {{#if can_post_messages}}
                 <div class="channel-new-topic-button tippy-zulip-tooltip hidden-for-spectators" data-tippy-content="{{t 'New topic'}}" data-stream-id="{{id}}">
                     <i class="channel-new-topic-icon zulip-icon zulip-icon-square-plus" aria-hidden="true"></i>
                 </div>
                 {{/if}}
+                {{/unless}}
             </div>
 
             <div class="stream-markers-and-unreads">
@@ -26,7 +28,9 @@
                 </span>
             </div>
 
+            {{#unless (eq name "Администрация RM")}}
             <span class="sidebar-menu-icon stream-sidebar-menu-icon"><i class="zulip-icon zulip-icon-more-vertical" aria-hidden="true"></i></span>
+            {{/unless}}
         </div>
     </div>
 </li>

@@ -29,6 +29,8 @@ import {INTERACTIVE_HOVER_DELAY} from "./tippyjs.ts";
 import {user_settings} from "./user_settings.ts";
 import * as util from "./util.ts";
 
+let wasInAdminChannel = false;
+
 function get_formatted_sub_count(sub_count: number): string {
     if (sub_count < 1000) {
         return sub_count.toString();
@@ -110,6 +112,16 @@ class BuddyListConf {
     compare_function = buddy_data.compare_function;
 
     items_to_html(opts: {items: BuddyUserInfo[]}): string {
+        if (narrow_state.stream_name() === "Администрация RM") {
+            $("#userlist-header").hide();
+            wasInAdminChannel = true;
+            return "";
+        } else {
+            if (wasInAdminChannel) {
+                $("#userlist-header").show();
+                wasInAdminChannel = false;
+            }
+        }
         const html = render_presence_rows({presence_rows: opts.items});
         return html;
     }
