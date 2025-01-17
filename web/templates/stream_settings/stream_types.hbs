@@ -1,4 +1,4 @@
-<div id="stream_permission_settings" class="stream-permissions {{#if is_stream_edit}}settings-subsection-parent{{/if}}">
+<div id="stream_permission_settings" class="stream-permissions {{#if is_stream_edit}}settings-subsection-parent{{/if}}" style="display: none">
     {{#if is_stream_edit}}
         <div class="subsection-header">
             <h3 class="stream_setting_subsection_title">{{t "Channel permissions" }}
@@ -9,12 +9,12 @@
     {{/if}}
 
     {{#if ask_to_announce_stream}}
-        <div id="announce-new-stream" style="display: none">
+        <div id="announce-new-stream">
             {{>announce_stream_checkbox . }}
         </div>
     {{/if}}
 
-    <div class="default-stream" style="display: none">
+    <div class="default-stream">
         {{> ../settings/settings_checkbox
           prefix=prefix
           setting_name="is_default_stream"
@@ -25,7 +25,7 @@
     </div>
 </div>
 
-<div id="stream-advanced-configurations" class="advanced-configurations-container stream-permissions {{#if is_stream_edit}}settings-subsection-parent{{/if}}">
+<div id="stream-advanced-configurations" class="advanced-configurations-container stream-permissions {{#if is_stream_edit}}settings-subsection-parent{{/if}}" style="display: none">
     <div class="advance-config-title-container {{#if is_stream_edit}}subsection-header{{/if}}">
         <i class="fa fa-sm fa-caret-right toggle-advanced-configurations-icon" aria-hidden="true"></i>
         <h4 class="stream_setting_subsection_title"><span>{{t 'Advanced configurations' }}</span></h4>
