@@ -83,7 +83,7 @@ export function initialize(): void {
     const targetNode = document.getElementById("message-lists-container");
     if (targetNode) {
         const observer = new MutationObserver(() => {
-            // Проверяем, находится ли пользователь в теме с иконкой 🔊
+            // Проверяем, находится ли пользователь в комнате с иконкой 🔊
             const topicName = narrow_state.topic();
             if (topicName && topicName.includes("🔊")) {
                 if (!isInAudioChannel) {

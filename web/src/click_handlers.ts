@@ -654,7 +654,7 @@ export function initialize(): void {
         const html_body = render_create_topic_modal();
 
         confirm_dialog.launch({
-            html_heading: $t_html({defaultMessage: "Создать тему"}),
+            html_heading: $t_html({defaultMessage: "Создать комнату"}),
             html_body,
             on_click() {
                 let topic_name = $("#new-topic-name").val();
@@ -671,7 +671,7 @@ export function initialize(): void {
                         message_type: "stream",
                         stream_id,
                         topic: topic_name,
-                        content: `Создана новая тема **${topic_name}**`,
+                        content: `Создана новая комната **${topic_name}**`,
                         keep_composebox_empty: true,
                     });
                 }
