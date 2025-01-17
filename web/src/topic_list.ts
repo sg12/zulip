@@ -9,6 +9,7 @@ import render_topic_list_item from "../templates/topic_list_item.hbs";
 import * as blueslip from "./blueslip.ts";
 import * as popover_menus from "./popover_menus.ts";
 import * as scroll_util from "./scroll_util.ts";
+import * as stream_data from './stream_data.ts'
 import * as stream_topic_history from "./stream_topic_history.ts";
 import * as stream_topic_history_util from "./stream_topic_history_util.ts";
 import * as topic_list_data from "./topic_list_data.ts";
@@ -81,8 +82,13 @@ type ListInfoNodeOptions =
       };
 
 type ListInfoNode = vdom.Node<ListInfoNodeOptions>;
+type ExtendedTopicInfo = TopicInfo & {
+    stream_name: string;
+};
 
-export function keyed_topic_li(conversation: TopicInfo): ListInfoNode {
+export function keyed_topic_li(conversation: ExtendedTopicInfo): ListInfoNode {
+    const stream = stream_data.get_sub_by_id(conversation.stream_id);
+    conversation = {...conversation, stream_name: stream.name};
     const render = (): string => render_topic_list_item(conversation);
 
     const eq = (other: ListInfoNode): boolean =>
