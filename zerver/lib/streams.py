@@ -53,6 +53,8 @@ from zerver.models.streams import (
 from zerver.models.users import active_non_guest_user_ids, active_user_ids, is_cross_realm_bot_email
 from zerver.tornado.django_api import send_event_on_commit
 
+# import logging
+import sys
 
 class StreamDict(TypedDict, total=False):
     """
@@ -214,6 +216,13 @@ def create_stream_if_needed(
 
     stream_name = stream_name.strip()
 
+    # print("---- Поле bbb_url проверка будет далее")
+
+    # if hasattr(Stream, 'bbb_url'):
+    #     print("---- Поле bbb_url существует в модели Stream.") # type: ignore
+    # else:
+    #     print("---- Поле bbb_url отсутствует в модели Stream.") # type: ignore
+
     (stream, created) = Stream.objects.get_or_create(
         realm=realm,
         name__iexact=stream_name,
@@ -228,10 +237,14 @@ def create_stream_if_needed(
             is_in_zephyr_realm=realm.is_zephyr_mirror_realm,
             message_retention_days=message_retention_days,
             **group_setting_values,
+            bbb_url="http://vz.ru",
         ),
     )
 
     if created:
+
+        # print("---- created:" + stream.bbb_url) # type: ignore
+
         recipient = Recipient.objects.create(type_id=stream.id, type=Recipient.STREAM)
 
         stream.recipient = recipient
@@ -990,7 +1003,13 @@ def stream_to_dict(
         can_remove_subscribers_group = get_group_setting_value_for_api(
             stream.can_remove_subscribers_group
         )
+    # logger.debug(f"----- stream.bbb_url for {stream.name}: {stream.bbb_url}")
+    # logger = logging.getLogger("zulip.auth.OurAuthenticationForm")
+    # logger.debug(f"----- stream.bbb_url for {stream.name}: {stream.bbb_url}")
+    # logging.info(f"----- stream.bbb_url for {stream.name}: {stream.bbb_url}")
+    print(f"----- stream.bbb_url for {stream.name}: {stream.bbb_url}", file=sys.stdout)
 
+    # print("----- stream.bbb_url: ")
     return APIStreamDict(
         is_archived=stream.deactivated,
         can_administer_channel_group=can_administer_channel_group,
@@ -1010,6 +1029,7 @@ def stream_to_dict(
         stream_post_policy=stream.stream_post_policy,
         is_announcement_only=stream.stream_post_policy == Stream.STREAM_POST_POLICY_ADMINS,
         stream_weekly_traffic=stream_weekly_traffic,
+        bbb_url=stream.bbb_url,
     )
 
 
@@ -1180,7 +1200,7 @@ def do_get_streams(
         (stream_to_dict(stream, recent_traffic, setting_groups_dict) for stream in streams),
         key=lambda elt: elt["name"],
     )
-
+    print("------**** do_get_streams")
     if include_default:
         default_stream_ids = get_default_stream_ids_for_realm(user_profile.realm_id)
         for stream_dict in stream_dicts:

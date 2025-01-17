@@ -39,6 +39,7 @@ export const stream_schema = z.object({
     can_administer_channel_group: group_setting_value_schema,
     can_remove_subscribers_group: group_setting_value_schema,
     is_recently_active: z.boolean(),
+    bbb_url: z.string().optional(),
 });
 
 export const stream_specific_notification_settings_schema = z.object({

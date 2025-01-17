@@ -200,6 +200,7 @@ class Stream(models.Model):
         "can_administer_channel_group_id",
         "can_remove_subscribers_group_id",
         "is_recently_active",
+        "bbb_url",
     ]
 
 
@@ -215,6 +216,12 @@ def get_active_streams(realm: Realm) -> QuerySet[Stream]:
     """
     Return all streams (including invite-only streams) that have not been deactivated.
     """
+    # streams = Stream.objects.filter(realm=realm, deactivated=False)
+    
+    # # Логируем информацию о каждом канале
+    # for stream in streams:
+    #     print(f"Stream: {stream.name}, bbb_url: {stream.bbb_url}")
+    # print("********* get_active_streams")
     return Stream.objects.filter(realm=realm, deactivated=False)
 
 
@@ -386,6 +393,7 @@ class DefaultStreamGroup(models.Model):
 
 
 def get_default_stream_groups(realm: Realm) -> QuerySet[DefaultStreamGroup]:
+    # print("********* get_default_stream_groups")
     return DefaultStreamGroup.objects.filter(realm=realm)
 
 
