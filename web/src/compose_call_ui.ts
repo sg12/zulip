@@ -142,7 +142,7 @@ export function generate_and_insert_audio_or_video_call_link(
         const video_call_id = util.random_int(100000000000000, 999999999999999);
         // const token = generate_jitsi_jwt(current_user.email, current_user.full_name);
         // console.log("token", token);
-        generateToken()
+        generateToken(current_user.email, current_user.full_name)
         .then((token) => generate_call_link(video_call_id,$target_textarea,token))
         .catch(() => generate_call_link(video_call_id,$target_textarea,""));
 
@@ -227,11 +227,17 @@ function generate_call_link(video_call_id: number, $target_textarea: JQuery<HTML
 //     return token;
 // }
 
-async function generateToken(): Promise<string> {
+async function generateToken(email: string, user_full_name: string): Promise<string> {
     try {
         const secret = new TextEncoder().encode("HguV/8QBrJdCih2Ycpoz0g5q5m85apT3Nu6E+lDvufg="); // Используйте переменную окружения
         const token = await new SignJWT({
             app_id: 'connectrm_svz',
+            user_email: email,
+            username: user_full_name,
+            aud: 'jitsi',
+            iss: 'connectrm_svz',
+            sub: 'jitsi-connectrm.ru',
+            room: '*',
         })
             .setProtectedHeader({ alg: 'HS256', typ: 'JWT' }) // Заголовок
             .setIssuedAt() // Время выпуска
