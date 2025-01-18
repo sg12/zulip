@@ -68,9 +68,6 @@ def get_bucket(bucket_name: str, authed: bool = True) -> "Bucket":
     ).Bucket(bucket_name)
 
 
-# Нужно разобрать этот прикол
-
-
 def upload_content_to_s3(
     bucket: "Bucket",
     path: str,

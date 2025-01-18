@@ -153,7 +153,6 @@ def update_last_reminder(user_profile: UserProfile | None) -> None:
 
 def home(request: HttpRequest) -> HttpResponse:
     subdomain = get_subdomain(request)
-    print("Я тут?")
     # If settings.ROOT_DOMAIN_LANDING_PAGE and this is the root
     # domain, send the user the landing page.
     if (
