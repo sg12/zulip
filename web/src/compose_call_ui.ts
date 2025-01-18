@@ -179,7 +179,8 @@ function generate_call_link(video_call_id: number, $target_textarea: JQuery<HTML
     console.log('Generated JWT:', token)
     if (token.length>0) {
         insert_audio_call_url(
-            video_call_link + "?jwt=" + token + "#config.startWithVideoMuted=true",
+            // video_call_link + "?jwt=" + token + "#config.startWithVideoMuted=true",
+            video_call_link + "?jwt=" + token + "#config.prejoinConfig.enabled=false",
             $target_textarea,
         );
     }else{
