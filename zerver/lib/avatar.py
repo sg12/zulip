@@ -11,7 +11,7 @@ from zerver.lib.avatar_hash import (
 from zerver.lib.thumbnail import MEDIUM_AVATAR_SIZE
 from zerver.lib.upload import get_avatar_url
 from zerver.lib.url_encoding import append_url_query_string
-from zerver.models import UserProfile
+from zerver.models import UserProfile, Stream
 from zerver.models.users import is_cross_realm_bot_email
 
 STATIC_AVATARS_DIR = "images/static_avatars/"
@@ -157,3 +157,59 @@ def is_avatar_new(ldap_avatar: bytes, user_profile: UserProfile) -> bool:
 
 def get_avatar_for_inaccessible_user() -> str:
     return staticfiles_storage.url("images/unknown-user-avatar.png")
+
+from zerver.lib.avatar_hash import stream_gravatar_hash, stream_avatar_base_path_from_ids
+from zerver.lib.upload import get_stream_avatar_url
+
+def stream_avatar_url(stream : Stream,
+                      medium : bool = False,
+                      stream_gravatar : bool = False
+) -> str | None:
+    return get_stream_avatar_field(
+        stream_id=stream.id,
+        realm_id=stream.realm_id,
+        avatar_source=stream.avatar_source,
+        avatar_version=stream.avatar_version,
+        medium=medium,
+        stream_gravatar=stream_gravatar
+    )
+
+
+def get_stream_avatar_field(stream_id : int,
+                            realm_id : int,
+                            avatar_source : str,
+                            avatar_version : int,
+                            medium : bool,
+                            stream_gravatar : bool
+) -> str | None:
+
+    if (
+        stream_gravatar
+        and settings.ENABLE_GRAVATAR
+        and avatar_source == Stream.AVATAR_FROM_GRAVATAR
+    ):
+        return None
+
+    if avatar_source == "U":
+        hash_key = stream_avatar_base_path_from_ids(stream_id, avatar_version, realm_id)
+        # Тут сделать в __init__ каком-то, смотри get_avatar_url
+        return get_stream_avatar_url(hash_key, medium=medium)
+
+    return get_stream_gravatar_url(stream_id=str(stream_id), realm_id=str(realm_id), avatar_version=avatar_version, medium=medium)
+
+
+# Тут не уверен
+def get_stream_gravatar_url(stream_id : str, realm_id : str, avatar_version : int, medium : bool = False) -> str:
+    url = _get_unversioned_stream_gravatar_url(stream_id, realm_id, medium)
+    return append_url_query_string(url, f"version={avatar_version:d}")
+
+
+def _get_unversioned_stream_gravatar_url(stream_id : str, realm_id : str, medium : bool) -> str:
+    if settings.ENABLE_GRAVATAR:
+        gravatar_query_suffix = f"&s={MEDIUM_AVATAR_SIZE}" if medium else ""
+        hash_key = stream_gravatar_hash(stream_id, realm_id)
+        return f"https://secure.gravatar.com/avatar/{hash_key}?d=identicon{gravatar_query_suffix}"
+    elif settings.DEFAULT_AVATAR_URI is not None:
+        return settings.DEFAULT_AVATAR_URI
+    else:
+        return staticfiles_storage.url("images/default-avatar.png")

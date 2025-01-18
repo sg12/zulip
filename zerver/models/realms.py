@@ -167,6 +167,7 @@ class Realm(models.Model):  # type: ignore[django-manager-missing] # django-stub
     # User-visible display name and description used on e.g. the organization homepage
     name = models.CharField(max_length=MAX_REALM_NAME_LENGTH)
     description = models.TextField(default="")
+    # icon = models.
 
     # A short, identifier-like name for the organization.  Used in subdomains;
     # e.g. on a server at example.com, an org with string_id `foo` is reached

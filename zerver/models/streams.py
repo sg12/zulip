@@ -26,6 +26,7 @@ class Stream(models.Model):
     MAX_NAME_LENGTH = 60
     MAX_DESCRIPTION_LENGTH = 1024
 
+    id = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")
     name = models.CharField(max_length=MAX_NAME_LENGTH, db_index=True)
     realm = models.ForeignKey(Realm, db_index=True, on_delete=CASCADE)
     date_created = models.DateTimeField(default=timezone_now)
@@ -34,6 +35,18 @@ class Stream(models.Model):
     description = models.CharField(max_length=MAX_DESCRIPTION_LENGTH, default="")
     rendered_description = models.TextField(default="")
 
+    # --- Новое ---
+    AVATAR_FROM_GRAVATAR = "G"
+    AVATAR_FROM_USER = "U"
+    AVATAR_SOURCES = (
+        (AVATAR_FROM_GRAVATAR, "Hosted by Gravatar"),
+        (AVATAR_FROM_USER, "Uploaded by user"),
+    )
+    avatar_source = models.CharField(
+        default=AVATAR_FROM_GRAVATAR, choices=AVATAR_SOURCES, max_length=1
+    )
+    avatar_version = models.PositiveSmallIntegerField(default=1)
+    
     # Foreign key to the Recipient object for STREAM type messages to this stream.
     recipient = models.ForeignKey(Recipient, null=True, on_delete=models.SET_NULL)
 
@@ -205,6 +218,12 @@ class Stream(models.Model):
 post_save.connect(flush_stream, sender=Stream)
 post_delete.connect(flush_stream, sender=Stream)
 
+
+def set_stream_image(stream_name: str, image: str) -> None:
+    pass
+
+def get_stream_image(stream_name: str) -> str:
+    pass
 
 def get_realm_stream(stream_name: str, realm_id: int) -> Stream:
     return Stream.objects.get(name__iexact=stream_name.strip(), realm_id=realm_id)

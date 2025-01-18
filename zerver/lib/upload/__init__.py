@@ -14,7 +14,7 @@ from django.core.files.uploadedfile import UploadedFile
 from django.db import transaction
 from django.utils.translation import gettext as _
 
-from zerver.lib.avatar_hash import user_avatar_base_path_from_ids, user_avatar_path
+from zerver.lib.avatar_hash import user_avatar_base_path_from_ids, user_avatar_path, stream_avatar_path, stream_avatar_base_path_from_ids
 from zerver.lib.exceptions import ErrorCode, JsonableError
 from zerver.lib.mime_types import guess_type
 from zerver.lib.outgoing_http import OutgoingSession
@@ -28,7 +28,7 @@ from zerver.lib.thumbnail import (
     resize_emoji,
 )
 from zerver.lib.upload.base import INLINE_MIME_TYPES, StreamingSourceWithSize, ZulipUploadBackend
-from zerver.models import Attachment, Message, Realm, RealmEmoji, ScheduledMessage, UserProfile
+from zerver.models import Attachment, Message, Realm, RealmEmoji, ScheduledMessage, UserProfile, Stream
 from zerver.models.users import is_cross_realm_bot_email
 
 
@@ -234,7 +234,17 @@ def all_message_attachments(
 
 
 def get_avatar_url(hash_key: str, medium: bool = False) -> str:
+    print('DEBUG upload.__init__.get_avatar_url upload_backend type : ', upload_backend)
+
     return upload_backend.get_avatar_url(hash_key, medium)
+
+
+
+
+def get_stream_avatar_url(hash_key: str, medium: bool = False) -> str:
+    return upload_backend.get_stream_avatar_url(hash_key, medium)
+
+
 
 
 def write_avatar_images(
@@ -273,6 +283,41 @@ def write_avatar_images(
     )
 
 
+def write_stream_avatar_images(
+    file_path: str,
+    stream: Stream,
+    image_data: bytes,
+    *,
+    content_type: str | None,
+    backend: ZulipUploadBackend | None = None,
+    future: bool = True,
+) -> None:
+    if backend is None:
+        backend = upload_backend
+    backend.upload_single_stream_avatar_image(
+        file_path + ".original",
+        stream=stream,
+        image_data=image_data,
+        content_type=content_type,
+        future=future,
+    )
+
+    backend.upload_single_stream_avatar_image(
+        backend.get_avatar_path(file_path, medium=False),
+        stream=stream,
+        image_data=resize_avatar(image_data),
+        content_type="image/png",
+        future=future,
+    )
+
+    backend.upload_single_stream_avatar_image(
+        backend.get_avatar_path(file_path, medium=True),
+        stream=stream,
+        image_data=resize_avatar(image_data, MEDIUM_AVATAR_SIZE),
+        content_type="image/png",
+        future=future,
+    )
+
 def upload_avatar_image(
     user_file: IO[bytes],
     user_profile: UserProfile,
@@ -290,6 +335,31 @@ def upload_avatar_image(
     write_avatar_images(
         file_path,
         user_profile,
+        image_data,
+        content_type=content_type,
+        backend=backend,
+        future=future,
+    )
+
+
+def upload_stream_avatar_image(
+        user_file : IO[bytes],
+        stream : Stream,
+        content_type: str | None = None,
+        backend: ZulipUploadBackend | None = None,
+        future: bool = True,
+) -> None:
+    if content_type is None:
+        content_type = guess_type(user_file.name)[0]
+    if content_type not in THUMBNAIL_ACCEPT_IMAGE_TYPES:
+        raise BadImageError(_("Invalid image format"))
+    
+    file_path = stream_avatar_path(stream, future=future)
+
+    image_data = user_file.read()
+    write_stream_avatar_images(
+        file_path,
+        stream,
         image_data,
         content_type=content_type,
         backend=backend,
@@ -340,6 +410,9 @@ def delete_avatar_image(user_profile: UserProfile, avatar_version: int) -> None:
     path_id = user_avatar_base_path_from_ids(user_profile.id, avatar_version, user_profile.realm_id)
     upload_backend.delete_avatar_image(path_id)
 
+def delete_stream_avatar_image(stream : Stream, avatar_version: int) -> None:
+    path_id = stream_avatar_base_path_from_ids(stream.id, avatar_version, stream.realm_id)
+    upload_backend.delete_stream_avatar_image(path_id)
 
 # Realm icon and logo uploads
 

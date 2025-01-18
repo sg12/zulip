@@ -183,6 +183,9 @@ from zerver.views.streams import (
     update_subscription_properties_backend,
     update_subscriptions_backend,
     update_subscriptions_property,
+    get_avatar_by_id,
+    set_avatar_by_id,
+    delete_avatar_by_id,
 )
 from zerver.views.submessage import process_submessage
 from zerver.views.thumbnail import backend_serve_thumbnail
@@ -195,6 +198,7 @@ from zerver.views.upload import (
     serve_file_unauthed_from_token,
     serve_file_url_backend,
     serve_local_avatar_unauthed,
+    serve_local_stream_avatar_unauthed,
     upload_file_backend,
 )
 from zerver.views.user_groups import (
@@ -480,6 +484,7 @@ v1_api_and_json_patterns = [
         PATCH=update_stream_backend,
         DELETE=deactivate_stream_backend,
     ),
+    rest_path("streams/<int:stream_id>/avatar", GET=get_avatar_by_id, POST=set_avatar_by_id, DELETE=delete_avatar_by_id),
     rest_path("streams/<int:stream_id>/email_address", GET=get_stream_email_address),
     # Delete topic in stream
     rest_path("streams/<int:stream_id>/delete_topic", POST=delete_in_topic),
@@ -706,6 +711,11 @@ urls += [
         "user_avatars/<path:path>",
         serve_local_avatar_unauthed,
         name="local_avatar_unauthed",
+    ),
+    path(
+        "stream_avatars/<path:path>",
+        serve_local_stream_avatar_unauthed,
+        name="local_stream_avatar_unauthed",
     ),
 ]
 

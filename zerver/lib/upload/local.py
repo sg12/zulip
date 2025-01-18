@@ -16,10 +16,10 @@ from zerver.lib.thumbnail import resize_logo, resize_realm_icon
 from zerver.lib.timestamp import timestamp_to_datetime
 from zerver.lib.upload.base import StreamingSourceWithSize, ZulipUploadBackend
 from zerver.lib.utils import assert_is_not_none
-from zerver.models import Realm, RealmEmoji, UserProfile
+from zerver.models import Realm, RealmEmoji, UserProfile, Stream
 
 
-def assert_is_local_storage_path(type: Literal["avatars", "files"], full_path: str) -> None:
+def assert_is_local_storage_path(type: Literal["avatars", "files", "stream_avatars"], full_path: str) -> None:
     """
     Verify that we are only reading and writing files under the
     expected paths.  This is expected to be already enforced at other
@@ -31,8 +31,9 @@ def assert_is_local_storage_path(type: Literal["avatars", "files"], full_path: s
     assert os.path.commonpath([type_path, full_path]) == type_path
 
 
-def write_local_file(type: Literal["avatars", "files"], path: str, file_data: bytes) -> None:
+def write_local_file(type: Literal["avatars", "files", "stream_avatars"], path: str, file_data: bytes) -> None:
     file_path = os.path.join(assert_is_not_none(settings.LOCAL_UPLOADS_DIR), type, path)
+    print('DEBUG local.write_local_file file path =', file_path)
     assert_is_local_storage_path(type, file_path)
 
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
@@ -40,7 +41,7 @@ def write_local_file(type: Literal["avatars", "files"], path: str, file_data: by
         f.write(file_data)
 
 
-def read_local_file(type: Literal["avatars", "files"], path: str) -> Iterator[bytes]:
+def read_local_file(type: Literal["avatars", "files", 'stream_avatars'], path: str) -> Iterator[bytes]:
     file_path = os.path.join(assert_is_not_none(settings.LOCAL_UPLOADS_DIR), type, path)
     assert_is_local_storage_path(type, file_path)
 
@@ -48,7 +49,7 @@ def read_local_file(type: Literal["avatars", "files"], path: str) -> Iterator[by
         yield from iter(lambda: f.read(4 * 1024 * 1024), b"")
 
 
-def delete_local_file(type: Literal["avatars", "files"], path: str) -> bool:
+def delete_local_file(type: Literal["avatars", "files", "stream_avatars"], path: str) -> bool:
     file_path = os.path.join(assert_is_not_none(settings.LOCAL_UPLOADS_DIR), type, path)
     assert_is_local_storage_path(type, file_path)
 
@@ -136,13 +137,28 @@ class LocalUploadBackend(ZulipUploadBackend):
 
     @override
     def get_avatar_url(self, hash_key: str, medium: bool = False) -> str:
+        print('DEBUG local LocalUploadBackend.get_avatar_url', "/user_avatars/" + self.get_avatar_path(hash_key, medium))
         return "/user_avatars/" + self.get_avatar_path(hash_key, medium)
+
+
+
+
+    @override
+    def get_stream_avatar_url(self, hash_key : str, medium : bool = False) -> str:
+        return "/stream_avatars/" + self.get_stream_avatar_path(hash_key, medium)
+
+
+
 
     @override
     def get_avatar_contents(self, file_path: str) -> tuple[bytes, str]:
         image_data = b"".join(read_local_file("avatars", file_path + ".original"))
         content_type = guess_type(file_path)[0]
         return image_data, content_type or "application/octet-stream"
+
+
+
+
 
     @override
     def upload_single_avatar_image(
@@ -155,12 +171,33 @@ class LocalUploadBackend(ZulipUploadBackend):
         future: bool = True,
     ) -> None:
         write_local_file("avatars", file_path, image_data)
+    
+    def upload_single_stream_avatar_image(
+        self,
+        file_path: str,
+        *,
+        stream : Stream,
+        image_data: bytes,
+        content_type: str | None,
+        future: bool = True,
+    ) -> None:
+        write_local_file("stream_avatars", file_path, image_data)
+
+
+
+
 
     @override
     def delete_avatar_image(self, path_id: str) -> None:
         delete_local_file("avatars", path_id + ".original")
         delete_local_file("avatars", self.get_avatar_path(path_id, True))
         delete_local_file("avatars", self.get_avatar_path(path_id, False))
+    
+    @override
+    def delete_stream_avatar_image(self, path_id: str) -> None:
+        delete_local_file("stream_avatars", path_id + ".original")
+        delete_local_file("stream_avatars", self.get_stream_avatar_path(path_id, True))
+        delete_local_file("stream_avatars", self.get_stream_avatar_path(path_id, False))
 
     @override
     def get_realm_icon_url(self, realm_id: int, version: int) -> str:

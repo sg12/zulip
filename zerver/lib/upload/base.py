@@ -6,7 +6,7 @@ from typing import IO, Any
 
 import pyvips
 
-from zerver.models import Realm, UserProfile
+from zerver.models import Realm, UserProfile, Stream
 
 INLINE_MIME_TYPES = [
     "application/pdf",
@@ -77,22 +77,54 @@ class ZulipUploadBackend:
 
     # Avatar image uploads
     def get_avatar_url(self, hash_key: str, medium: bool = False) -> str:
+        print('DEBUG base ZulipUploadBackend.get_avatar_url')
         raise NotImplementedError
+
+    def get_stream_avatar_url(self, hash_key : str, medium : bool = False) -> str:
+        raise NotImplementedError
+    
+
+
 
     def get_avatar_contents(self, file_path: str) -> tuple[bytes, str]:
         raise NotImplementedError
 
+
+
+
     def get_avatar_path(self, hash_key: str, medium: bool = False) -> str:
+        print('DEBUG base ZulipUploadBackend.get_avatar_path hash key :', hash_key)
         if medium:
             return f"{hash_key}-medium.png"
         else:
             return f"{hash_key}.png"
+
+
+    def get_stream_avatar_path(self, hash_key : str, medium : bool = False) -> str:
+        if medium:
+            return f"{hash_key}-medium.png"
+        else:
+            return f"{hash_key}.png"
+
+
+
 
     def upload_single_avatar_image(
         self,
         file_path: str,
         *,
         user_profile: UserProfile,
+        image_data: bytes,
+        content_type: str | None,
+        future: bool = True,
+    ) -> None:
+        raise NotImplementedError
+
+    def upload_single_stream_avatar_image(
+        self,
+        file_path: str,
+        *,
+        stream: Stream,
         image_data: bytes,
         content_type: str | None,
         future: bool = True,
