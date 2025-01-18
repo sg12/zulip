@@ -259,6 +259,13 @@ export function build_stream_list(force_rerender: boolean): void {
     const streams = stream_data.subscribed_stream_ids();
     const stream_groups = stream_list_sort.sort_groups(streams, get_search_term());
 
+    console.log("stream - 1: " + streams.toString());
+    // console.log("stream - 2: " + stream_data.get_sub_by_id(streams[0])?.bbb_url);
+
+    for (const stream_id of streams) {
+        console.log("stream - 3: " + stream_id.toString() + " - " + stream_data.get_sub_by_id(stream_id)?.bbb_url);
+    }
+
     if (stream_groups.same_as_before && !force_rerender) {
         return;
     }
@@ -824,7 +831,7 @@ export function initialize({
     on_stream_click: (stream_id: number, trigger: string) => void;
 }): void {
     create_initial_sidebar_rows();
-
+    console.log("stream - 01");
     // We build the stream_list now.  It may get re-built again very shortly
     // when new messages come in, but it's fairly quick.
     build_stream_list(false);
@@ -940,6 +947,20 @@ export function set_event_handlers({
         .on("click", (e) => {
             e.preventDefault();
             if (e.target.id === "streams_inline_icon") {
+                const can_create_streams =
+                    settings_data.user_can_create_private_streams() ||
+                    settings_data.user_can_create_public_streams() ||
+                    settings_data.user_can_create_web_public_streams();
+
+                if (!can_create_streams) {
+                    // If the user can't create streams, we directly
+                    // navigate them to the Stream settings subscribe UI.
+                    window.location.assign("#channels/all");
+                    return;
+                }
+
+                window.location.assign("#channels/new");
+
                 return;
             }
             toggle_filter_displayed(e);

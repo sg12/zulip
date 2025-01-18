@@ -174,6 +174,7 @@ def build_stream_api_dict(
         stream_weekly_traffic=stream_weekly_traffic,
         is_announcement_only=is_announcement_only,
         is_recently_active=raw_stream_dict["is_recently_active"],
+        bbb_url=raw_stream_dict["bbb_url"],
     )
 
 
@@ -216,6 +217,8 @@ def build_stream_dict_for_sub(
     # updated for the in_home_view => is_muted API migration.
     in_home_view = not is_muted
 
+    bbb_url = stream_dict["bbb_url"]
+
     # Our caller may add a subscribers field.
     return SubscriptionStreamDict(
         is_archived=is_archived,
@@ -245,6 +248,7 @@ def build_stream_dict_for_sub(
         stream_post_policy=stream_post_policy,
         stream_weekly_traffic=stream_weekly_traffic,
         wildcard_mentions_notify=wildcard_mentions_notify,
+        bbb_url=bbb_url,
     )
 
 
@@ -504,6 +508,15 @@ def gather_subscriptions_helper(
         "realm_id",
         "recipient_id",
     )
+
+    # all_streams_test = get_all_streams(
+    #     realm, include_archived_channels=include_archived_channels
+    # );
+    # for stream in all_streams_test:
+    #     print(f"---Stream: {stream.name}, bbb_url: {stream.bbb_url}")
+
+
+
     recip_id_to_stream_id: dict[int, int] = {
         stream["recipient_id"]: stream["id"] for stream in all_streams
     }
@@ -550,6 +563,9 @@ def gather_subscriptions_helper(
         stream_id = get_stream_id(sub_dict)
         sub_unsub_stream_ids.add(stream_id)
         raw_stream_dict = all_streams_map[stream_id]
+
+        # print("------Stream: " + raw_stream_dict["bbb_url"])
+
         stream_api_dict = build_stream_api_dict(
             raw_stream_dict, recent_traffic, setting_groups_dict
         )
@@ -625,6 +641,8 @@ def gather_subscriptions_helper(
     subscribed.sort(key=lambda x: x["name"])
     unsubscribed.sort(key=lambda x: x["name"])
     never_subscribed.sort(key=lambda x: x["name"])
+
+    print("------Stream: " + subscribed[0]["bbb_url"])
 
     return SubscriptionInfo(
         subscriptions=subscribed,

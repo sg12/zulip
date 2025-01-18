@@ -311,7 +311,7 @@ h4.user_group_setting_subsection_title {
     height: 95%;
     border-radius: 4px;
     padding: 0;
-    width: 97%;
+    width: 60%;
     overflow: hidden;
     max-width: 1200px;
     max-height: var(--overlay-container-max-height);
@@ -359,14 +359,17 @@ h4.user_group_setting_subsection_title {
         cursor: pointer;
     }
 
-    .left,
     .right {
         position: relative;
         display: inline-block;
         vertical-align: top;
-        width: 50%;
+        width: 97%;
         height: calc(100% - 45px);
         margin: 0 -2px;
+    }
+
+    .left {
+        display: none;
     }
 
     .left .no-streams-to-show,
@@ -417,25 +420,8 @@ h4.user_group_setting_subsection_title {
         }
     }
 
-    .left {
-        border-right: 1px solid var(--color-border-modal-bar);
-
-        .list-toggler-container {
-            align-items: center;
-            padding: 6px 8px;
-            border-bottom: 1px solid var(--color-border-modal-bar);
-            display: flex;
-            justify-content: space-between;
-
-            #add_new_subscription {
-                position: relative;
-                top: -2px;
-            }
-        }
-    }
-
     .right {
-        width: calc(50% + 1px);
+        width: 97%;
 
         .nothing-selected .create_stream_button,
         .nothing-selected .create_user_group_button {

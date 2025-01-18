@@ -1,4 +1,4 @@
-<div id="stream_permission_settings" class="stream-permissions {{#if is_stream_edit}}settings-subsection-parent{{/if}}">
+<div id="stream_permission_settings" class="stream-permissions {{#if is_stream_edit}}settings-subsection-parent{{/if}}" style="display: none">
     {{#if is_stream_edit}}
         <div class="subsection-header">
             <h3 class="stream_setting_subsection_title">{{t "Channel permissions" }}
@@ -7,24 +7,6 @@
         </div>
         <div class="stream-permissions-warning-banner"></div>
     {{/if}}
-
-    <div class="input-group stream-privacy-values">
-        <div class="alert stream-privacy-status"></div>
-        <label>{{t 'Who can access this channel'}}
-            {{> ../help_link_widget link="/help/channel-permissions" }}
-        </label>
-
-        <div class="stream-privacy_choices prop-element" id="{{prefix}}stream_privacy" data-setting-widget-type="radio-group" data-setting-choice-type="string">
-            {{#each stream_privacy_policy_values}}
-                <div class="settings-radio-input-parent">
-                    <label class="radio">
-                        <input type="radio" name="privacy" value="{{ this.code }}" {{#if (eq this.code ../stream_privacy_policy) }}checked{{/if}} />
-                        <b>{{ this.name }}:</b> {{ this.description }}
-                    </label>
-                </div>
-            {{/each}}
-        </div>
-    </div>
 
     {{#if ask_to_announce_stream}}
         <div id="announce-new-stream">
@@ -43,7 +25,7 @@
     </div>
 </div>
 
-<div id="stream-advanced-configurations" class="advanced-configurations-container stream-permissions {{#if is_stream_edit}}settings-subsection-parent{{/if}}">
+<div id="stream-advanced-configurations" class="advanced-configurations-container stream-permissions {{#if is_stream_edit}}settings-subsection-parent{{/if}}" style="display: none">
     <div class="advance-config-title-container {{#if is_stream_edit}}subsection-header{{/if}}">
         <i class="fa fa-sm fa-caret-right toggle-advanced-configurations-icon" aria-hidden="true"></i>
         <h4 class="stream_setting_subsection_title"><span>{{t 'Advanced configurations' }}</span></h4>
@@ -68,14 +50,12 @@
 
         {{> ../settings/group_setting_value_pill_input
           setting_name="can_administer_channel_group"
-          label=(t 'Who can administer this channel')
-          label_parens_text=(t 'in addition to organization administrators')
+          label=(t 'Кто может управлять этим каналом')
           prefix=prefix }}
 
         {{> ../settings/group_setting_value_pill_input
           setting_name="can_remove_subscribers_group"
           label=(t 'Who can unsubscribe others from this channel')
-          label_parens_text=(t 'in addition to organization administrators')
           prefix=prefix }}
 
 

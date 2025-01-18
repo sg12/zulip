@@ -4,6 +4,9 @@ import $ from "jquery";
 import assert from "minimalistic-assert";
 import {z} from "zod";
 
+import render_audio_iframe from "../templates/audio_iframe.hbs";
+
+import * as audio_call from "./audio_call.ts";
 import * as activity_ui from "./activity_ui.ts";
 import {all_messages_data} from "./all_messages_data.ts";
 import * as blueslip from "./blueslip.ts";
@@ -345,6 +348,7 @@ export type ShowMessageViewOpts = {
     force_close?: boolean;
     change_hash?: boolean;
     trigger?: string;
+    is_audio?: boolean;
     fetched_target_message?: boolean;
     then_select_id?: number | undefined;
     then_select_offset?: number | undefined;
@@ -777,6 +781,13 @@ export let show = (raw_terms: NarrowTerm[], show_opts: ShowMessageViewOpts): voi
             resize.resize_stream_filters_container();
         });
     });
+
+    if (show_opts.is_audio) {
+        const topic = raw_terms.find(term => term.operator === "topic")?.operand;
+        const iframe_html = render_audio_iframe({ topic });
+        $(".message-list").append(iframe_html);
+        audio_call.enterAudioChannel();
+    }
 };
 
 export function rewire_show(value: typeof show): void {

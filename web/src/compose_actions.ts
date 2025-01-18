@@ -26,6 +26,7 @@ import * as reload_state from "./reload_state.ts";
 import * as resize from "./resize.ts";
 import * as spectators from "./spectators.ts";
 import * as stream_data from "./stream_data.ts";
+import {send_message} from "./compose.js"
 
 // Opts sent to `compose_actions.start`.
 type ComposeActionsStartOpts = {
@@ -264,6 +265,11 @@ function same_recipient_as_before(opts: ComposeActionsOpts): boolean {
             (opts.message_type === "private" &&
                 opts.private_message_recipient === compose_state.private_message_recipient()))
     );
+}
+
+export function start_and_send_message(opts: ComposeActionsStartOpts): void {
+    start(opts);
+    send_message();
 }
 
 export let start = (raw_opts: ComposeActionsStartOpts): void => {

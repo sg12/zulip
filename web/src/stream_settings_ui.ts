@@ -836,7 +836,6 @@ export function change_state(
     // if in #channels/new form.
     if (section === "new") {
         do_open_create_stream();
-        show_right_section();
         return;
     }
 

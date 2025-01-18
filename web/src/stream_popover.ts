@@ -221,10 +221,6 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
                 $(e.currentTarget).hide();
                 e.stopPropagation();
             });
-
-            new ClipboardJS(util.the($popper.find(".copy_stream_link"))).on("success", () => {
-                popover_menus.hide_current_popover_if_visible(instance);
-            });
         },
         onHidden() {
             hide_stream_popover();

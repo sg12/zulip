@@ -746,7 +746,7 @@ def add_subscriptions_backend(
         created_streams=created_streams,
         announce=announce,
     )
-
+    
     result["subscribed"] = dict(result["subscribed"])
     result["already_subscribed"] = dict(result["already_subscribed"])
     if not authorization_errors_fatal:
@@ -886,7 +886,7 @@ def get_subscribers_backend(
         allow_realm_admin=True,
     )
     subscribers = get_subscriber_ids(stream, user_profile)
-
+    print("------**** get_subscribers_backend")
     return json_success(request, data={"subscribers": list(subscribers)})
 
 
@@ -915,6 +915,7 @@ def get_streams_backend(
         include_default=include_default,
         include_owner_subscribed=include_owner_subscribed,
     )
+    print("------**** get_streams_backend")
     return json_success(request, data={"streams": streams})
 
 
@@ -929,7 +930,7 @@ def get_stream_backend(
 
     recent_traffic = get_streams_traffic({stream.id}, user_profile.realm)
     setting_groups_dict = get_group_setting_value_dict_for_streams([stream])
-
+    print("------**** get_stream_backend")
     return json_success(
         request, data={"stream": stream_to_dict(stream, recent_traffic, setting_groups_dict)}
     )
