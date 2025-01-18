@@ -1,5 +1,4 @@
 import $ from "jquery";
-import * as compose_call_ui from "./compose_call_ui.ts";
 import * as narrow_state from "./narrow_state.ts";
 
 let callUrl: string | null = null;
@@ -38,8 +37,8 @@ export async function enterAudioChannel() {
             $("#left_bar_compose_reply_button_big").click(); // Открываем чат для вставки ссылки
             await delay(100); // Добавляем задержку, чтобы чат успел открыться
 
-            // Генерируем и вставляем новую ссылку на видеозвонок в чат
-            compose_call_ui.generate_and_insert_audio_or_video_call_link($(".video_link"), false)
+            $(".video_link").click() // Генерируем ссылку
+            await delay(100);
 
             $("#compose-send-button").click(); // Отправляем сообщение с ссылкой
 
