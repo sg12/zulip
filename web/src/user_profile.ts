@@ -665,6 +665,66 @@ export function show_user_profile(user: User, default_tab_key = "profile-tab"): 
     }
 }
 
+// function handle_remove_stream_subscription(
+//     target_user_id: number,
+//     sub: StreamSubscription,
+//     success: (data: unknown) => void,
+//     failure: () => void,
+// ): void {
+//     // Проверяем, является ли пользователь администратором
+//     if (people.is_my_user_id(target_user_id)) {
+//         if (current_user.user_id == sub.creator_id) {
+//             // peer_data.get_subscriber_count(stream.stream_id) === 1
+//             const other_users_id =  peer_data.get_subscribers(sub.stream_id);
+//             let new_admin_id = 0;
+//             for (const user_id_in_sub of other_users_id) {
+//                 if (user_id_in_sub != target_user_id){
+//                     new_admin_id = user_id_in_sub
+//                     break;
+//                 }
+//             }
+//                     subscriber_api.promote_user_to_admin(new_admin_id, sub, () => {
+//                         console.log(
+//                             `Пользователь ${new_admin_id} назначен администратором канала ${sub.name}`,
+//                         );
+//                         proceedWithUnsubscribe();
+//                     }, failure);
+//         }
+//         proceedWithUnsubscribe();
+//     } else {
+//         subscriber_api.remove_user_id_from_stream(target_user_id, sub, success, failure);
+//     }
+
+//     function proceedWithUnsubscribe(): void {
+//         void channel.del({
+//             url: "/json/users/me/subscriptions",
+//             data: {subscriptions: JSON.stringify([sub.name])},
+//             success,
+//             error: failure,
+//         });
+//     }
+// }
+
+// export function promote_user_to_admin(
+//     user_id: number,
+//     sub: StreamSubscription,
+//     success: () => void,
+//     failure: () => void,
+// ): void {
+//     const data = {
+//         user_id,
+//         stream_id: sub.stream_id,
+//         role: "admin", // Указание роли администратора
+//     };
+//     channel.post({
+//         url: "/json/streams/update_role",
+//         data: JSON.stringify(data),
+//         success,
+//         error: failure,
+//     });
+// }
+
+
 function handle_remove_stream_subscription(
     target_user_id: number,
     sub: StreamSubscription,

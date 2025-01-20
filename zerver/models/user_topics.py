@@ -73,4 +73,4 @@ class UserTopic(models.Model):
 
     @override
     def __str__(self) -> str:
-        return f"({self.user_profile.email}, {self.stream.name}, {self.topic_name}, {self.last_updated})"
+        return f"({self.user_profile.email}, {self.stream.name}, {self.topic_name}, {self.last_updated}, {self.id})"

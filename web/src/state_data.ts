@@ -147,6 +147,7 @@ export const user_topic_schema = z.object({
     topic_name: z.string(),
     last_updated: z.number(),
     visibility_policy: z.number(),
+    id: z.number(),
 });
 
 export const muted_user_schema = z.object({

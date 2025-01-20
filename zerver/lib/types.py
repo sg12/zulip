@@ -136,6 +136,7 @@ class UserTopicDict(TypedDict, total=False):
     topic_name: str
     last_updated: int
     visibility_policy: int
+    id: int
 
 
 @dataclass

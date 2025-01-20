@@ -44,7 +44,7 @@ def get_user_topics(
         query = query.filter(stream__deactivated=False)
 
     rows = query.values(
-        "stream_id", "stream__name", "topic_name", "last_updated", "visibility_policy"
+        "stream_id", "stream__name", "topic_name", "last_updated", "visibility_policy", "id"
     )
 
     result = []
@@ -54,6 +54,7 @@ def get_user_topics(
             "topic_name": row["topic_name"],
             "visibility_policy": row["visibility_policy"],
             "last_updated": datetime_to_timestamp(row["last_updated"]),
+            "id": row["id"],
         }
 
         if include_stream_name:
@@ -75,7 +76,7 @@ def get_topic_mutes(
     )
 
     return [
-        (user_topic["stream__name"], user_topic["topic_name"], user_topic["last_updated"])
+        (user_topic["stream__name"], user_topic["topic_name"], user_topic["last_updated"], user_topic["id"])
         for user_topic in user_topics
     ]
 
@@ -98,9 +99,10 @@ def set_topic_visibility_policy(
 
     if last_updated is None:
         last_updated = timezone_now()
-    for stream_name, topic_name in topics:
+    for stream_name, topic_name, id in topics:
         stream = get_stream(stream_name, user_profile.realm)
         recipient_id = stream.recipient_id
+
         assert recipient_id is not None
 
         bulk_set_user_topic_visibility_policy_in_database(
@@ -110,6 +112,7 @@ def set_topic_visibility_policy(
             topic_name=topic_name,
             visibility_policy=visibility_policy,
             last_updated=last_updated,
+            id=id,
         )
 
 

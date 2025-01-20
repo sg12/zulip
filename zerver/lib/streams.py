@@ -1,4 +1,5 @@
 from collections.abc import Collection
+from ctypes import util
 from datetime import datetime, timedelta
 from typing import TypedDict
 
@@ -55,6 +56,7 @@ from zerver.tornado.django_api import send_event_on_commit
 
 # import logging
 import sys
+import random
 
 class StreamDict(TypedDict, total=False):
     """
@@ -237,13 +239,13 @@ def create_stream_if_needed(
             is_in_zephyr_realm=realm.is_zephyr_mirror_realm,
             message_retention_days=message_retention_days,
             **group_setting_values,
-            bbb_url="http://vz.ru",
+            bbb_url=str(random.randint(100000000000000, 999999999999999)),
         ),
     )
 
     if created:
 
-        # print("---- created:" + stream.bbb_url) # type: ignore
+        print("---- created:" + stream.bbb_url) # type: ignore
 
         recipient = Recipient.objects.create(type_id=stream.id, type=Recipient.STREAM)
 

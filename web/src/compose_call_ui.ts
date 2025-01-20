@@ -49,6 +49,7 @@ function insert_audio_call_url(url: string, $target_textarea: JQuery<HTMLTextAre
 export function generate_and_insert_audio_or_video_call_link(
     $target_element: JQuery,
     is_audio_call: boolean,
+    bbb_url: string
 ): void {
     let $target_textarea: JQuery<HTMLTextAreaElement>;
     let edit_message_id: string | undefined;
@@ -139,9 +140,15 @@ export function generate_and_insert_audio_or_video_call_link(
         });
     } else {
         // TODO: Use `new URL` to generate the URLs here.
-        const video_call_id = util.random_int(100000000000000, 999999999999999);
+        
+
+        // const video_call_id = util.random_int(100000000000000, 999999999999999);
         // const token = generate_jitsi_jwt(current_user.email, current_user.full_name);
-        // console.log("token", token);
+        console.log("------token bbb_url", bbb_url);
+        let video_call_id = bbb_url;
+        if(bbb_url.length < 3) {
+            video_call_id = util.random_int(100000000000000, 999999999999999).toString();
+        }
         generateToken()
         .then((token) => generate_call_link(video_call_id,$target_textarea,token))
         .catch(() => generate_call_link(video_call_id,$target_textarea,""));
@@ -174,7 +181,7 @@ export function generate_and_insert_audio_or_video_call_link(
     }
 }
 
-function generate_call_link(video_call_id: number, $target_textarea: JQuery<HTMLTextAreaElement>, token: String){
+function generate_call_link(video_call_id: string, $target_textarea: JQuery<HTMLTextAreaElement>, token: String){
     const video_call_link = compose_call.get_jitsi_server_url() + "/" + video_call_id;
     console.log('Generated JWT:', token)
     if (token.length>0) {
