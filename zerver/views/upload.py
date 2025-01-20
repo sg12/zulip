@@ -437,6 +437,34 @@ def serve_local_avatar_unauthed(request: HttpRequest, path: str) -> HttpResponse
     patch_cache_control(response, max_age=31536000, public=True, immutable=True)
     return response
 
+def serve_local_stream_avatar_unauthed(request: HttpRequest, path: str) -> HttpResponseBase:
+    """Serves avatar images off disk, via nginx (or directly in dev), with no auth.
+
+    This is done unauthed because these need to be accessed from HTML
+    emails, where the client does not have any auth.  We rely on the
+    URL being generated using the AVATAR_SALT secret.
+
+    """
+    if settings.LOCAL_STREAM_AVATARS_DIR is None:
+        # We do not expect clients to hit this URL when using the S3
+        # backend; however, there is no reason to not serve the
+        # redirect to S3 where the content lives.
+        url = get_public_upload_root_url() + path
+        return redirect(url, permanent=True)
+    print('DEBUG views.upload.serve_local_stream_avatar_unauthed settings : ', settings, 'settings.LOCAL_STREAM_AVATARS_DIR : ', settings.LOCAL_STREAM_AVATARS_DIR)
+    local_path = os.path.join(settings.LOCAL_STREAM_AVATARS_DIR, path)
+    assert_is_local_storage_path("stream_avatars", local_path)
+    if not os.path.isfile(local_path):
+        return HttpResponseNotFound("<p>File not found</p>")
+
+    if settings.DEVELOPMENT:
+        response: HttpResponseBase = FileResponse(open(local_path, "rb"))  # noqa: SIM115
+    else:
+        response = internal_nginx_redirect(quote(f"/internal/local/stream_avatars/{path}"))
+
+    patch_cache_control(response, max_age=31536000, public=True, immutable=True)
+    return response
+
 
 def upload_file_backend(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     if len(request.FILES) == 0:

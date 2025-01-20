@@ -1121,3 +1121,87 @@ def get_stream_email_address(
     stream_email = encode_email_address(stream, show_sender=True)
 
     return json_success(request, data={"email": stream_email})
+
+from zerver.lib.avatar import stream_avatar_url
+from django.shortcuts import redirect
+from django.core.files.uploadedfile import UploadedFile
+from zerver.lib.upload import upload_stream_avatar_image
+from zerver.actions.streams import do_change_stream_avatar_fields
+
+def set_avatar_by_id(request: HttpRequest,
+                    user_profile: UserProfile,
+                    *,
+                    stream_id: Annotated[NonNegativeInt, ApiParamConfig("stream", path_only=True)],
+) -> HttpResponse:
+    
+    if len(request.FILES) != 1:
+        raise JsonableError(_("You must upload exactly one avatar."))
+    
+
+    [user_file] = request.FILES.values()
+    assert isinstance(user_file, UploadedFile)
+    assert user_file.size is not None
+    if user_file.size > settings.MAX_AVATAR_FILE_SIZE_MIB * 1024 * 1024:
+        raise JsonableError(
+            _("Uploaded file is larger than the allowed limit of {max_size} MiB").format(
+                max_size=settings.MAX_AVATAR_FILE_SIZE_MIB,
+            )
+        )
+    
+    (stream, sub) = access_stream_by_id(
+        user_profile,
+        stream_id,
+    )
+
+    upload_stream_avatar_image(user_file, stream)
+    do_change_stream_avatar_fields(stream, Stream.AVATAR_FROM_USER, acting_user=user_profile)
+    user_avatar_url = stream_avatar_url(stream=stream)
+
+    json_result = dict(
+        avatar_url=user_avatar_url,
+    )
+    return json_success(request, data=json_result)
+
+def delete_avatar_by_id(request: HttpRequest,
+                    user_profile: UserProfile,
+                    *,
+                    stream_id: Annotated[NonNegativeInt, ApiParamConfig("stream", path_only=True)],
+) -> HttpResponse:
+
+    (stream, sub) = access_stream_by_id(
+        user_profile,
+        stream_id,
+    )
+
+    do_change_stream_avatar_fields(
+        stream, Stream.AVATAR_FROM_GRAVATAR, acting_user=user_profile
+    )
+    gravatar_url = stream_avatar_url(stream=stream)
+
+    json_result = dict(
+        avatar_url=gravatar_url,
+    )
+    return json_success(request, data=json_result)
+
+
+def get_avatar_by_id(request: HttpRequest,
+                    user_profile: UserProfile,
+                    *,
+                    stream_id: Annotated[NonNegativeInt, ApiParamConfig("stream", path_only=True)],
+) -> HttpResponse:
+    print('DEBUG streams.get_avatar_by_id', user_profile, stream_id)
+    # stream : Stream = Stream.objects.get(id = stream_id)
+    url = ''
+
+    (stream, sub) = access_stream_by_id(
+        user_profile,
+        stream_id,
+    )
+    print(stream, sub)
+
+    url = stream_avatar_url(stream=stream)
+    
+    return redirect(url)
+    # return json_success(request=request)
+    # if not stream.exists():
+    #     raise JsonableError(_("Stream don't exists."))

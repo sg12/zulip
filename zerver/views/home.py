@@ -153,7 +153,6 @@ def update_last_reminder(user_profile: UserProfile | None) -> None:
 
 def home(request: HttpRequest) -> HttpResponse:
     subdomain = get_subdomain(request)
-
     # If settings.ROOT_DOMAIN_LANDING_PAGE and this is the root
     # domain, send the user the landing page.
     if (
@@ -166,16 +165,20 @@ def home(request: HttpRequest) -> HttpResponse:
         return hello_view(request)
 
     if subdomain == settings.SOCIAL_AUTH_SUBDOMAIN:
+        print('subdomain')
         return redirect(settings.ROOT_DOMAIN_URI)
     elif subdomain == settings.SELF_HOSTING_MANAGEMENT_SUBDOMAIN:
+        print('subdomain 2')
         return redirect(reverse("remote_billing_legacy_server_login"))
     realm = get_realm_from_request(request)
     if realm is None:
         context = {
             "current_url": request.get_host(),
         }
+        print('realm')
         return render(request, "zerver/invalid_realm.html", status=404, context=context)
     if realm.allow_web_public_streams_access():
+        print('realm 2')
         return web_public_view(home_real)(request)
     return zulip_login_required(home_real)(request)
 
@@ -187,6 +190,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
         client_user_agent
     )
     if banned_desktop_app:
+        print('hm_render')
         return render(
             request,
             "zerver/portico_error_pages/insecure_desktop_app.html",
@@ -196,6 +200,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
         )
     (unsupported_browser, browser_name) = is_unsupported_browser(client_user_agent)
     if unsupported_browser:
+        print('hm_render 2')
         return render(
             request,
             "zerver/portico_error_pages/unsupported_browser.html",
@@ -223,6 +228,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
 
     # If a user hasn't signed the current Terms of Service, send them there
     if need_accept_tos(user_profile):
+        print('hm_render 3')
         return accounts_accept_terms(request)
 
     narrow, narrow_stream, narrow_topic_name = detect_narrowed_window(request, user_profile)

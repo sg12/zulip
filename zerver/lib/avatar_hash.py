@@ -2,7 +2,7 @@ import hashlib
 
 from django.conf import settings
 
-from zerver.models import UserProfile
+from zerver.models import UserProfile, Stream
 
 
 def gravatar_hash(email: str) -> str:
@@ -39,3 +39,28 @@ def user_avatar_base_path_from_ids(user_profile_id: int, version: int, realm_id:
 
 def user_avatar_content_hash(ldap_avatar: bytes) -> str:
     return hashlib.sha256(ldap_avatar).hexdigest()
+
+
+
+
+def stream_gravatar_hash(stream_id : str, realm_id : str) -> str:
+    print("DEBUG avatar_hash.stream_gravatar_hash stream_id value and type:", stream_id, type(stream_id), '; realm_id and type', realm_id, type(realm_id))
+    temp = stream_id + ":" + realm_id
+    return hashlib.md5(temp.encode()).hexdigest()
+
+
+def stream_avatar_hash(stream_id : str, version : str) -> str:
+    
+    stream_key = stream_id + ":" + version
+    return hashlib.sha256(stream_key.encode()).hexdigest()[:40]
+
+
+def stream_avatar_path(stream : Stream, future: bool = False) -> str:
+    return stream_avatar_base_path_from_ids(
+        stream.id, stream.avatar_version + (1 if future else 0), stream.realm_id
+    )
+
+
+def stream_avatar_base_path_from_ids(stream_id : int, version : int, realm_id : int) -> str:
+    stream_id_hash = stream_avatar_hash(str(stream_id), str(version))
+    return f"{realm_id}/{stream_id_hash}"

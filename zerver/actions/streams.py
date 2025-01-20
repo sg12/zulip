@@ -1639,3 +1639,46 @@ def do_change_stream_group_based_setting(
         name=stream.name,
     )
     send_event_on_commit(stream.realm, event, can_access_stream_user_ids(stream))
+
+@transaction.atomic(savepoint=False)
+def do_change_stream_avatar_fields(
+    stream: Stream,
+    avatar_source: str,
+    *,
+    acting_user: UserProfile | None,
+) -> None:
+    stream.avatar_source = avatar_source
+    stream.avatar_version += 1
+    stream.save(update_fields=["avatar_source", "avatar_version"])
+    event_time = timezone_now()
+    RealmAuditLog.objects.create(
+        realm=stream.realm,
+        acting_user=acting_user,
+        modified_stream=stream,
+        event_type=AuditLogEventType.CHANNEL_AVATAR_CHANGED,
+        extra_data={"avatar_source": avatar_source},
+        event_time=event_time,
+    )
+
+#     if not skip_notify:
+#         notify_stream_avatar_url_change(stream)
+
+# from zerver.lib.avatar import stream_avatar_url
+
+# def notify_stream_avatar_url_change(stream : Stream) -> None:
+#     payload = dict(
+#         avatar_source=stream.avatar_source,
+#         avatar_url=stream_avatar_url(stream),
+#         avatar_url_medium=stream_avatar_url(stream, medium=True),
+#         avatar_version=stream.avatar_version,
+#         # Even clients using client_gravatar don't need the email,
+#         # since we're sending the URL anyway.
+#         stream_id = stream.id
+#     )
+
+#     event = dict(type="realm_user", op="update", person=payload)
+#     send_event_on_commit(
+#         stream.realm,
+#         event,
+#         get_user_ids_who_can_access_user(user_profile),
+#     )

@@ -167,6 +167,7 @@ S3_UPLOADS_STORAGE_CLASS: Literal[
 S3_AVATAR_PUBLIC_URL_PREFIX: str | None = None
 LOCAL_UPLOADS_DIR: str | None = None
 LOCAL_AVATARS_DIR: str | None = None
+LOCAL_STREAM_AVATARS_DIR: str | None = None
 LOCAL_FILES_DIR: str | None = None
 MAX_FILE_UPLOAD_SIZE = 100
 # How many GB an organization on a paid plan can upload per user,

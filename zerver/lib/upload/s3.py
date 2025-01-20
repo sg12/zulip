@@ -17,7 +17,7 @@ from typing_extensions import override
 from zerver.lib.partial import partial
 from zerver.lib.thumbnail import resize_logo, resize_realm_icon
 from zerver.lib.upload.base import INLINE_MIME_TYPES, StreamingSourceWithSize, ZulipUploadBackend
-from zerver.models import Realm, RealmEmoji, UserProfile
+from zerver.models import Realm, RealmEmoji, UserProfile, Stream
 
 if TYPE_CHECKING:
     from mypy_boto3_s3.client import S3Client
@@ -54,7 +54,7 @@ if settings.S3_SKIP_PROXY is True:  # nocoverage
 
 def get_bucket(bucket_name: str, authed: bool = True) -> "Bucket":
     import boto3
-
+    print("DEBUG s3.get_bucket bucket_name:", bucket_name)
     return boto3.resource(
         "s3",
         aws_access_key_id=settings.S3_KEY if authed else None,
@@ -73,6 +73,7 @@ def upload_content_to_s3(
     path: str,
     content_type: str | None,
     user_profile: UserProfile | None,
+    # stream : Stream | None,
     contents: bytes,
     *,
     storage_class: Literal[
@@ -96,6 +97,10 @@ def upload_content_to_s3(
     if user_profile:
         metadata["user_profile_id"] = str(user_profile.id)
         metadata["realm_id"] = str(user_profile.realm_id)
+    # if stream:
+    #     raise ZeroDivisionError
+    #     metadata["stream_id"] = str(stream.id)
+    #     metadata["realm_id"] = str(stream.realm.id)
     if extra_metadata is not None:
         metadata.update(extra_metadata)
 
@@ -310,7 +315,11 @@ class S3UploadBackend(ZulipUploadBackend):
 
     @override
     def get_avatar_url(self, hash_key: str, medium: bool = False) -> str:
+        print('DEBUG s3 S3UploadBackend.get_avatar_url', self.get_public_upload_url(self.get_avatar_path(hash_key, medium)))
         return self.get_public_upload_url(self.get_avatar_path(hash_key, medium))
+
+    def get_stream_avatar_url(self, hash_key : str, medium : bool = False) -> str:
+        return self.get_public_upload_url(self.get_stream_avatar_path(hash_key, medium))
 
     @override
     def get_avatar_contents(self, file_path: str) -> tuple[bytes, str]:
@@ -331,14 +340,37 @@ class S3UploadBackend(ZulipUploadBackend):
     ) -> None:
         extra_metadata = {"avatar_version": str(user_profile.avatar_version + (1 if future else 0))}
         upload_content_to_s3(
-            self.avatar_bucket,
-            file_path,
-            content_type,
-            user_profile,
-            image_data,
+            bucket=self.avatar_bucket,
+            path=file_path,
+            content_type=content_type,
+            user_profile=user_profile,
+            contents=image_data,
             extra_metadata=extra_metadata,
             cache_control="public, max-age=31536000, immutable",
         )
+
+
+    # @override
+    # def upload_single_stream_avatar_image(
+    #     self,
+    #     file_path: str,
+    #     *,
+    #     stream: Stream,
+    #     image_data: bytes,
+    #     content_type: str | None,
+    #     future: bool = True,
+    # ) -> None:
+    #     extra_metadata = {"avatar_version": str(stream.avatar_version + (1 if future else 0))}
+    #     upload_content_to_s3(
+    #         bucket=self.avatar_bucket,
+    #         path=file_path,
+    #         content_type=content_type,
+    #         stream=stream,
+    #         contents=image_data,
+    #         extra_metadata=extra_metadata,
+    #         cache_control="public, max-age=31536000, immutable",
+    #     )
+
 
     @override
     def delete_avatar_image(self, path_id: str) -> None:
