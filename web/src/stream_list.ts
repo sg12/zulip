@@ -39,6 +39,11 @@ import * as unread from "./unread.ts";
 import type {FullUnreadCountsData, StreamCountInfo} from "./unread.ts";
 import {user_settings} from "./user_settings.ts";
 
+///------------
+import * as compose_call_ui from "./compose_call_ui.ts";
+import * as user_topics from "./user_topics.ts";
+///-------------
+
 let pending_stream_list_rerender = false;
 let zoomed_in = false;
 
@@ -912,16 +917,35 @@ export function set_event_handlers({
         const navigate_to_stream = (): void => {
             const topic_list_info = topic_list_data.get_list_info(stream_id, false, "");
             const topic_item = topic_list_info.items[0];
-            if (topic_item !== undefined) {
-                const destination_url = hash_util.by_stream_topic_url(
-                    stream_id,
-                    topic_item.topic_name,
-                );
-                browser_history.go_to_location(destination_url);
-            } else {
+            console.log("------1 ");
+            // if (topic_item !== undefined) {
+            //     const destination_url = hash_util.by_stream_topic_url(
+            //         stream_id,
+            //         topic_item.topic_name,
+            //     );
+            //     //------------------
+            //     console.log("------2 : " + destination_url);
+            //     const topic_id = user_topics.get_topic_id(stream_id, topic_item.topic_name);
+            //     if(!topic_item.is_muted){
+            //         if(topic_id != false){
+            //             const bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url + "-" + user_topics.get_topic_id(stream_id, topic_item.topic_name);
+            //             compose_call_ui.generate_and_insert_audio_or_video_call_link($(e.target), true, bbb_url);
+            //         }else{
+            //             const bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
+            //             compose_call_ui.generate_and_insert_audio_or_video_call_link($(e.target), true, bbb_url);
+            //         }
+            //         browser_history.go_to_location(destination_url);
+            //         console.log("------3 : ");
+            //     }else{
+            //         console.log("------4 : ");
+            //     //--------------------
+            //         browser_history.go_to_location(destination_url);
+            //     }
+            // } else {
+            //     console.log("------5 ");
                 on_stream_click(stream_id, "sidebar");
                 return;
-            }
+            // }
         };
 
         if (topics.length === 0) {

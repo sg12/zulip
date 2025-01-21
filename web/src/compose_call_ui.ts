@@ -144,11 +144,12 @@ export function generate_and_insert_audio_or_video_call_link(
 
         // const video_call_id = util.random_int(100000000000000, 999999999999999);
         // const token = generate_jitsi_jwt(current_user.email, current_user.full_name);
-        console.log("------token bbb_url", bbb_url);
+        console.log("------token bbb_url: ", bbb_url);
         let video_call_id = bbb_url;
         if(bbb_url.length < 3) {
             video_call_id = util.random_int(100000000000000, 999999999999999).toString();
         }
+        console.log("------token bbb_url 2: ", video_call_id);
         generateToken()
         .then((token) => generate_call_link(video_call_id,$target_textarea,token))
         .catch(() => generate_call_link(video_call_id,$target_textarea,""));
@@ -183,7 +184,7 @@ export function generate_and_insert_audio_or_video_call_link(
 
 function generate_call_link(video_call_id: string, $target_textarea: JQuery<HTMLTextAreaElement>, token: String){
     const video_call_link = compose_call.get_jitsi_server_url() + "/" + video_call_id;
-    console.log('Generated JWT:', token)
+    // console.log('Generated JWT:', token)
     if (token.length>0) {
         insert_audio_call_url(
             // video_call_link + "?jwt=" + token + "#config.startWithVideoMuted=true",
