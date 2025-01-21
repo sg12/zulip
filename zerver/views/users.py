@@ -889,7 +889,8 @@ def get_user_favorites(
     user_profile: UserProfile,
 ) -> HttpResponse:
     user_favorites = user_profile.favorites
-    return json_success(request, {'uids' : user_profile.favorites.split(';') if user_favorites != '' else []})
+    print('DEBUG views.users.get_user_favorites :', user_favorites)
+    return json_success(request, {'uids' : user_profile.favorites.split(';')[1:] if user_favorites != '' else []})
 
 def add_user_favorite(
     request: HttpRequest,
@@ -897,6 +898,8 @@ def add_user_favorite(
     favorite_id: str,
 ) -> HttpResponse:
     user_favorites = user_profile.favorites.split(';')
+    if favorite_id in user_favorites:
+        raise JsonableError(_("Favorite already added."))
     if len(user_favorites) >= 200:
         raise JsonableError(_("Limit for adding favorites."))
     user_favorites.append(favorite_id)
