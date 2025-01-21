@@ -1,7 +1,7 @@
 <div class="popover-menu" id="message-actions-menu-dropdown" data-simplebar data-simplebar-tab-index="-1">
     <ul role="menu" class="popover-menu-list">
         {{!-- Group 1 --}}
-        {{#if should_display_quote_message}}
+<!--         {{#if should_display_quote_message}}
         <li role="none" class="link-item popover-menu-list-item">
             <a role="menuitem" data-message-id="{{message_id}}" class="respond_button popover-menu-link" tabindex="0">
                 <i class="popover-menu-icon zulip-icon zulip-icon-quote-message" aria-hidden="true"></i>
@@ -16,9 +16,9 @@
                 {{popover_hotkey_hints "<"}}
             </a>
         </li>
-        {{/if}}
+        {{/if}} -->
         {{!-- Group 2 --}}
-        {{#if (or editability_menu_item move_message_menu_item should_display_delete_option)}}
+<!--         {{#if (or editability_menu_item move_message_menu_item should_display_delete_option)}}
         <li role="separator" class="popover-menu-separator"></li>
         {{/if}}
         {{#if editability_menu_item}}
@@ -46,9 +46,9 @@
                 <span class="popover-menu-label">{{t "Delete message" }}</span>
             </a>
         </li>
-        {{/if}}
+        {{/if}} -->
         {{!-- Group 3 --}}
-        {{#if should_display_add_reaction_option}}
+<!--         {{#if should_display_add_reaction_option}}
         <li role="separator" class="popover-menu-separator"></li>
         <li role="none" class="link-item popover-menu-list-item">
             <a role="menuitem" data-message-id="{{message_id}}" class="reaction_button popover-menu-link" tabindex="0">
@@ -57,9 +57,9 @@
                 {{popover_hotkey_hints ":"}}
             </a>
         </li>
-        {{/if}}
+        {{/if}} -->
         {{!-- Group 4 --}}
-        {{#if (or should_display_mark_as_unread should_display_hide_option should_display_collapse should_display_uncollapse)}}
+<!--         {{#if (or should_display_mark_as_unread should_display_hide_option should_display_collapse should_display_uncollapse)}}
         <li role="separator" class="popover-menu-separator"></li>
         {{/if}}
         {{#if should_display_mark_as_unread}}
@@ -96,9 +96,9 @@
                 {{popover_hotkey_hints "-"}}
             </a>
         </li>
-        {{/if}}
+        {{/if}} -->
         {{!-- Group 5 --}}
-        <li role="separator" class="popover-menu-separator hidden-for-spectators"></li>
+<!--         <li role="separator" class="popover-menu-separator hidden-for-spectators"></li>
         {{#if view_source_menu_item}}
         <li role="none" class="link-item popover-menu-list-item">
             <a role="menuitem" data-message-id="{{message_id}}" class="popover_view_source popover-menu-link" tabindex="0">
@@ -107,7 +107,7 @@
                 {{popover_hotkey_hints "E"}}
             </a>
         </li>
-        {{/if}}
+        {{/if}} -->
         {{#if should_display_read_receipts_option}}
         <li role="none" class="link-item popover-menu-list-item">
             <a role="menuitem" data-message-id="{{message_id}}" class="view_read_receipts popover-menu-link" tabindex="0">
