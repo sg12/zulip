@@ -31,17 +31,3 @@ export function compute_show_video_chat_button(): boolean {
 
     return true;
 }
-
-export function compute_show_audio_chat_button(): boolean {
-    const available_providers = realm.realm_available_video_chat_providers;
-    if (
-        (available_providers.jitsi_meet &&
-            get_jitsi_server_url() !== null &&
-            realm.realm_video_chat_provider === available_providers.jitsi_meet.id) ||
-        (available_providers.zoom &&
-            realm.realm_video_chat_provider === available_providers.zoom.id)
-    ) {
-        return true;
-    }
-    return false;
-}

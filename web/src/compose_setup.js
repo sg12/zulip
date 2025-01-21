@@ -57,9 +57,6 @@ export function initialize() {
     $(".compose-control-buttons-container .video_link").toggle(
         compose_call.compute_show_video_chat_button(),
     );
-    $(".compose-control-buttons-container .audio_link").toggle(
-        compose_call.compute_show_audio_chat_button(),
-    );
 
     $("textarea#compose-textarea").on("keydown", (event) => {
         compose_ui.handle_keydown(event, $("textarea#compose-textarea").expectOne());
@@ -393,6 +390,7 @@ export function initialize() {
         compose_call_ui.generate_and_insert_audio_or_video_call_link($(e.target), false, bbb_url);
     });
 
+<<<<<<< HEAD
     $("body").on("click", ".audio_link", (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -416,6 +414,8 @@ export function initialize() {
         compose_call_ui.generate_and_insert_audio_or_video_call_link($(e.target), true, bbb_url);
     });
 
+=======
+>>>>>>> ourdev/frontend
     $("body").on("click", ".time_pick", function (e) {
         e.preventDefault();
         e.stopPropagation();

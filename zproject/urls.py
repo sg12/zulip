@@ -239,6 +239,9 @@ from zerver.views.users import (
     regenerate_bot_api_key,
     update_user_by_email_api,
     update_user_by_id_api,
+    get_user_favorites,
+    add_user_favorite,
+    delete_user_favorite,
 )
 from zerver.views.video_calls import (
     complete_zoom_user,
@@ -318,6 +321,8 @@ v1_api_and_json_patterns = [
     # users -> zerver.views.users
     rest_path("users", GET=get_members_backend, POST=create_user_backend),
     rest_path("users/me", GET=get_profile_backend, DELETE=deactivate_user_own_backend),
+    rest_path("users/me/favorites", GET=get_user_favorites),
+    rest_path("users/me/favorites/<str:favorite_id>", POST=add_user_favorite, DELETE=delete_user_favorite),
     rest_path("users/<int:user_id>/reactivate", POST=reactivate_user_backend),
     rest_path(
         "users/<int:user_id>",

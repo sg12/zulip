@@ -881,3 +881,39 @@ def get_user_by_email(
 
     data = get_user_data(user_profile, include_custom_profile_fields, client_gravatar, target_user)
     return json_success(request, data)
+
+
+
+def get_user_favorites(
+    request: HttpRequest,
+    user_profile: UserProfile,
+) -> HttpResponse:
+    user_favorites = user_profile.favorites
+    return json_success(request, {'uids' : user_profile.favorites.split(';') if user_favorites != '' else []})
+
+def add_user_favorite(
+    request: HttpRequest,
+    user_profile: UserProfile,
+    favorite_id: str,
+) -> HttpResponse:
+    user_favorites = user_profile.favorites.split(';')
+    if len(user_favorites) >= 200:
+        raise JsonableError(_("Limit for adding favorites."))
+    user_favorites.append(favorite_id)
+    user_favorites.sort()
+    user_profile.favorites = ';'.join(user_favorites)
+    user_profile.save()
+    return json_success(request)
+
+def delete_user_favorite(
+    request: HttpRequest,
+    user_profile: UserProfile,
+    favorite_id: str,
+) -> HttpResponse:
+    user_favorites = user_profile.favorites.split(';')
+    if favorite_id not in user_favorites:
+        raise JsonableError(_("User don't has favorite with this uid."))
+    user_favorites.remove(favorite_id)
+    user_profile.favorites = ';'.join(user_favorites)
+    user_profile.save()
+    return json_success(request)
