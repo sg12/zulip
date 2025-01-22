@@ -505,6 +505,9 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, UserBaseSettings):
     bot_type = models.PositiveSmallIntegerField(null=True, db_index=True)
     bot_owner = models.ForeignKey("self", null=True, on_delete=models.SET_NULL)
 
+    # Избранные юзеры для пользователя, 'uid;uid;...'
+    favorites = models.CharField(blank=True, default='')
+
     # Each role has a superset of the permissions of the next higher
     # numbered role.  When adding new roles, leave enough space for
     # future roles to be inserted between currently adjacent
