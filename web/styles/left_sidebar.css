@@ -542,7 +542,7 @@ ul.filters {
         opacity: var(--opacity-left-sidebar-muted);
     }
 
-    .zulip-icon-follow {
+    .zulip-icon-follow, .zulip-icon-camera-on, .zulip-icon-mic-on, .zulip-icon-mic-off, .zulip-icon-camera-off, .zulip-icon-screen-share {
         opacity: 0.5;
 
         &:hover {
