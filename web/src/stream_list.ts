@@ -12,17 +12,17 @@ import render_subscribe_to_more_streams from "../templates/subscribe_to_more_str
 
 import * as blueslip from "./blueslip.ts";
 import * as browser_history from "./browser_history.ts";
-import type {Filter} from "./filter.ts";
+import type { Filter } from "./filter.ts";
 import * as hash_util from "./hash_util.ts";
-import {$t} from "./i18n.ts";
+import { $t } from "./i18n.ts";
 import * as keydown_util from "./keydown_util.ts";
-import {ListCursor} from "./list_cursor.ts";
+import { ListCursor } from "./list_cursor.ts";
 import * as narrow_state from "./narrow_state.ts";
 import * as pm_list from "./pm_list.ts";
 import * as popovers from "./popovers.ts";
 import * as resize from "./resize.ts";
 import * as scroll_util from "./scroll_util.ts";
-import {web_channel_default_view_values} from "./settings_config.ts";
+import { web_channel_default_view_values } from "./settings_config.ts";
 import * as settings_data from "./settings_data.ts";
 import * as sidebar_ui from "./sidebar_ui.ts";
 import * as stream_data from "./stream_data.ts";
@@ -30,14 +30,14 @@ import * as stream_list_sort from "./stream_list_sort.ts";
 import * as stream_topic_history from "./stream_topic_history.ts";
 import * as stream_topic_history_util from "./stream_topic_history_util.ts";
 import * as sub_store from "./sub_store.ts";
-import type {StreamSubscription} from "./sub_store.ts";
-import {LONG_HOVER_DELAY} from "./tippyjs.ts";
+import type { StreamSubscription } from "./sub_store.ts";
+import { LONG_HOVER_DELAY } from "./tippyjs.ts";
 import * as topic_list from "./topic_list.ts";
 import * as topic_list_data from "./topic_list_data.ts";
 import * as ui_util from "./ui_util.ts";
 import * as unread from "./unread.ts";
-import type {FullUnreadCountsData, StreamCountInfo} from "./unread.ts";
-import {user_settings} from "./user_settings.ts";
+import type { FullUnreadCountsData, StreamCountInfo } from "./unread.ts";
+import { user_settings } from "./user_settings.ts";
 
 ///------------
 import * as compose_call_ui from "./compose_call_ui.ts";
@@ -296,8 +296,8 @@ export function build_stream_list(force_rerender: boolean): void {
 
     const need_section_subheaders =
         (any_pinned_streams ? 1 : 0) +
-            (any_normal_streams ? 1 : 0) +
-            (any_dormant_streams ? 1 : 0) >=
+        (any_normal_streams ? 1 : 0) +
+        (any_dormant_streams ? 1 : 0) >=
         2;
 
     if (any_pinned_streams && need_section_subheaders) {
@@ -370,12 +370,12 @@ export function get_stream_li(stream_id: number): JQuery | undefined {
 
     const $li = row.get_li();
     if (!$li) {
-        blueslip.error("Cannot find li", {stream_id});
+        blueslip.error("Cannot find li", { stream_id });
         return undefined;
     }
 
     if ($li.length > 1) {
-        blueslip.error("stream_li has too many elements", {stream_id});
+        blueslip.error("stream_li has too many elements", { stream_id });
         return undefined;
     }
 
@@ -407,7 +407,7 @@ function stream_id_for_elt($elt: JQuery): number {
     return Number.parseInt(stream_id_string, 10);
 }
 
-export function zoom_in_topics(options: {stream_id: number | undefined}): void {
+export function zoom_in_topics(options: { stream_id: number | undefined }): void {
     // This only does stream-related tasks related to zooming
     // in to more topics, which is basically hiding all the
     // other streams.
@@ -455,7 +455,7 @@ export function zoom_out_topics(): void {
 export function set_in_home_view(stream_id: number, in_home: boolean): void {
     const $li = get_stream_li(stream_id);
     if (!$li) {
-        blueslip.error("passed in bad stream id", {stream_id});
+        blueslip.error("passed in bad stream id", { stream_id });
         return;
     }
 
@@ -541,7 +541,7 @@ function build_stream_sidebar_row(sub: StreamSubscription): void {
 export function create_sidebar_row(sub: StreamSubscription): void {
     if (stream_sidebar.has_row_for(sub.stream_id)) {
         // already exists
-        blueslip.warn("Dup try to build sidebar row for stream", {stream_id: sub.stream_id});
+        blueslip.warn("Dup try to build sidebar row for stream", { stream_id: sub.stream_id });
         return;
     }
     build_stream_sidebar_row(sub);
@@ -682,7 +682,7 @@ export function refresh_pinned_or_unpinned_stream(sub: StreamSubscription): void
     if (sub.pin_to_top) {
         const $stream_li = get_stream_li(sub.stream_id);
         if (!$stream_li) {
-            blueslip.error("passed in bad stream id", {stream_id: sub.stream_id});
+            blueslip.error("passed in bad stream id", { stream_id: sub.stream_id });
             return;
         }
         scroll_stream_into_view($stream_li);
@@ -753,7 +753,7 @@ export function update_stream_sidebar_for_narrow(filter: Filter): JQuery | undef
         // corresponding to that stream in our sidebar.  This error
         // stopped appearing from March 2018 until at least
         // April 2020, so if it appears again, something regressed.
-        blueslip.error("No stream_li for subscribed stream", {stream_id});
+        blueslip.error("No stream_li for subscribed stream", { stream_id });
         clear_topics();
         return undefined;
     }
@@ -843,11 +843,11 @@ export function initialize({
     update_subscribe_to_more_streams_link();
     initialize_stream_cursor();
     initialize_tippy_tooltips();
-    set_event_handlers({on_stream_click});
+    set_event_handlers({ on_stream_click });
 
     $("#stream_filters").on("click", ".show-more-topics", (e) => {
         zoom_in();
-        browser_history.update_current_history_state_data({show_more_topics: true});
+        browser_history.update_current_history_state_data({ show_more_topics: true });
 
         e.preventDefault();
         e.stopPropagation();
@@ -855,7 +855,7 @@ export function initialize({
 
     $(".show-all-streams").on("click", (e) => {
         zoom_out();
-        browser_history.update_current_history_state_data({show_more_topics: false});
+        browser_history.update_current_history_state_data({ show_more_topics: false });
 
         e.preventDefault();
         e.stopPropagation();
@@ -889,7 +889,6 @@ export function set_event_handlers({
         if (e.metaKey || e.ctrlKey || e.shiftKey) {
             return;
         }
-
         clear_and_hide_search();
         e.preventDefault();
         e.stopPropagation();
@@ -897,13 +896,13 @@ export function set_event_handlers({
         const stream_id = stream_id_for_elt($(e.target).parents("li.narrow-filter"));
         const current_narrow_stream_id = narrow_state.stream_id();
         const current_topic = narrow_state.topic();
-
+        console.log("--------0");
         if (current_narrow_stream_id === stream_id && current_topic) {
             const channel_feed_url = hash_util.by_stream_url(stream_id);
             browser_history.go_to_location(channel_feed_url);
             return;
         }
-
+        console.log("--------1");
         if (
             user_settings.web_channel_default_view ===
             web_channel_default_view_values.channel_feed.code
@@ -911,41 +910,42 @@ export function set_event_handlers({
             on_stream_click(stream_id, "sidebar");
             return;
         }
-
         let topics = stream_topic_history.get_recent_topic_names(stream_id);
-
+        console.log("--------2");
         const navigate_to_stream = (): void => {
+            console.log("--------3");
             const topic_list_info = topic_list_data.get_list_info(stream_id, false, "");
             const topic_item = topic_list_info.items[0];
-            console.log("------1 ");
-            // if (topic_item !== undefined) {
-            //     const destination_url = hash_util.by_stream_topic_url(
-            //         stream_id,
-            //         topic_item.topic_name,
-            //     );
-            //     //------------------
-            //     console.log("------2 : " + destination_url);
-            //     const topic_id = user_topics.get_topic_id(stream_id, topic_item.topic_name);
-            //     if(!topic_item.is_muted){
-            //         if(topic_id != false){
-            //             const bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url + "-" + user_topics.get_topic_id(stream_id, topic_item.topic_name);
-            //             compose_call_ui.generate_and_insert_audio_or_video_call_link($(e.target), true, bbb_url);
-            //         }else{
-            //             const bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
-            //             compose_call_ui.generate_and_insert_audio_or_video_call_link($(e.target), true, bbb_url);
-            //         }
-            //         browser_history.go_to_location(destination_url);
-            //         console.log("------3 : ");
-            //     }else{
-            //         console.log("------4 : ");
-            //     //--------------------
-            //         browser_history.go_to_location(destination_url);
-            //     }
-            // } else {
-            //     console.log("------5 ");
+            const videoContainer = document.getElementById("video-container"); // очистка предыдущего видеоконтейнера, если он активен
+            if (videoContainer) {
+                videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
+                videoContainer.innerHTML = ""; //очитска вего (она работает)
+
+            }
+            let isReadyShowVideo = false;
+            if (topic_item !== undefined) {
+                const destination_url = hash_util.by_stream_topic_url(
+                    stream_id,
+                    topic_item.topic_name,
+                );
+                browser_history.go_to_location(destination_url); // Обновляем основной чат диалога (от прежнего орригинального кода)
+                const topic_id = user_topics.get_topic_id(stream_id, topic_item.topic_name);
+                if (!topic_item.is_muted) {
+                    let bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
+                    if (bbb_url.length > 0) {
+                        if (topic_id != false) {
+                            bbb_url = bbb_url + "-" + user_topics.get_topic_id(stream_id, topic_item.topic_name);
+                        }
+                        isReadyShowVideo = true;
+                        console.log("--------4: " + bbb_url);
+                        compose_call_ui.generate_and_insert_audio_or_video_call_link(bbb_url);
+                    }
+                }
+            }
+            if (!isReadyShowVideo) {
                 on_stream_click(stream_id, "sidebar");
                 return;
-            // }
+            }
         };
 
         if (topics.length === 0) {
@@ -1166,3 +1166,5 @@ export function get_current_stream_li(): JQuery | undefined {
 
     return $stream_li;
 }
+
+

@@ -13,8 +13,11 @@ import * as stream_data from './stream_data.ts'
 import * as stream_topic_history from "./stream_topic_history.ts";
 import * as stream_topic_history_util from "./stream_topic_history_util.ts";
 import * as topic_list_data from "./topic_list_data.ts";
-import type {TopicInfo} from "./topic_list_data.ts";
+import type { TopicInfo } from "./topic_list_data.ts";
 import * as vdom from "./vdom.ts";
+
+import * as compose_call_ui from "./compose_call_ui.ts";
+import * as user_topics from "./user_topics.ts";
 
 /*
     Track all active widgets with a Map by stream_id.
@@ -70,16 +73,16 @@ export function zoom_out(): void {
 
 type ListInfoNodeOptions =
     | {
-          type: "topic";
-          conversation: TopicInfo;
-      }
+        type: "topic";
+        conversation: TopicInfo;
+    }
     | {
-          type: "more_items";
-          more_topics_unreads: number;
-      }
+        type: "more_items";
+        more_topics_unreads: number;
+    }
     | {
-          type: "spinner";
-      };
+        type: "spinner";
+    };
 
 type ListInfoNode = vdom.Node<ListInfoNodeOptions>;
 type ExtendedTopicInfo = TopicInfo & {
@@ -88,7 +91,7 @@ type ExtendedTopicInfo = TopicInfo & {
 
 export function keyed_topic_li(conversation: ExtendedTopicInfo): ListInfoNode {
     const stream = stream_data.get_sub_by_id(conversation.stream_id);
-    conversation = {...conversation, stream_name: stream.name};
+    conversation = { ...conversation, stream_name: stream.name };
     const render = (): string => render_topic_list_item(conversation);
 
     const eq = (other: ListInfoNode): boolean =>
@@ -372,7 +375,7 @@ export function initialize({
             if ($(e.target).hasClass("visibility-policy-icon")) {
                 return;
             }
-
+            console.log("--------00");
             const $stream_row = $(e.target).parents(".narrow-filter");
             const stream_id_string = $stream_row.attr("data-stream-id");
             assert(stream_id_string !== undefined);
@@ -380,7 +383,21 @@ export function initialize({
             const topic = $(e.target).parents("li").attr("data-topic-name");
             const is_audio_topic = topic.startsWith("🔊");
             on_topic_click(stream_id, topic, is_audio_topic);
+            const videoContainer = document.getElementById("video-container"); // очистка предыдущего видеоконтейнера, если он активен
+            if (videoContainer) {
+                videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
+                videoContainer.innerHTML = ""; //очитска вего (она работает)
 
+            }
+            if (is_audio_topic) {
+                const topic_id = user_topics.get_topic_id(stream_id, topic);
+                let bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
+                if (bbb_url.length > 0) {
+                    bbb_url = bbb_url + "-" + user_topics.get_topic_id(stream_id, topic);
+                    console.log("--------4: " + bbb_url);
+                    compose_call_ui.generate_and_insert_audio_or_video_call_link(bbb_url);
+                }
+            }
             e.preventDefault();
             e.stopPropagation();
         },
