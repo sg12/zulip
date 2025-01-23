@@ -782,12 +782,12 @@ export let show = (raw_terms: NarrowTerm[], show_opts: ShowMessageViewOpts): voi
         });
     });
 
-    if (show_opts.is_audio) {
-        const topic = raw_terms.find(term => term.operator === "topic")?.operand;
-        const iframe_html = render_audio_iframe({ topic });
-        $(".message-list").append(iframe_html);
-        audio_call.enterAudioChannel();
-    }
+    // if (show_opts.is_audio) {
+    //     const topic = raw_terms.find(term => term.operator === "topic")?.operand;
+    //     const iframe_html = render_audio_iframe({ topic });
+    //     $(".message-list").append(iframe_html);
+    //     audio_call.enterAudioChannel();
+    // }
 };
 
 export function rewire_show(value: typeof show): void {
@@ -1133,10 +1133,10 @@ export function render_message_list_with_selected_message(opts: {
     // TODO: Probably this should accept the offset parameter rather
     // than calling `set_message_offset` just after.
     message_lists.current.select_id(msg_id, {
-        then_scroll,
-        use_closest: true,
-        ...opts.select_opts,
-    });
+            then_scroll,
+            use_closest: true,
+            ...opts.select_opts,
+        });
 
     if (preserve_pre_narrowing_screen_position) {
         // Scroll so that the selected message is in the same

@@ -411,10 +411,8 @@ export class MessageList {
             this.view.maybe_rerender();
             this.should_trigger_message_selected_event = true;
         }
-
-        if (this.should_trigger_message_selected_event) {
-            $(document).trigger(new $.Event("message_selected.zulip", opts));
-        }
+           
+        $(document).trigger(new $.Event("message_selected.zulip", opts));
     }
 
     selected_message(): Message | undefined {
