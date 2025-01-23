@@ -85,7 +85,16 @@ export async function enterAudioChannel() {
             parentNode: container,
             jwt: callUrl.split('jwt=')[1], // Извлекаем JWT из URL
             configOverwrite: { startWithAudioMuted: true, startWithVideoMuted: true, prejoinConfig: { enabled: false } },
-            interfaceConfigOverwrite: { TOOLBAR_BUTTONS: [] }, // Убираем все кнопки
+            interfaceConfigOverwrite: {
+                TOOLBAR_BUTTONS: [
+                    'camera',
+                    'desktop',
+                    'microphone',
+                    'chat',
+                    'settings',
+                    'fullscreen'
+                ]
+            }
         };
         api = new JitsiMeetExternalAPI(domain, options);
 
@@ -100,34 +109,32 @@ export async function enterAudioChannel() {
 
             // Обработчики событий для кнопок
             document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-mic`)?.addEventListener("click", () => {
-                api.isAudioAvailable().then((available: any) => {
-                    if (available) {
-                        api.executeCommand('toggleAudio');
-                        isMicMuted = !isMicMuted;
-                        updateMicIcon();
-                    } else {
-                        console.error("Audio is not available.");
-                    }
-                });
+                api.executeCommand('toggleAudio');
             });
 
             document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-camera`)?.addEventListener("click", () => {
-                api.isVideoAvailable().then((available: any) => {
-                    if (available) {
-                        api.executeCommand('toggleVideo');
-                        isCameraMuted = !isCameraMuted;
-                        updateCameraIcon();
-                    } else {
-                        console.error("Video is not available.");
-                    }
-                });
+                api.executeCommand('toggleVideo');
             });
 
             document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-screen`)?.addEventListener("click", () => {
                 api.executeCommand('toggleShareScreen');
-                isScreenSharing = !isScreenSharing;
-                updateScreenIcon();
             });
+        });
+
+        // Подписываемся на события изменения статуса микрофона, камеры и шаринга экрана
+        api.addListener('audioMuteStatusChanged', (event: { muted: boolean }) => {
+            isMicMuted = event.muted;
+            updateMicIcon();
+        });
+
+        api.addListener('videoMuteStatusChanged', (event: { muted: boolean }) => {
+            isCameraMuted = event.muted;
+            updateCameraIcon();
+        });
+
+        api.addListener('screenSharingStatusChanged', (event: { on: boolean }) => {
+            isScreenSharing = event.on;
+            updateScreenIcon();
         });
 
         // Скрываем лишние элементы
