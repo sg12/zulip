@@ -1,9 +1,9 @@
-import ClipboardJS from "clipboard";
 import $ from "jquery";
 import assert from "minimalistic-assert";
 import type * as tippy from "tippy.js";
 import {z} from "zod";
 
+import render_change_avatar_stream_modal from "../templates/change_avatar_stream_modal.hbs";
 import render_inline_decorated_stream_name from "../templates/inline_decorated_stream_name.hbs";
 import render_inline_stream_or_topic_reference from "../templates/inline_stream_or_topic_reference.hbs";
 import render_move_topic_to_stream from "../templates/move_topic_to_stream.hbs";
@@ -15,6 +15,7 @@ import * as browser_history from "./browser_history.ts";
 import * as composebox_typeahead from "./composebox_typeahead.ts";
 import * as dialog_widget from "./dialog_widget.ts";
 import * as dropdown_widget from "./dropdown_widget.ts";
+import {get_channel_avatar} from "./stream_list.ts";
 import * as hash_util from "./hash_util.ts";
 import {$t, $t_html} from "./i18n.ts";
 import * as message_edit from "./message_edit.ts";
@@ -27,7 +28,7 @@ import * as popover_menus from "./popover_menus.ts";
 import {left_sidebar_tippy_options} from "./popover_menus.ts";
 import {web_channel_default_view_values} from "./settings_config.ts";
 import * as settings_data from "./settings_data.ts";
-import * as stream_color from "./stream_color.ts";
+import {current_user} from './state_data.ts'
 import * as stream_data from "./stream_data.ts";
 import * as stream_settings_api from "./stream_settings_api.ts";
 import * as stream_settings_components from "./stream_settings_components.ts";
@@ -112,12 +113,16 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
     const show_go_to_channel_feed =
         user_settings.web_channel_default_view !==
         web_channel_default_view_values.channel_feed.code;
+    const sub = sub_store.get(stream_id);
+    const canChangeAvatar = current_user.user_id === sub.creator_id
+
     const content = render_left_sidebar_stream_actions_popover({
         stream: {
-            ...sub_store.get(stream_id),
+            ...sub,
             url: browser_history.get_full_url(stream_hash),
         },
         show_go_to_channel_feed,
+        canChangeAvatar,
     });
 
     popover_menus.toggle_popover_menu(elt, {
@@ -205,26 +210,121 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
                 e.stopPropagation();
             });
 
-            // Choose a different color.
-            $popper.on("click", ".choose_stream_color", (e) => {
-                const $popover = $(instance.popper);
-                const $colorpicker = $popover.find(".colorpicker-container").find(".colorpicker");
-                $(".colorpicker-container").show();
-                $colorpicker.spectrum("destroy");
-                $colorpicker.spectrum(stream_color.sidebar_popover_colorpicker_options_full);
-                // In theory this should clean up the old color picker,
-                // but this seems a bit flaky -- the new colorpicker
-                // doesn't fire until you click a button, but the buttons
-                // have been hidden.  We work around this by just manually
-                // fixing it up here.
-                $colorpicker.parent().find(".sp-container").removeClass("sp-buttons-disabled");
-                $(e.currentTarget).hide();
+            // Choose a different avatar channel.
+            $popper.on("click", ".change_stream_avatar", (e) => {
+                build_change_avatar_stream(stream_id);
+
+                e.preventDefault();
                 e.stopPropagation();
             });
         },
         onHidden() {
             hide_stream_popover();
         },
+    });
+}
+
+export function change_channel_avatar(stream_id: number, image: File, on_success: (avatar_url: string) => void): void {
+    const url = `/json/streams/${stream_id}/avatar`;
+    const formData = new FormData();
+    formData.append("avatar", image);
+
+    void $.ajax({
+        url,
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success() {
+            const avatar_url = URL.createObjectURL(image);
+            on_success(avatar_url);
+        },
+        error() {
+            console.error("Error changing channel avatar");
+        },
+    });
+}
+
+export function delete_channel_avatar(stream_id: number, on_success: () => void): void {
+    const url = `/json/streams/${stream_id}/avatar`;
+
+    void $.ajax({
+        url,
+        type: "DELETE",
+        success() {
+            on_success();
+        },
+        error() {
+            console.error("Error deleting channel avatar");
+        },
+    });
+}
+
+export function build_change_avatar_stream(stream_id: number): void {
+    const stream = stream_data.get_sub_by_id(stream_id);
+    if (!stream) {
+        console.error("Stream not found");
+        return;
+    }
+
+    function on_submit(): void {
+        const fileInput = document.getElementById("upload-avatar") as HTMLInputElement;
+        if (fileInput.files && fileInput.files[0]) {
+            change_channel_avatar(stream_id, fileInput.files[0], (avatar_url) => {
+                const avatarPreview = document.getElementById("avatar-preview") as HTMLImageElement;
+                avatarPreview.src = avatar_url;
+                avatarPreview.style.display = "block";
+
+                // Обновляем аватар в боковой панели
+                $(`.stream-avatar[data-stream-id="${stream_id}"]`).attr('src', avatar_url);
+
+                dialog_widget.hide_dialog_spinner();
+                dialog_widget.close();
+            });
+        } else {
+            dialog_widget.hide_dialog_spinner();
+            dialog_widget.close();
+        }
+    }
+
+    function post_render(): void {
+        const fileInput = document.getElementById("upload-avatar") as HTMLInputElement;
+        const avatarPreview = document.getElementById("avatar-preview") as HTMLImageElement;
+
+        fileInput.addEventListener("change", () => {
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    avatarPreview.src = e.target?.result as string;
+                    avatarPreview.style.display = "block";
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                avatarPreview.style.display = "none";
+            }
+        });
+
+        document.getElementById("delete-avatar")?.addEventListener("click", () => {
+            delete_channel_avatar(stream_id, () => {
+                avatarPreview.style.display = "none";
+                get_channel_avatar(stream_id, stream.name, (data) => {
+                    $(`.stream-avatar[data-stream-id="${stream_id}"]`).attr('src', data);
+                })
+
+                dialog_widget.close();
+            });
+        });
+    }
+
+    dialog_widget.launch({
+        html_heading: "Смена фото канала",
+        html_body: render_change_avatar_stream_modal(),
+        html_submit_button: "Сохранить",
+        id: "change_avatar_stream_modal",
+        form_id: "change_avatar_stream_modal",
+        on_click: on_submit,
+        loading_spinner: true,
+        post_render: post_render,
     });
 }
 
