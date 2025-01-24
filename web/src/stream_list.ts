@@ -466,6 +466,24 @@ export function set_in_home_view(stream_id: number, in_home: boolean): void {
     }
 }
 
+function get_channel_avatar(stream_id: number, on_success: (blob: Blob) => void): void {
+    const url = `/json/streams/${stream_id}/avatar`;
+
+    void $.ajax({
+        url,
+        type: "GET",
+        xhrFields: {
+            responseType: "blob"
+        },
+        success(blob) {
+            on_success(blob);
+        },
+        error() {
+            console.error("Error fetching channel avatar");
+        },
+    });
+}
+
 function build_stream_sidebar_li(sub: StreamSubscription): JQuery {
     const name = sub.name;
     const is_muted = stream_data.is_muted(sub.stream_id);
@@ -481,8 +499,17 @@ function build_stream_sidebar_li(sub: StreamSubscription): JQuery {
         pin_to_top: sub.pin_to_top,
         hide_unread_count: settings_data.should_mask_unread_count(is_muted),
         can_post_messages,
+        avatar: null, // Изначально аватар отсутствует
     };
+
     const $list_item = $(render_stream_sidebar_row(args));
+
+    // Получаем аватар асинхронно и обновляем элемент списка
+    get_channel_avatar(sub.stream_id, (blob) => {
+        const avatar_url = URL.createObjectURL(blob);
+        $list_item.find(`.stream-avatar[data-stream-id="${sub.stream_id}"]`).attr('src', avatar_url); // Обновляем URL аватара в элементе списка
+    });
+
     return $list_item;
 }
 
