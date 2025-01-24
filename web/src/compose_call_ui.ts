@@ -8,11 +8,38 @@ import * as compose_ui from "./compose_ui.ts";
 import {$t, $t_html} from "./i18n.ts";
 import * as rows from "./rows.ts";
 import {current_user, realm} from "./state_data.ts";
+import * as narrow_state from "./narrow_state.ts";
 import * as ui_report from "./ui_report.ts";
 import * as util from "./util.ts";
 
 import { SignJWT } from 'jose';
 import render_audio_iframe from "../templates/audio_iframe.hbs";
+
+let api: any = null;
+let isMicMuted = true;
+let isCameraMuted = true;
+let isScreenSharing = false;
+
+function updateMicIcon() {
+    const micIcon = document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-mic`);
+    if (micIcon) {
+        micIcon.className = isMicMuted ? "zulip-icon zulip-icon-mic-off" : "zulip-icon zulip-icon-mic-on";
+    }
+}
+
+function updateCameraIcon() {
+    const cameraIcon = document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-camera`);
+    if (cameraIcon) {
+        cameraIcon.className = isCameraMuted ? "zulip-icon zulip-icon-camera-off" : "zulip-icon zulip-icon-camera-on";
+    }
+}
+
+function updateScreenIcon() {
+    const screenButton = document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-screen`);
+    if (screenButton) {
+        screenButton.style.opacity = isScreenSharing ? "1" : "";
+    }
+}
 
 const call_response_schema = z.object({
     msg: z.string(),
@@ -56,13 +83,80 @@ function insert_audio_call_url(url: string): void {
         videoContainer.style.top = "10px";
         videoContainer.style.right = "10px";
         videoContainer.style.zIndex = "1000";
-        // Вставляем iFrame
+
+        const cleanUrl = url.split('#')[0];
+
+         // Вставляем ссылку в iframe с использованием Jitsi Meet API
         const iframeHeight = Math.floor(window.innerHeight * 0.75);
-        videoContainer.innerHTML = `
-            <iframe id="video-iframe" src="${url}" width="100%" height="${iframeHeight}px" 
-            frameborder="0" allow="microphone *; camera *; display-capture *;" allowfullscreen 
-            style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"></iframe>
-        `;
+        const domain = "jitsi-connectrm.ru:8443";
+        const roomName = encodeURIComponent(cleanUrl.split('/').pop()?.split('?')[0] || ""); // Кодируем имя комнаты
+        const jwt = encodeURIComponent(cleanUrl.split('jwt=')[1] || ""); // Кодируем JWT
+        const options = {
+            roomName: roomName,
+            width: "100%",
+            height: iframeHeight + "px",
+            parentNode: videoContainer,
+            jwt: jwt,
+            configOverwrite: { startWithAudioMuted: true, startWithVideoMuted: true, prejoinConfig: { enabled: false } },
+            interfaceConfigOverwrite: {
+                TOOLBAR_BUTTONS: [
+                    'camera',
+                    'desktop',
+                    'microphone',
+                    'settings',
+                    'fullscreen'
+                ]
+            }
+        };
+        api = new JitsiMeetExternalAPI(domain, options);
+
+        // Подписываемся на событие входа в конференцию
+        api.addListener('videoConferenceJoined', () => {
+            const controls = document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #custom-controls`);
+            if (controls) {
+                controls.style.display = "flex";
+            }
+
+            // Обработчики событий для кнопок
+            document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-mic`)?.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                api.executeCommand('toggleAudio');
+            });
+
+            document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-camera`)?.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                api.executeCommand('toggleVideo');
+            });
+
+            document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-screen`)?.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                api.executeCommand('toggleShareScreen');
+            });
+        });
+
+        // Подписываемся на события изменения статуса микрофона, камеры и шаринга экрана
+        api.addListener('audioMuteStatusChanged', (event: { muted: boolean }) => {
+            isMicMuted = event.muted;
+            updateMicIcon();
+        });
+
+        api.addListener('videoMuteStatusChanged', (event: { muted: boolean }) => {
+            isCameraMuted = event.muted;
+            updateCameraIcon();
+        });
+
+        api.addListener('screenSharingStatusChanged', (event: { on: boolean }) => {
+            isScreenSharing = event.on;
+            updateScreenIcon();
+        });
+
+        // Скрываем лишние элементы
+        // $("#compose-content").hide();
+        // $("#bottom_whitespace").hide();
+        // $(".recipient_row").hide();
     }
 }
 
@@ -172,7 +266,7 @@ export function generate_and_insert_audio_or_video_call_link_old(
     //     });
     // } else {
         // TODO: Use `new URL` to generate the URLs here.
-        
+
 
         // const video_call_id = util.random_int(100000000000000, 999999999999999);
         // const token = generate_jitsi_jwt(current_user.email, current_user.full_name);
@@ -288,7 +382,7 @@ async function generateToken(): Promise<string> {
             context: {
                 user: {
                     name: current_user.full_name,
-                    id: current_user.email, 
+                    id: current_user.email,
                     email: current_user.email,
                     avatar: "https://e7.pngegg.com/pngimages/971/686/png-clipart-computer-icons-social-media-blog-avatar-material-service-logo.png" //optional
                 }
