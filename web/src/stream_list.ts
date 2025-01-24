@@ -1,6 +1,7 @@
 import $ from "jquery";
 import _ from "lodash";
 import assert from "minimalistic-assert";
+import md5 from "blueimp-md5";
 import * as tippy from "tippy.js";
 
 import render_filter_topics from "../templates/filter_topics.hbs";
@@ -466,7 +467,12 @@ export function set_in_home_view(stream_id: number, in_home: boolean): void {
     }
 }
 
-function get_channel_avatar(stream_id: number, on_success: (blob: Blob) => void): void {
+export function gravatar_url_for_channel(channel_name: string): string {
+    const hash = md5(channel_name.toLowerCase());
+    return "https://secure.gravatar.com/avatar/" + hash + "?d=identicon";
+}
+
+export function get_channel_avatar(stream_id: number, channel_name: string, on_success: (url: string) => void): void {
     const url = `/json/streams/${stream_id}/avatar`;
 
     void $.ajax({
@@ -476,10 +482,19 @@ function get_channel_avatar(stream_id: number, on_success: (blob: Blob) => void)
             responseType: "blob"
         },
         success(blob) {
-            on_success(blob);
+            try {
+                const avatar_url = URL.createObjectURL(blob);
+                on_success(avatar_url);
+            } catch (error) {
+                console.error("Error processing channel avatar", error);
+                const fallback_url = gravatar_url_for_channel(channel_name);
+                on_success(fallback_url);
+            }
         },
         error() {
             console.error("Error fetching channel avatar");
+            const fallback_url = gravatar_url_for_channel(channel_name);
+            on_success(fallback_url);
         },
     });
 }
@@ -505,8 +520,7 @@ function build_stream_sidebar_li(sub: StreamSubscription): JQuery {
     const $list_item = $(render_stream_sidebar_row(args));
 
     // Получаем аватар асинхронно и обновляем элемент списка
-    get_channel_avatar(sub.stream_id, (blob) => {
-        const avatar_url = URL.createObjectURL(blob);
+    get_channel_avatar(sub.stream_id, sub.name, (avatar_url) => {
         $list_item.find(`.stream-avatar[data-stream-id="${sub.stream_id}"]`).attr('src', avatar_url); // Обновляем URL аватара в элементе списка
     });
 

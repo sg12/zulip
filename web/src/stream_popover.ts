@@ -15,6 +15,7 @@ import * as browser_history from "./browser_history.ts";
 import * as composebox_typeahead from "./composebox_typeahead.ts";
 import * as dialog_widget from "./dialog_widget.ts";
 import * as dropdown_widget from "./dropdown_widget.ts";
+import {get_channel_avatar} from "./stream_list.ts";
 import * as hash_util from "./hash_util.ts";
 import {$t, $t_html} from "./i18n.ts";
 import * as message_edit from "./message_edit.ts";
@@ -223,21 +224,6 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
     });
 }
 
-export function get_channel_avatar(stream_id: number, on_success: (data: any) => void): void {
-    const url = `/json/streams/${stream_id}/avatar`;
-
-    void $.ajax({
-        url,
-        type: "GET",
-        success(data) {
-            on_success(data);
-        },
-        error() {
-            console.error("Error fetching channel avatar");
-        },
-    });
-}
-
 export function change_channel_avatar(stream_id: number, image: File, on_success: (avatar_url: string) => void): void {
     const url = `/json/streams/${stream_id}/avatar`;
     const formData = new FormData();
@@ -321,7 +307,7 @@ export function build_change_avatar_stream(stream_id: number): void {
         document.getElementById("delete-avatar")?.addEventListener("click", () => {
             delete_channel_avatar(stream_id, () => {
                 avatarPreview.style.display = "none";
-                get_channel_avatar(stream_id, (data) => {
+                get_channel_avatar(stream_id, stream.name, (data) => {
                     $(`.stream-avatar[data-stream-id="${stream_id}"]`).attr('src', data);
                 })
 
