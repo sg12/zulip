@@ -110,6 +110,8 @@ function insert_audio_call_url(url: string): void {
         };
         api = new JitsiMeetExternalAPI(domain, options);
 
+        document.querySelector('iframe').setAttribute('allow', 'camera; microphone; fullscreen; display-capture');
+        
         // Подписываемся на событие входа в конференцию
         api.addListener('videoConferenceJoined', () => {
             const controls = document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #custom-controls`);
