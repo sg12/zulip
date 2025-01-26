@@ -79,21 +79,23 @@ function insert_audio_call_url(url: string): void {
     // container.hide();
     let videoContainer = document.getElementById("video-container");
     if (videoContainer) {
-        videoContainer.style.position = "fixed";
-        videoContainer.style.top = "10px";
-        videoContainer.style.right = "10px";
-        videoContainer.style.zIndex = "1000";
+        // videoContainer.style.flex = "1 1 auto";
+        // videoContainer.style.position = "fixed";
+        // videoContainer.style.top = "10px";
+        // videoContainer.style.right = "10px";
+        // videoContainer.style.zIndex = "1000";
 
         const cleanUrl = url.split('#')[0];
 
          // Вставляем ссылку в iframe с использованием Jitsi Meet API
         const iframeHeight = Math.floor(window.innerHeight * 0.75);
+        const iframeWidth = Math.floor(window.innerWidth * 1);
         const domain = "jitsi-connectrm.ru:8443";
         const roomName = encodeURIComponent(cleanUrl.split('/').pop()?.split('?')[0] || ""); // Кодируем имя комнаты
         const jwt = encodeURIComponent(cleanUrl.split('jwt=')[1] || ""); // Кодируем JWT
         const options = {
             roomName: roomName,
-            width: "100%",
+            width: iframeWidth + "px",
             height: iframeHeight + "px",
             parentNode: videoContainer,
             jwt: jwt,

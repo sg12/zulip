@@ -97,6 +97,15 @@
     animation: zspinner 1s linear infinite;
     }
 
+    .column-middle-inner {
+    display: flex; /* Включаем Flexbox */
+    flex-direction: row; /* Элементы расположены горизонтально */
+    height: 100%; /* Растянуть на всю высоту */
+    }
+
+    /* Чат (левая часть) */
+
+
     /* Bootstrap 'a' tag styles for styling reload link */
     a#reload-lnk:focus {
     outline: thin dotted #333;
@@ -116,6 +125,26 @@
     a#reload-lnk:focus {
     color: #005580;
     text-decoration: underline;
+    }
+    #video-container {
+    flex: "1 1 auto"; /* Занимает 50% ширины */
+    display: flex; /* Включает Flexbox для содержимого */
+    justify-content: center; /* Центрирование содержимого по горизонтали */
+    align-items: flex-start; /* Содержимое прижато к верхней границе */
+    overflow: hidden; /* Предотвращает выход содержимого за границы */
+    padding: 10px; /* Внутренние отступы для лучшего отображения */
+    box-sizing: border-box; /* Учитывает отступы и границы в размерах */
+    margin-top: 106px;
+    }
+    #message-feed {
+    flex: "1 1 auto"; /* Занимает 50% ширины */
+    display: flex; /* Включает Flexbox для содержимого */
+    justify-content: center; /* Центрирование содержимого по горизонтали */
+    align-items: flex-start; /* Содержимое прижато к верхней границе */
+    overflow: hidden; /* Предотвращает выход содержимого за границы */
+    padding: 10px; /* Внутренние отступы для лучшего отображения */
+    box-sizing: border-box; /* Учитывает отступы и границы в размерах */
+    margin-top: 106px;
     }
 </style>
 {% endblock %}
@@ -266,7 +295,6 @@
                     </div>
                 </div>
                 <div id="message_feed_container">
-                    <div id="video-container"></div>
                     <div class="message-feed" id="main_div">
                         <div id="loading_older_messages_indicator"></div>
                         <div id="page_loading_indicator"></div>
@@ -284,6 +312,7 @@
                         </div>
                     </div>
                 </div>
+                <div id="video-container"></div>
                 <div id="compose" {% if embedded %}data-embedded{% endif %}>
                     <div id="compose-container"></div>
                 </div>
