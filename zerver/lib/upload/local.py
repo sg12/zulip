@@ -172,6 +172,7 @@ class LocalUploadBackend(ZulipUploadBackend):
     ) -> None:
         write_local_file("avatars", file_path, image_data)
     
+    @override
     def upload_single_stream_avatar_image(
         self,
         file_path: str,
