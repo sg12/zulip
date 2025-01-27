@@ -970,12 +970,11 @@ export function set_event_handlers({
                     topic_item.topic_name,
                 );
                 browser_history.go_to_location(destination_url); // Обновляем основной чат диалога (от прежнего орригинального кода)
-                const topic_id = user_topics.get_topic_id(stream_id, topic_item.topic_name);
                 if (!topic_item.is_muted) {
                     let bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
                     if (bbb_url.length > 0) {
-                        if (topic_id != false) {
-                            bbb_url = bbb_url + "-" + user_topics.get_topic_id(stream_id, topic_item.topic_name);
+                        if (topic_item.topic_name) {
+                            bbb_url = bbb_url + "-" + topic_item.topic_name.split('').map(char => char.charCodeAt(0)).join('');
                         }
                         isReadyShowVideo = true;
                         console.log("--------4: " + bbb_url);
