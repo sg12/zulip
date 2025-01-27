@@ -350,16 +350,17 @@ class S3UploadBackend(ZulipUploadBackend):
         )
 
 
-    # @override
-    # def upload_single_stream_avatar_image(
-    #     self,
-    #     file_path: str,
-    #     *,
-    #     stream: Stream,
-    #     image_data: bytes,
-    #     content_type: str | None,
-    #     future: bool = True,
-    # ) -> None:
+    @override
+    def upload_single_stream_avatar_image(
+        self,
+        file_path: str,
+        *,
+        stream: Stream,
+        image_data: bytes,
+        content_type: str | None,
+        future: bool = True,
+    ) -> None:
+        assert True == False, 'Это как бы не работает :)'
     #     extra_metadata = {"avatar_version": str(stream.avatar_version + (1 if future else 0))}
     #     upload_content_to_s3(
     #         bucket=self.avatar_bucket,
