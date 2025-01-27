@@ -390,12 +390,14 @@ export function initialize({
 
             }
             if (is_audio_topic) {
-                const topic_id = user_topics.get_topic_id(stream_id, topic);
-                let bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
+                console.log("--------3: " + topic);
+                const bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
+                console.log("--------4: " + bbb_url);
                 if (bbb_url.length > 0) {
-                    bbb_url = bbb_url + "-" + user_topics.get_topic_id(stream_id, topic);
-                    console.log("--------4: " + bbb_url);
-                    compose_call_ui.generate_and_insert_audio_or_video_call_link(bbb_url);
+                    const char_code = topic.split('').map(char => char.charCodeAt(0)).join('');
+                    const bbb_url2 = bbb_url + "-" + char_code;
+                    console.log("--------5: " + char_code);
+                    compose_call_ui.generate_and_insert_audio_or_video_call_link(bbb_url2);
                 }
             }
             e.preventDefault();

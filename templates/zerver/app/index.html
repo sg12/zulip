@@ -97,11 +97,11 @@
     animation: zspinner 1s linear infinite;
     }
 
-    .column-middle-inner {
-    display: flex; /* Включаем Flexbox */
-    flex-direction: row; /* Элементы расположены горизонтально */
-    height: 100%; /* Растянуть на всю высоту */
-    }
+    /* .column-middle-inner {
+    display: flex; 
+    flex-direction: row;
+    height: 100%; 
+    } */
 
     /* Чат (левая часть) */
 
@@ -125,26 +125,6 @@
     a#reload-lnk:focus {
     color: #005580;
     text-decoration: underline;
-    }
-    #video-container {
-    flex: "1 1 auto"; /* Занимает 50% ширины */
-    display: flex; /* Включает Flexbox для содержимого */
-    justify-content: center; /* Центрирование содержимого по горизонтали */
-    align-items: flex-start; /* Содержимое прижато к верхней границе */
-    overflow: hidden; /* Предотвращает выход содержимого за границы */
-    padding: 10px; /* Внутренние отступы для лучшего отображения */
-    box-sizing: border-box; /* Учитывает отступы и границы в размерах */
-    margin-top: 106px;
-    }
-    #message-feed {
-    flex: "1 1 auto"; /* Занимает 50% ширины */
-    display: flex; /* Включает Flexbox для содержимого */
-    justify-content: center; /* Центрирование содержимого по горизонтали */
-    align-items: flex-start; /* Содержимое прижато к верхней границе */
-    overflow: hidden; /* Предотвращает выход содержимого за границы */
-    padding: 10px; /* Внутренние отступы для лучшего отображения */
-    box-sizing: border-box; /* Учитывает отступы и границы в размерах */
-    margin-top: 106px;
     }
 </style>
 {% endblock %}
@@ -312,12 +292,13 @@
                         </div>
                     </div>
                 </div>
-                <div id="video-container"></div>
+                
                 <div id="compose" {% if embedded %}data-embedded{% endif %}>
                     <div id="compose-container"></div>
                 </div>
             </div>
         </div>
+        <div class="column-video" id="video-container"></div>
         <div class="column-right" id="right-sidebar-container">
         </div><!--/right sidebar-->
     </div>
