@@ -12,6 +12,10 @@ import * as narrow_state from "./narrow_state.ts";
 import * as ui_report from "./ui_report.ts";
 import * as util from "./util.ts";
 
+import * as buddy_list from "./buddy_list.ts";
+import * as buddy_data from "./buddy_data.ts";
+import * as peer_data from "./peer_data.ts";
+
 import { SignJWT } from 'jose';
 import render_audio_iframe from "../templates/audio_iframe.hbs";
 
@@ -39,6 +43,33 @@ function updateScreenIcon() {
     if (screenButton) {
         screenButton.style.opacity = isScreenSharing ? "1" : "";
     }
+}
+
+function updateParticipantsList() {
+    // получаем информацию по комнате
+    api.getRoomsInfo().then((rooms) => {
+        if (rooms.rooms && rooms.rooms.length > 0) { // если ответ по запросу есть, то
+            const participants = rooms.rooms[0].participants; // берем участников комнаты
+            const participantNames = participants.map(participant => participant.displayName); // вытаскиваем их имена
+            const filteredParticipants = filterParticipantsByName(participantNames); // Фильтруем текущих участников по именам участников jitsi
+            updateBuddyList(filteredParticipants); // Передаем отфильтрованный список участников в buddy_list
+        }
+    }).catch((error) => {
+        console.error("Error fetching room info", error);
+    });
+}
+
+function filterParticipantsByName(participantNames: string[]) {
+    const stream_id = narrow_state.stream_id(); // получаем текущий канал
+    const user_ids = peer_data.get_subscribers(stream_id); // получаем айдишники пользователей, подписанных на канал
+    const users = buddy_data.get_items_for_users(user_ids); // получаем пользователей по их айди (структура как в buddy_list)
+    return users.filter(user => participantNames.includes(user.name));
+}
+
+function updateBuddyList(participants) {
+    // не работает. должно встраивать в html объекты пользователей
+    // const html = buddy_list.items_to_html({items: participants});
+    // console.log("Updating buddy list with HTML:", html);
 }
 
 const call_response_schema = z.object({
@@ -113,7 +144,7 @@ function insert_audio_call_url(url: string): void {
         api = new JitsiMeetExternalAPI(domain, options);
 
         document.querySelector('iframe').setAttribute('allow', 'camera; microphone; fullscreen; display-capture');
-        
+
         // Подписываемся на событие входа в конференцию
         api.addListener('videoConferenceJoined', () => {
             const controls = document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #custom-controls`);
@@ -157,10 +188,18 @@ function insert_audio_call_url(url: string): void {
             updateScreenIcon();
         });
 
-        // Скрываем лишние элементы
-        // $("#compose-content").hide();
-        // $("#bottom_whitespace").hide();
-        // $(".recipient_row").hide();
+        // Подписываемся на события входа и выхода участников
+        api.addListener('participantJoined', () => {
+            updateParticipantsList();
+        });
+
+        api.addListener('participantLeft', () => {
+            updateParticipantsList();
+        });
+
+        api.addListener('participantKickedOut', () => {
+            updateParticipantsList();
+        });
     }
 }
 
