@@ -540,7 +540,7 @@ function open_invite_user_modal(e: JQuery.ClickEvent<Document, undefined>): void
             selected: 0,
             child_wants_focus: true,
             values: [
-                {label: $t({defaultMessage: "Email invitation"}), key: "invite-email-tab"},
+                // {label: $t({defaultMessage: "Email invitation"}), key: "invite-email-tab"},
                 {label: $t({defaultMessage: "Invitation link"}), key: "invite-link-tab"},
             ],
             callback(_name, key) {
