@@ -1438,9 +1438,9 @@ export function add_cross_realm_user(person: User): void {
         _add_user(person);
     }
     cross_realm_dict.set(person.user_id, person);
-    if (person.full_name === "Welcome Bot") {
-        WELCOME_BOT = person;
-    }
+    // if (person.full_name === "Welcome Bot") {
+    //     WELCOME_BOT = person;
+    // }
 }
 
 export function deactivate(person: User): void {
