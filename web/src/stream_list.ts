@@ -958,11 +958,7 @@ export function set_event_handlers({
             const topic_list_info = topic_list_data.get_list_info(stream_id, false, "");
             const topic_item = topic_list_info.items[0];
             const videoContainer = document.getElementById("video-container"); // очистка предыдущего видеоконтейнера, если он активен
-            if (videoContainer) {
-                videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
-                videoContainer.innerHTML = ""; //очитска вего (она работает)
-
-            }
+            
             let isReadyShowVideo = false;
             if (topic_item !== undefined) {
                 const destination_url = hash_util.by_stream_topic_url(
@@ -971,6 +967,11 @@ export function set_event_handlers({
                 );
                 browser_history.go_to_location(destination_url); // Обновляем основной чат диалога (от прежнего орригинального кода)
                 if (!topic_item.is_muted) {
+                    if (videoContainer) {
+                        videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
+                        videoContainer.innerHTML = ""; //очитска вего (она работает)
+        
+                    }
                     let bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
                     if (bbb_url.length > 0) {
                         if (topic_item.topic_name) {

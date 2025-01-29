@@ -1,13 +1,13 @@
 import $ from "jquery";
-import {z} from "zod";
+import { z } from "zod";
 
 import * as channel from "./channel.ts";
 import * as compose_call from "./compose_call.ts";
-import {get_recipient_label} from "./compose_closed_ui.ts";
+import { get_recipient_label } from "./compose_closed_ui.ts";
 import * as compose_ui from "./compose_ui.ts";
-import {$t, $t_html} from "./i18n.ts";
+import { $t, $t_html } from "./i18n.ts";
 import * as rows from "./rows.ts";
-import {current_user, realm} from "./state_data.ts";
+import { current_user, realm } from "./state_data.ts";
 import * as narrow_state from "./narrow_state.ts";
 import * as ui_report from "./ui_report.ts";
 import * as util from "./util.ts";
@@ -65,29 +65,38 @@ export function update_audio_chat_button_display(): void {
 }
 
 function insert_video_call_url(url: string, $target_textarea: JQuery<HTMLTextAreaElement>): void {
-    const link_text = $t({defaultMessage: "Join video call."});
+    const link_text = $t({ defaultMessage: "Join video call." });
     compose_ui.insert_syntax_and_focus(`[${link_text}](${url})`, $target_textarea, "block", 1);
 }
 
 function insert_audio_call_url_old(url: string, $target_textarea: JQuery<HTMLTextAreaElement>): void {
-    const link_text = $t({defaultMessage: "Join voice call."});
+    const link_text = $t({ defaultMessage: "Join voice call." });
     compose_ui.insert_syntax_and_focus(`[${link_text}](${url})`, $target_textarea, "block", 1);
 }
+
+let defaultVideoX = 0;
+let defaultVideoY = 0;
 
 function insert_audio_call_url(url: string): void {
     // const container = $("#message_feed_container");
     // container.hide();
     let videoContainer = document.getElementById("video-container");
     if (videoContainer) {
+        const rect = videoContainer.getBoundingClientRect();
+        videoContainer.style.position = "absolute";
         // videoContainer.style.flex = "1 1 auto";
         // videoContainer.style.position = "fixed";
-        // videoContainer.style.top = "10px";
-        // videoContainer.style.right = "10px";
-        // videoContainer.style.zIndex = "1000";
+        if(defaultVideoX == 0)
+            defaultVideoX = rect.left;
+        videoContainer.style.left = `${defaultVideoX}px`;
+        if(defaultVideoY == 0)
+            videoContainer.style.top = `${defaultVideoY}px`;
+        videoContainer.style.zIndex = "9999";
+        videoContainer.style.resize = "both";
 
         const cleanUrl = url.split('#')[0];
 
-         // Вставляем ссылку в iframe с использованием Jitsi Meet API
+        // Вставляем ссылку в iframe с использованием Jitsi Meet API
         const iframeHeight = Math.floor(window.innerHeight * 0.75);
         const iframeWidth = Math.floor(window.innerWidth * 1);
         const domain = "jitsi-connectrm.ru:8443";
@@ -106,14 +115,15 @@ function insert_audio_call_url(url: string): void {
                     'desktop',
                     'microphone',
                     'settings',
-                    'fullscreen'
+                    'fullscreen',
+                    'hangup'
                 ]
             }
         };
         api = new JitsiMeetExternalAPI(domain, options);
 
         document.querySelector('iframe').setAttribute('allow', 'camera; microphone; fullscreen; display-capture');
-        
+        console.log("--------Compose_call_ui");
         // Подписываемся на событие входа в конференцию
         api.addListener('videoConferenceJoined', () => {
             const controls = document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #custom-controls`);
@@ -157,23 +167,146 @@ function insert_audio_call_url(url: string): void {
             updateScreenIcon();
         });
 
-        // Скрываем лишние элементы
-        // $("#compose-content").hide();
-        // $("#bottom_whitespace").hide();
-        // $(".recipient_row").hide();
+        api.addListener('readyToClose', () => {
+            if (videoContainer) {
+                videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
+                videoContainer.innerHTML = ""; //очитска вего (она работает)
+                isDragging = false;
+                offsetX = 0;
+                offsetY = 0;
+            }
+            updateScreenIcon();
+        });
+
+        let isDragging = false;
+        let offsetX = 0, offsetY = 0;
+
+        const iframe = document.querySelector('iframe');
+        if (iframe) {
+            iframe.addEventListener('load', () => {
+                isDragging = false;
+                offsetX = 0;
+                offsetY = 0;
+                const overlay = document.createElement('div');
+                overlay.id = 'overlay';
+                overlay.style.position = 'absolute';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '80%';
+                overlay.style.zIndex = '10';
+                overlay.style.background = 'transparent';
+
+                videoContainer.appendChild(overlay);
+
+                overlay.addEventListener('mousedown', (e) => {
+                    console.log('****mousedown detected on overlay');
+                    isDragging = true;
+                    offsetX = e.clientX - videoContainer.getBoundingClientRect().left;
+                    offsetY = e.clientY - videoContainer.getBoundingClientRect().top;
+                });
+
+                overlay.addEventListener('mousemove', (e) => {
+                    if (isDragging) {
+                        videoContainer.style.left = `${e.clientX - offsetX}px`;
+                        videoContainer.style.top = `${e.clientY - offsetY}px`;
+                    }
+                });
+
+                overlay.addEventListener('mouseup', () => {
+                    // console.log("--------Compose_call_ui - mouseup");
+                    isDragging = false;
+                });
+
+                // makeResizable(videoContainer);
+                // makeResizable(videoContainer, iframe);
+                setTimeout(() => {
+                    const videoContainer = document.getElementById("video-container");
+                    const iframe = videoContainer?.querySelector("iframe") as HTMLIFrameElement;
+                    if (videoContainer && iframe) {
+                        makeResizable(videoContainer, iframe);
+                    }
+                }, 1000);
+            });
+        }
     }
+}
+
+function makeResizable(videoContainer: HTMLElement, iframe: HTMLIFrameElement) {
+    if (!videoContainer || !iframe) return;
+
+    const resizer = document.createElement("div");
+    resizer.style.position = "absolute";
+    resizer.style.width = "15px";
+    resizer.style.height = "15px";
+    resizer.style.cursor = "nwse-resize";
+    resizer.style.background = "rgba(0, 0, 0, 0.5)"; // Сделаем его видимым
+    resizer.style.zIndex = "10000";
+    resizer.style.borderRadius = "3px";
+
+    // Добавляем ресайзер в контейнер
+    videoContainer.appendChild(resizer);
+
+    function updateResizerPosition() {
+        const iframeRect = iframe.getBoundingClientRect();
+        const containerRect = videoContainer.getBoundingClientRect();
+
+        // Позиционируем resizer относительно iframe внутри videoContainer
+        resizer.style.left = `${iframeRect.left - containerRect.left + iframeRect.width - 15}px`;
+        resizer.style.top = `${iframeRect.top - containerRect.top + iframeRect.height - 15}px`;
+    }
+
+    updateResizerPosition(); // Устанавливаем начальную позицию
+
+    let isResizing = false;
+
+    resizer.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        isResizing = true;
+
+        let startX = e.clientX;
+        let startY = e.clientY;
+        let startWidth = iframe.clientWidth;
+        let startHeight = iframe.clientHeight;
+
+        function doResize(e: MouseEvent) {
+            if (!isResizing) return;
+            
+            // Новые размеры iframe
+            const newWidth = startWidth + (e.clientX - startX);
+            const newHeight = startHeight + (e.clientY - startY);
+
+            iframe.style.width = `${newWidth}px`;
+            iframe.style.height = `${newHeight}px`;
+
+            // Подгоняем videoContainer
+            videoContainer.style.width = `${newWidth}px`;
+            videoContainer.style.height = `${newHeight}px`;
+
+            updateResizerPosition(); // Перемещаем ресайзер
+        }
+
+        function stopResize() {
+            isResizing = false;
+            window.removeEventListener("mousemove", doResize);
+            window.removeEventListener("mouseup", stopResize);
+        }
+
+        window.addEventListener("mousemove", doResize);
+        window.addEventListener("mouseup", stopResize);
+    });
 }
 
 export function generate_and_insert_audio_or_video_call_link(
     bbb_url: string
 ): void {
-        let video_call_id = bbb_url;
-        if(bbb_url.length < 7) {
-            video_call_id = util.random_int(100000000000000, 999999999999999).toString();
-        }
-        generateToken()
-        .then((token) => generate_call_link(video_call_id,token))
-        .catch(() => generate_call_link(video_call_id,""));
+    let video_call_id = bbb_url;
+    if (bbb_url.length < 7) {
+        video_call_id = util.random_int(100000000000000, 999999999999999).toString();
+    }
+    generateToken()
+        .then((token) => generate_call_link(video_call_id, token))
+        .catch(() => generate_call_link(video_call_id, ""));
 }
 
 export function generate_and_insert_audio_or_video_call_link_old(
@@ -269,72 +402,72 @@ export function generate_and_insert_audio_or_video_call_link_old(
     //         },
     //     });
     // } else {
-        // TODO: Use `new URL` to generate the URLs here.
+    // TODO: Use `new URL` to generate the URLs here.
 
 
-        // const video_call_id = util.random_int(100000000000000, 999999999999999);
-        // const token = generate_jitsi_jwt(current_user.email, current_user.full_name);
-        console.log("------token bbb_url: ", bbb_url);
-        let video_call_id = bbb_url;
-        if(bbb_url.length < 3) {
-            video_call_id = util.random_int(100000000000000, 999999999999999).toString();
-        }
-        console.log("------token bbb_url 2: ", video_call_id);
-        generateToken()
-        .then((token) => generate_call_link(video_call_id,token))
-        .catch(() => generate_call_link(video_call_id,""));
+    // const video_call_id = util.random_int(100000000000000, 999999999999999);
+    // const token = generate_jitsi_jwt(current_user.email, current_user.full_name);
+    console.log("------token bbb_url: ", bbb_url);
+    let video_call_id = bbb_url;
+    if (bbb_url.length < 3) {
+        video_call_id = util.random_int(100000000000000, 999999999999999).toString();
+    }
+    console.log("------token bbb_url 2: ", video_call_id);
+    generateToken()
+        .then((token) => generate_call_link(video_call_id, token))
+        .catch(() => generate_call_link(video_call_id, ""));
 
-        // const video_call_link = compose_call.get_jitsi_server_url() + "/" + video_call_id;
-        // // if (is_audio_call) {
-        // insert_audio_call_url(
-        //     video_call_link + "?jwt=" + token + "#config.startWithVideoMuted=true",
-        //     $target_textarea,
-        // );
-        // } else {
-        //     /* Because Jitsi remembers what last call type you joined
-        //        in browser local storage, we need to specify that video
-        //        should not be muted in the video call case, or your
-        //        next call will also join without video after joining an
-        //        audio-only call.
+    // const video_call_link = compose_call.get_jitsi_server_url() + "/" + video_call_id;
+    // // if (is_audio_call) {
+    // insert_audio_call_url(
+    //     video_call_link + "?jwt=" + token + "#config.startWithVideoMuted=true",
+    //     $target_textarea,
+    // );
+    // } else {
+    //     /* Because Jitsi remembers what last call type you joined
+    //        in browser local storage, we need to specify that video
+    //        should not be muted in the video call case, or your
+    //        next call will also join without video after joining an
+    //        audio-only call.
 
-        //        This has the annoying downside that it requires users
-        //        who have a personal preference to disable video every
-        //        time, but Jitsi's UI makes that very easy to do, and
-        //        that inconvenience is probably less important than letting
-        //        the person organizing a call specify their intended
-        //        call type (video vs audio).
-        //    */
-        //     insert_video_call_url(
-        //         video_call_link + "#config.startWithVideoMuted=false",
-        //         $target_textarea,
-        //     );
-        // }
+    //        This has the annoying downside that it requires users
+    //        who have a personal preference to disable video every
+    //        time, but Jitsi's UI makes that very easy to do, and
+    //        that inconvenience is probably less important than letting
+    //        the person organizing a call specify their intended
+    //        call type (video vs audio).
+    //    */
+    //     insert_video_call_url(
+    //         video_call_link + "#config.startWithVideoMuted=false",
+    //         $target_textarea,
+    //     );
+    // }
     // }
 }
 
-function generate_call_link(video_call_id: string, token: String){
+function generate_call_link(video_call_id: string, token: String) {
     const video_call_link = compose_call.get_jitsi_server_url() + "/" + video_call_id;
-    if (token.length>0) {
+    if (token.length > 0) {
         insert_audio_call_url(
             video_call_link + "?jwt=" + token + "#config.prejoinConfig.enabled=false&config.startWithVideoMuted=true",
         );
-    }else{
+    } else {
         insert_audio_call_url(
             video_call_link + "#config.startWithVideoMuted=true",
         );
     }
 }
 
-function generate_call_link_old(video_call_id: string, $target_textarea: JQuery<HTMLTextAreaElement>, token: String){
+function generate_call_link_old(video_call_id: string, $target_textarea: JQuery<HTMLTextAreaElement>, token: String) {
     const video_call_link = compose_call.get_jitsi_server_url() + "/" + video_call_id;
     // console.log('Generated JWT:', token)
-    if (token.length>0) {
+    if (token.length > 0) {
         insert_audio_call_url(
             // video_call_link + "?jwt=" + token + "#config.startWithVideoMuted=true",
             video_call_link + "?jwt=" + token + "#config.prejoinConfig.enabled=false&config.startWithVideoMuted=true",
             $target_textarea,
         );
-    }else{
+    } else {
         insert_audio_call_url(
             video_call_link + "#config.startWithVideoMuted=true",
             $target_textarea,

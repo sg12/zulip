@@ -384,12 +384,12 @@ export function initialize({
             const is_audio_topic = topic.startsWith("🔊");
             on_topic_click(stream_id, topic, is_audio_topic);
             const videoContainer = document.getElementById("video-container"); // очистка предыдущего видеоконтейнера, если он активен
-            if (videoContainer) {
-                videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
-                videoContainer.innerHTML = ""; //очитска вего (она работает)
 
-            }
             if (is_audio_topic) {
+                if (videoContainer) {
+                    videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
+                    videoContainer.innerHTML = ""; //очитска вего (она работает)
+                }
                 console.log("--------3: " + topic);
                 const bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
                 console.log("--------4: " + bbb_url);

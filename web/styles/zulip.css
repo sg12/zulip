@@ -10,7 +10,7 @@ html {
     touch-action: manipulation;
 }
 
-.column-middle, .column-video,
+.column-middle,
 #main_div {
     background-color: var(--color-background);
 }
@@ -563,8 +563,6 @@ body.has-overlay-scrollbar {
         display: flex; /* Включаем Flexbox */
         justify-content: center; /* Центрируем содержимое по горизонтали */
         align-items: center; /* Центрируем содержимое по вертикали */
-        background-color: #f8f9fa; /* Светлый фон */
-        border-left: 1px solid #ddd; /* Линия-разделитель с центральной частью */
         margin-left: 10px; /* Убираем лишние отступы */
         width: 300px; /* Учитываем ширину боковых панелей */
         margin-right: var(--right-sidebar-width);
