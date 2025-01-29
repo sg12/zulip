@@ -1421,6 +1421,7 @@ label.preferences-radio-choice-label {
 
         .normal-settings-list,
         .org-settings-list {
+            top: 45px;
             position: relative;
             list-style: none;
             margin: 0;
