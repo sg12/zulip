@@ -35,32 +35,32 @@ export function update_onboarding_steps_to_display(onboarding_steps: OnboardingS
     }
 }
 
-function narrow_to_dm_with_welcome_bot_new_user(
-    onboarding_steps: OnboardingStep[],
-    show_message_view: (raw_terms: NarrowTerm[], opts: {trigger: string}) => void,
-): void {
-    if (
-        onboarding_steps.some(
-            (onboarding_step) => onboarding_step.name === "narrow_to_dm_with_welcome_bot_new_user",
-        )
-    ) {
-        show_message_view(
-            [
-                {
-                    operator: "dm",
-                    operand: people.WELCOME_BOT.email,
-                },
-            ],
-            {trigger: "sidebar"},
-        );
-        post_onboarding_step_as_read("narrow_to_dm_with_welcome_bot_new_user");
-    }
-}
+// function narrow_to_dm_with_welcome_bot_new_user(
+//     onboarding_steps: OnboardingStep[],
+//     show_message_view: (raw_terms: NarrowTerm[], opts: {trigger: string}) => void,
+// ): void {
+//     if (
+//         onboarding_steps.some(
+//             (onboarding_step) => onboarding_step.name === "narrow_to_dm_with_welcome_bot_new_user",
+//         )
+//     ) {
+//         show_message_view(
+//             [
+//                 {
+//                     operator: "dm",
+//                     operand: people.WELCOME_BOT.email,
+//                 },
+//             ],
+//             {trigger: "sidebar"},
+//         );
+//         post_onboarding_step_as_read("narrow_to_dm_with_welcome_bot_new_user");
+//     }
+// }
 
 export function initialize(
     params: StateData["onboarding_steps"],
     show_message_view: (raw_terms: NarrowTerm[], opts: {trigger: string}) => void,
 ): void {
     update_onboarding_steps_to_display(params.onboarding_steps);
-    narrow_to_dm_with_welcome_bot_new_user(params.onboarding_steps, show_message_view);
+    // narrow_to_dm_with_welcome_bot_new_user(params.onboarding_steps, show_message_view);
 }
