@@ -547,7 +547,7 @@ body.has-overlay-scrollbar {
         width: 240px;
     }
 
-    
+
 
     .column-middle {
         flex: 0 0 auto; /* Занимает оставшееся пространство */
@@ -558,15 +558,14 @@ body.has-overlay-scrollbar {
     }
 
     .column-video {
+        position: sticky;
+        top: calc((var(--header-padding-bottom) - 3px));
         flex: 1; /* Фиксированная ширина */
         height: 100%; /* Высота на всю центральную часть */
         display: flex; /* Включаем Flexbox */
         justify-content: center; /* Центрируем содержимое по горизонтали */
         align-items: center; /* Центрируем содержимое по вертикали */
-        background-color: #f8f9fa; /* Светлый фон */
-        border-left: 1px solid #ddd; /* Линия-разделитель с центральной частью */
         margin-left: 10px; /* Убираем лишние отступы */
-        width: 300px; /* Учитываем ширину боковых панелей */
         margin-right: var(--right-sidebar-width);
         overflow: hidden;
     }
