@@ -53,11 +53,13 @@
         </div>
     </div>
     <div class="input-group">
-        <label for="invite_as" class="modal-field-label">{{t "Users join as" }}
+<!--         <label for="invite_as" class="modal-field-label">{{t "Users join as" }}
             {{> help_link_widget link="/help/user-roles" }}
-        </label>
+        </label> -->
         <select id="invite_as" name="invite_as" class="invite-user-select modal_select bootstrap-focus-style">
+            {{#if is_admin}}
             <option value="{{ invite_as_options.guest.code }}">{{t "Guests" }}</option>
+            {{/if}}
             <option selected="selected" value="{{ invite_as_options.member.code }}">{{t "Members" }}</option>
             {{#if is_admin}}
             <option value="{{ invite_as_options.moderator.code }}">{{t "Moderators" }}</option>
