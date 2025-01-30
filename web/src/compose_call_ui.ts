@@ -76,160 +76,176 @@ function insert_audio_call_url_old(url: string, $target_textarea: JQuery<HTMLTex
 
 let defaultVideoX = 0;
 let defaultVideoY = 0;
+let url_video = "";
 
 function insert_audio_call_url(url: string): void {
     // const container = $("#message_feed_container");
     // container.hide();
+    url_video = url;
     let videoContainer = document.getElementById("video-container");
-    if (videoContainer) {
-        const rect = videoContainer.getBoundingClientRect();
-        videoContainer.style.position = "absolute";
-        // videoContainer.style.flex = "1 1 auto";
-        // videoContainer.style.position = "fixed";
-        if(defaultVideoX == 0)
-            defaultVideoX = rect.left;
-        videoContainer.style.left = `${defaultVideoX}px`;
-        if(defaultVideoY == 0)
-            videoContainer.style.top = `${defaultVideoY}px`;
-        videoContainer.style.zIndex = "9999";
-        videoContainer.style.resize = "both";
 
-        const cleanUrl = url.split('#')[0];
+    if (!videoContainer) return;
 
-        // Вставляем ссылку в iframe с использованием Jitsi Meet API
-        const iframeHeight = Math.floor(window.innerHeight * 0.75);
-        const iframeWidth = Math.floor(window.innerWidth * 1);
-        const domain = "jitsi-connectrm.ru:8443";
-        const roomName = encodeURIComponent(cleanUrl.split('/').pop()?.split('?')[0] || ""); // Кодируем имя комнаты
-        const jwt = encodeURIComponent(cleanUrl.split('jwt=')[1] || ""); // Кодируем JWT
-        const options = {
-            roomName: roomName,
-            width: iframeWidth + "px",
-            height: iframeHeight + "px",
-            parentNode: videoContainer,
-            jwt: jwt,
-            configOverwrite: { startWithAudioMuted: true, startWithVideoMuted: true, prejoinConfig: { enabled: false } },
-            interfaceConfigOverwrite: {
-                TOOLBAR_BUTTONS: [
-                    'camera',
-                    'desktop',
-                    'microphone',
-                    'settings',
-                    'fullscreen',
-                    'hangup'
-                ]
-            }
-        };
-        api = new JitsiMeetExternalAPI(domain, options);
+    videoContainer.style.display = "block"; // Показываем контейнер
+    videoContainer.innerHTML = "";
 
-        document.querySelector('iframe').setAttribute('allow', 'camera; microphone; fullscreen; display-capture');
-        console.log("--------Compose_call_ui");
-        // Подписываемся на событие входа в конференцию
-        api.addListener('videoConferenceJoined', () => {
-            const controls = document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #custom-controls`);
-            if (controls) {
-                controls.style.display = "flex";
-            }
+    const loadingBar = document.createElement("div");
+    loadingBar.id = "loading-spinner";
+    videoContainer.appendChild(loadingBar);
 
-            // Обработчики событий для кнопок
-            document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-mic`)?.addEventListener("click", (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                api.executeCommand('toggleAudio');
-            });
+    const rect = videoContainer.getBoundingClientRect();
+    videoContainer.style.position = "absolute";
+    videoContainer.style.flex = "1";
+    // videoContainer.style.position = "fixed";
+    
+    if (defaultVideoX == 0)
+        defaultVideoX = rect.left;
+    videoContainer.style.left = `${defaultVideoX}px`;
+    if (defaultVideoY == 0)
+        videoContainer.style.top = `${defaultVideoY}px`;
+    videoContainer.style.zIndex = "9999";
+    videoContainer.style.resize = "both";
 
-            document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-camera`)?.addEventListener("click", (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                api.executeCommand('toggleVideo');
-            });
+    const cleanUrl = url.split('#')[0];
 
-            document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-screen`)?.addEventListener("click", (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                api.executeCommand('toggleShareScreen');
-            });
-        });
-
-        // Подписываемся на события изменения статуса микрофона, камеры и шаринга экрана
-        api.addListener('audioMuteStatusChanged', (event: { muted: boolean }) => {
-            isMicMuted = event.muted;
-            updateMicIcon();
-        });
-
-        api.addListener('videoMuteStatusChanged', (event: { muted: boolean }) => {
-            isCameraMuted = event.muted;
-            updateCameraIcon();
-        });
-
-        api.addListener('screenSharingStatusChanged', (event: { on: boolean }) => {
-            isScreenSharing = event.on;
-            updateScreenIcon();
-        });
-
-        api.addListener('readyToClose', () => {
-            if (videoContainer) {
-                videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
-                videoContainer.innerHTML = ""; //очитска вего (она работает)
-                isDragging = false;
-                offsetX = 0;
-                offsetY = 0;
-            }
-            updateScreenIcon();
-        });
-
-        let isDragging = false;
-        let offsetX = 0, offsetY = 0;
-
-        const iframe = document.querySelector('iframe');
-        if (iframe) {
-            iframe.addEventListener('load', () => {
-                isDragging = false;
-                offsetX = 0;
-                offsetY = 0;
-                const overlay = document.createElement('div');
-                overlay.id = 'overlay';
-                overlay.style.position = 'absolute';
-                overlay.style.top = '0';
-                overlay.style.left = '0';
-                overlay.style.width = '100%';
-                overlay.style.height = '80%';
-                overlay.style.zIndex = '10';
-                overlay.style.background = 'transparent';
-
-                videoContainer.appendChild(overlay);
-
-                overlay.addEventListener('mousedown', (e) => {
-                    console.log('****mousedown detected on overlay');
-                    isDragging = true;
-                    offsetX = e.clientX - videoContainer.getBoundingClientRect().left;
-                    offsetY = e.clientY - videoContainer.getBoundingClientRect().top;
-                });
-
-                overlay.addEventListener('mousemove', (e) => {
-                    if (isDragging) {
-                        videoContainer.style.left = `${e.clientX - offsetX}px`;
-                        videoContainer.style.top = `${e.clientY - offsetY}px`;
-                    }
-                });
-
-                overlay.addEventListener('mouseup', () => {
-                    // console.log("--------Compose_call_ui - mouseup");
-                    isDragging = false;
-                });
-
-                // makeResizable(videoContainer);
-                // makeResizable(videoContainer, iframe);
-                setTimeout(() => {
-                    const videoContainer = document.getElementById("video-container");
-                    const iframe = videoContainer?.querySelector("iframe") as HTMLIFrameElement;
-                    if (videoContainer && iframe) {
-                        makeResizable(videoContainer, iframe);
-                    }
-                }, 1000);
-            });
+    // Вставляем ссылку в iframe с использованием Jitsi Meet API
+    const iframeHeight = Math.floor(rect.right - rect.left - 80);
+    const iframeWidth = Math.floor(rect.right - rect.left);
+    const domain = "jitsi-connectrm.ru:8443";
+    const roomName = encodeURIComponent(cleanUrl.split('/').pop()?.split('?')[0] || ""); // Кодируем имя комнаты
+    const jwt = encodeURIComponent(cleanUrl.split('jwt=')[1] || ""); // Кодируем JWT
+    const options = {
+        roomName: roomName,
+        width: iframeWidth + "px",
+        height: iframeHeight + "px",
+        parentNode: videoContainer,
+        jwt: jwt,
+        configOverwrite: { startWithAudioMuted: true, startWithVideoMuted: true, prejoinConfig: { enabled: false } },
+        interfaceConfigOverwrite: {
+            TOOLBAR_BUTTONS: [
+                'camera',
+                'desktop',
+                'microphone',
+                'settings',
+                'fullscreen',
+                'hangup'
+            ]
         }
+    };
+    api = new JitsiMeetExternalAPI(domain, options);
+
+    document.querySelector('iframe').setAttribute('allow', 'camera; microphone; fullscreen; display-capture');
+    console.log("--------Compose_call_ui");
+    // Подписываемся на событие входа в конференцию
+    api.addListener('videoConferenceJoined', () => {
+        const controls = document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #custom-controls`);
+        if (controls) {
+            controls.style.display = "flex";
+        }
+
+        // Обработчики событий для кнопок
+        document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-mic`)?.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            api.executeCommand('toggleAudio');
+        });
+
+        document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-camera`)?.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            api.executeCommand('toggleVideo');
+        });
+
+        document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-screen`)?.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            api.executeCommand('toggleShareScreen');
+        });
+    });
+
+    // Подписываемся на события изменения статуса микрофона, камеры и шаринга экрана
+    api.addListener('audioMuteStatusChanged', (event: { muted: boolean }) => {
+        isMicMuted = event.muted;
+        updateMicIcon();
+    });
+
+    api.addListener('videoMuteStatusChanged', (event: { muted: boolean }) => {
+        isCameraMuted = event.muted;
+        updateCameraIcon();
+    });
+
+    api.addListener('screenSharingStatusChanged', (event: { on: boolean }) => {
+        isScreenSharing = event.on;
+        updateScreenIcon();
+    });
+
+    api.addListener('readyToClose', () => {
+        if (videoContainer) {
+            videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
+            videoContainer.innerHTML = ""; //очитска вего (она работает)
+            isDragging = false;
+            offsetX = 0;
+            offsetY = 0;
+        }
+        updateScreenIcon();
+    });
+
+    let isDragging = false;
+    let offsetX = 0, offsetY = 0;
+
+    const iframe = document.querySelector('iframe');
+    if (iframe) {
+        iframe.style.display = "none";
+        iframe.addEventListener('load', () => {
+            isDragging = false;
+            offsetX = 0;
+            offsetY = 0;
+            const overlay = document.createElement('div');
+            overlay.id = 'overlay';
+            overlay.style.position = 'absolute';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '80%';
+            overlay.style.zIndex = '10';
+            overlay.style.background = 'transparent';
+
+            videoContainer.appendChild(overlay);
+
+            overlay.addEventListener('mousedown', (e) => {
+                console.log('****mousedown detected on overlay');
+                isDragging = true;
+                offsetX = e.clientX - videoContainer.getBoundingClientRect().left;
+                offsetY = e.clientY - videoContainer.getBoundingClientRect().top;
+            });
+
+            overlay.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    videoContainer.style.left = `${e.clientX - offsetX}px`;
+                    videoContainer.style.top = `${e.clientY - offsetY}px`;
+                }
+            });
+
+            overlay.addEventListener('mouseup', () => {
+                // console.log("--------Compose_call_ui - mouseup");
+                isDragging = false;
+            });
+
+            // makeResizable(videoContainer);
+            // makeResizable(videoContainer, iframe);
+            setTimeout(() => {
+                const videoContainer = document.getElementById("video-container");
+                const iframe = videoContainer?.querySelector("iframe") as HTMLIFrameElement;
+                if (videoContainer && iframe) {
+                    makeResizable(videoContainer, iframe);
+                    addExitButton(videoContainer, iframe);
+                    loadingBar.style.display = "none"; // Скрываем бар загрузки
+                    iframe.style.display = "block"; 
+                }
+            }, 1000);
+        });
     }
+
 }
 
 function makeResizable(videoContainer: HTMLElement, iframe: HTMLIFrameElement) {
@@ -271,7 +287,7 @@ function makeResizable(videoContainer: HTMLElement, iframe: HTMLIFrameElement) {
 
         function doResize(e: MouseEvent) {
             if (!isResizing) return;
-            
+
             // Новые размеры iframe
             const newWidth = startWidth + (e.clientX - startX);
             const newHeight = startHeight + (e.clientY - startY);
@@ -294,6 +310,100 @@ function makeResizable(videoContainer: HTMLElement, iframe: HTMLIFrameElement) {
 
         window.addEventListener("mousemove", doResize);
         window.addEventListener("mouseup", stopResize);
+    });
+}
+
+function addExitButton(videoContainer: HTMLElement, iframe: HTMLIFrameElement) {
+    if (!videoContainer || !iframe) return;
+
+    const exitButton = document.createElement("button");
+    exitButton.innerText = "✖";
+    exitButton.style.position = "absolute";
+    exitButton.style.top = "10px";
+    exitButton.style.right = "10px";
+    exitButton.style.width = "35px";
+    exitButton.style.height = "35px";
+    exitButton.style.background = "rgba(255, 0, 0, 0.7)";
+    exitButton.style.color = "white";
+    exitButton.style.border = "none";
+    exitButton.style.borderRadius = "50%";
+    exitButton.style.cursor = "pointer";
+    exitButton.style.zIndex = "10001"; // Выше iframe
+    exitButton.style.fontSize = "18px";
+    exitButton.style.display = "flex";
+    exitButton.style.alignItems = "center";
+    exitButton.style.justifyContent = "center";
+
+    // Добавляем кнопку в контейнер
+    videoContainer.appendChild(exitButton);
+
+    // Функция выхода (закрытие iframe)
+    exitButton.addEventListener("click", () => {
+        videoContainer.innerHTML = ""; // Удаляем iframe
+        // videoContainer.style.display = "none"; // Скрываем контейнер
+        showEnterButton(url_video); // Показываем кнопку "Войти"
+    });
+
+    // Обновляем позицию кнопки
+    function updateExitButtonPosition() {
+        const iframeRect = iframe.getBoundingClientRect();
+        const containerRect = videoContainer.getBoundingClientRect();
+        exitButton.style.left = `${iframeRect.left - containerRect.left + iframeRect.width - 50}px`;
+        exitButton.style.top = `${iframeRect.top - containerRect.top + 10}px`;
+    }
+
+    updateExitButtonPosition();
+    new ResizeObserver(updateExitButtonPosition).observe(iframe);
+}
+
+export function showEnterButton(url: string) {
+    const videoContainer = document.getElementById("video-container");
+    if (!videoContainer) return;
+
+    const enterButton = document.createElement("button");
+    enterButton.innerText = "Войти в видео";
+    enterButton.style.position = "absolute"; // Привязываем к экрану, но позиционируем как у videoContainer
+    enterButton.style.width = "120px";
+    enterButton.style.height = "60px";
+    enterButton.style.background = "green";
+    enterButton.style.color = "white";
+    enterButton.style.border = "none";
+    enterButton.style.borderRadius = "5px";
+    enterButton.style.cursor = "pointer";
+    enterButton.style.fontSize = "16px";
+    enterButton.style.zIndex = "10001"; // Поверх всех элементов
+
+    // Удаляем кнопку "Войти", если она уже есть
+    const existingButton = document.getElementById("enter-button");
+    if (existingButton) {
+        existingButton.remove();
+    }
+
+    // Добавляем ID для кнопки, чтобы можно было ее легко удалить
+    enterButton.id = "enter-button";
+
+    // Добавляем кнопку в body (НЕ внутрь videoContainer!)
+    document.body.appendChild(enterButton);
+
+    // Функция обновления позиции кнопки
+    function updateEnterButtonPosition() {
+        if (!videoContainer) return;
+        const rect = videoContainer.getBoundingClientRect();
+
+        // Размещаем кнопку в том же месте, где была кнопка "Выйти"
+        enterButton.style.left = `${rect.left + rect.width / 2}px`; // Отступ справа
+        enterButton.style.top = `${rect.top + 150}px`; // Отступ сверху
+    }
+
+    updateEnterButtonPosition(); // Устанавливаем начальное положение кнопки
+
+    // Обновляем положение кнопки при изменении размера окна
+    window.addEventListener("resize", updateEnterButtonPosition);
+
+    // При нажатии создаем конференцию заново
+    enterButton.addEventListener("click", () => {
+        document.body.removeChild(enterButton); // Удаляем кнопку "Войти"
+        insert_audio_call_url(url);
     });
 }
 

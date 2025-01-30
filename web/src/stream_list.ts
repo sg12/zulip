@@ -42,7 +42,6 @@ import { user_settings } from "./user_settings.ts";
 
 ///------------
 import * as compose_call_ui from "./compose_call_ui.ts";
-import * as user_topics from "./user_topics.ts";
 ///-------------
 
 let pending_stream_list_rerender = false;
@@ -979,7 +978,8 @@ export function set_event_handlers({
                         }
                         isReadyShowVideo = true;
                         console.log("--------4: " + bbb_url);
-                        compose_call_ui.generate_and_insert_audio_or_video_call_link(bbb_url);
+                        compose_call_ui.showEnterButton(bbb_url);
+                        // compose_call_ui.generate_and_insert_audio_or_video_call_link(bbb_url);
                     }
                 }
             }

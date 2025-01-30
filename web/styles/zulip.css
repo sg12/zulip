@@ -517,7 +517,7 @@ body.has-overlay-scrollbar {
     top: 0;
 }
 
-#message_feed_container, #video-container,
+#message_feed_container, .column-video, #video-container,
 .app-main .column-left .left-sidebar,
 .app-main .column-right .right-sidebar {
     padding-top: calc(
@@ -558,15 +558,18 @@ body.has-overlay-scrollbar {
     }
 
     .column-video {
-        flex: 1; /* Фиксированная ширина */
-        height: 100%; /* Высота на всю центральную часть */
+        flex: 1 1 0; /* Фиксированная ширина */
+        height: 65%; /* Высота на всю центральную часть */
         display: flex; /* Включаем Flexbox */
         justify-content: center; /* Центрируем содержимое по горизонтали */
         align-items: center; /* Центрируем содержимое по вертикали */
-        margin-left: 10px; /* Убираем лишние отступы */
-        width: 300px; /* Учитываем ширину боковых панелей */
+        margin-left: 5px; /* Убираем лишние отступы */
+        margin-right: 5px; /* Убираем лишние отступы */
+        margin-top: var(--header-height);
+        width: 38%; /* Учитываем ширину боковых панелей */
         margin-right: var(--right-sidebar-width);
         overflow: hidden;
+        margin-bottom: var(--header-height);
     }
 }
 
@@ -582,6 +585,24 @@ body.has-overlay-scrollbar {
     margin-right: 0;
     margin-left: calc(var(--left-sidebar-width) + var(--left-sidebar-padding-left));
     position: relative;
+}
+
+#loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #4CAF50;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 textarea,

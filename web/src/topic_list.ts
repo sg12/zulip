@@ -17,7 +17,6 @@ import type { TopicInfo } from "./topic_list_data.ts";
 import * as vdom from "./vdom.ts";
 
 import * as compose_call_ui from "./compose_call_ui.ts";
-import * as user_topics from "./user_topics.ts";
 
 /*
     Track all active widgets with a Map by stream_id.
@@ -397,7 +396,8 @@ export function initialize({
                     const char_code = topic.split('').map(char => char.charCodeAt(0)).join('');
                     const bbb_url2 = bbb_url + "-" + char_code;
                     console.log("--------5: " + char_code);
-                    compose_call_ui.generate_and_insert_audio_or_video_call_link(bbb_url2);
+                    // compose_call_ui.generate_and_insert_audio_or_video_call_link(bbb_url2);
+                    compose_call_ui.showEnterButton(bbb_url2);
                 }
             }
             e.preventDefault();
