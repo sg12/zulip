@@ -8,7 +8,9 @@
         <div class="clear-float"></div>
     </div>
     <div class="sidebar-wrapper">
+        {{#if is_admin}}
         <div class="tab-container"></div>
+        {{/if}}
         <div class="sidebar left" data-simplebar data-simplebar-tab-index="-1">
             <div class="sidebar-list dark-grey small-text">
                 <ul class="normal-settings-list">
@@ -24,6 +26,7 @@
                         <i class="sidebar-item-icon fa fa-sliders" aria-hidden="true"></i>
                         <div class="text">{{t "Preferences" }}</div>
                     </li>
+                    {{#if is_admin}}
                     <li class="sidebar-item" tabindex="0" data-section="notifications">
                         <i class="sidebar-item-icon fa fa-exclamation-triangle" aria-hidden="true"></i>
                         <div class="text">{{t "Notifications" }}</div>
@@ -38,16 +41,19 @@
                         <i class="sidebar-item-icon fa fa-book" aria-hidden="true"></i>
                         <div class="text">{{t "Alert words" }}</div>
                     </li>
+                    {{/if}}
                     {{#if show_uploaded_files_section}}
                     <li class="sidebar-item" tabindex="0" data-section="uploaded-files">
                         <i class="sidebar-item-icon fa fa-paperclip" aria-hidden="true"></i>
                         <div class="text">{{t "Uploaded files" }}</div>
                     </li>
                     {{/if}}
+                    {{#if is_admin}}
                     <li class="sidebar-item" tabindex="0" data-section="topics">
                         <i class="sidebar-item-icon zulip-icon zulip-icon-topic" aria-hidden="true"></i>
                         <div class="text">{{t "Topics" }}</div>
                     </li>
+                    {{/if}}
                     <li class="sidebar-item" tabindex="0" data-section="muted-users">
                         <i class="sidebar-item-icon fa fa-eye-slash" aria-hidden="true"></i>
                         <div class="text">{{t "Muted users" }}</div>
