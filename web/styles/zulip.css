@@ -547,7 +547,7 @@ body.has-overlay-scrollbar {
         width: 240px;
     }
 
-    
+
 
     .column-middle {
         flex: 0 0 auto; /* Занимает оставшееся пространство */
@@ -558,15 +558,26 @@ body.has-overlay-scrollbar {
     }
 
     .column-video {
-        flex: 1 1 0; /* Фиксированная ширина */
-        height: 65%; /* Высота на всю центральную часть */
+/* <<<<<<< HEAD
+        flex: 1 1 0; 
+        height: 65%; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        margin-left: 5px; 
+        margin-right: 5px; 
+        margin-top: var(--header-height);
+        width: 38%; Учитываем ширину боковых панелей
+=======  */
+        position: sticky;
+        top: calc((var(--header-padding-bottom) - 3px));
+        flex: 1; /* Фиксированная ширина */
+        height: 100%; /* Высота на всю центральную часть */
         display: flex; /* Включаем Flexbox */
         justify-content: center; /* Центрируем содержимое по горизонтали */
         align-items: center; /* Центрируем содержимое по вертикали */
-        margin-left: 5px; /* Убираем лишние отступы */
-        margin-right: 5px; /* Убираем лишние отступы */
-        margin-top: var(--header-height);
-        width: 38%; /* Учитываем ширину боковых панелей */
+        margin-left: 10px; /* Убираем лишние отступы */
+/* >>>>>>> dev_scrollVideoContainer */
         margin-right: var(--right-sidebar-width);
         overflow: hidden;
         margin-bottom: var(--header-height);
