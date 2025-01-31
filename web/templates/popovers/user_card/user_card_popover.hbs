@@ -150,6 +150,21 @@
                 {{/if}}
             </a>
         </li>
+        {{#if isPin}}
+            <li role="none" class="popover-menu-list-item link-item">
+                <a role="menuitem" class="sidebar-popover-unpin-from-top popover-menu-link hidden-for-spectators" tabindex="0">
+                    <i class="popover-menu-icon zulip-icon zulip-icon-unpin" aria-hidden="true"></i>
+                    <span class="popover-menu-label">{{t "Unpin user from top" }}</span>
+                </a>
+            </li>
+        {{else}}
+            <li role="none" class="popover-menu-list-item link-item">
+                <a role="menuitem" class="sidebar-popover-pin-to-top popover-menu-link hidden-for-spectators" tabindex="0">
+                    <i class="popover-menu-icon zulip-icon zulip-icon-pin" aria-hidden="true"></i>
+                    <span class="popover-menu-label">{{t "Pin user to top" }}</span>
+                </a>
+            </li>
+        {{/if}}
         {{#if can_send_private_message}}
             <li role="none" class="popover-menu-list-item link-item hidden-for-spectators">
                 <a role="menuitem" class="popover-menu-link {{ private_message_class }}" tabindex="0">

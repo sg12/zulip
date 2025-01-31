@@ -50,24 +50,43 @@ export function close(): void {
     update_private_messages();
 }
 
-export function _build_direct_messages_list(): vdom.Tag<PMNode> {
-    const $filter = $<HTMLInputElement>(".direct-messages-list-filter").expectOne();
-    const search_term = $filter.val()!;
-    const conversations = pm_list_data.get_conversations(search_term);
-    const pm_list_info = pm_list_data.get_list_info(zoomed, search_term);
-    const conversations_to_be_shown = pm_list_info.conversations_to_be_shown;
-    const more_conversations_unread_count = pm_list_info.more_conversations_unread_count;
+async function getConversationsWithPinned(force = false): Promise<{ pinned, others }> {
+    const conversations = pm_list_data.get_conversations();
+    const pinned_conversations = await pm_list_data.getPinnedConversations(force);
 
-    const pm_list_nodes = conversations_to_be_shown.map((conversation) =>
-        pm_list_dom.keyed_pm_li(conversation),
-    );
+    const pinned = [];
+    const others = [];
 
-    const all_conversations_shown = conversations_to_be_shown.length === conversations.length;
-    if (!all_conversations_shown) {
-        pm_list_nodes.push(
-            pm_list_dom.more_private_conversations_li(more_conversations_unread_count),
-        );
+    for (const conversation of conversations) {
+        if (pinned_conversations.includes(conversation.user_ids_string)) {
+            pinned.push(conversation);
+        } else {
+            others.push(conversation);
+        }
     }
+
+    return { pinned, others };
+}
+
+export async function _build_direct_messages_list(force = false): Promise<vdom.Tag<PMNode>> {
+    const { pinned, others } = await getConversationsWithPinned(force);
+
+    const pm_list_nodes = [];
+
+    if (pinned.length > 0) {
+        pm_list_nodes.push(pm_list_dom.pm_subheader("Pinned"));
+        for (const conversation of pinned) {
+            pm_list_nodes.push(pm_list_dom.keyed_pm_li(conversation));
+        }
+    }
+
+    if (others.length > 0) {
+        pm_list_nodes.push(pm_list_dom.pm_subheader("All"));
+        for (const conversation of others) {
+            pm_list_nodes.push(pm_list_dom.keyed_pm_li(conversation));
+        }
+    }
+
     const dom_ast = pm_list_dom.pm_ul(pm_list_nodes);
 
     return dom_ast;
@@ -88,7 +107,7 @@ function set_dom_to(new_dom: vdom.Tag<PMNode>): void {
     prior_dom = new_dom;
 }
 
-export function update_private_messages(): void {
+export async function update_private_messages(force = false): Promise<void> {
     if (private_messages_collapsed) {
         // In the collapsed state, we will still display the current
         // conversation, to preserve the UI invariant that there's
@@ -106,7 +125,7 @@ export function update_private_messages(): void {
             prior_dom = undefined;
         }
     } else {
-        const new_dom = _build_direct_messages_list();
+        const new_dom = await _build_direct_messages_list(force);
         set_dom_to(new_dom);
     }
     // Make sure to update the left sidebar heights after updating
@@ -299,5 +318,4 @@ export function initialize(): void {
 
     //     toggle_sidebar_user_card_popover($target);
     // });
-
 }
