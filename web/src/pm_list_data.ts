@@ -7,13 +7,40 @@ import * as people from "./people.ts";
 import * as pm_conversations from "./pm_conversations.ts";
 import * as unread from "./unread.ts";
 import * as user_status from "./user_status.ts";
+import * as channel from "./channel.ts";
 import type {UserStatusEmojiInfo} from "./user_status.ts";
+
+let cached_pinned_conversations: string[] = [];
 
 // Maximum number of conversation threads to show in default view.
 const max_conversations_to_show = 8;
 
 // Maximum number of conversation threads to show in default view with unreads.
 const max_conversations_to_show_with_unreads = 15;
+
+export async function getPinnedConversations(force = false): Promise<string[]> {
+    if (!force && cached_pinned_conversations.length > 0) {
+        return cached_pinned_conversations;
+    }
+
+    const url = "/json/users/me/favorites";
+    return new Promise((resolve, reject) => {
+        channel.get({
+            url: url,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success(response) {
+                cached_pinned_conversations = response.uids || [];
+                resolve(cached_pinned_conversations);
+            },
+            error() {
+                console.error("Error getting info about topping");
+                reject([]);
+            },
+        });
+    });
+}
 
 export function get_active_user_ids_string(): string | undefined {
     const filter = narrow_state.filter();
@@ -129,7 +156,7 @@ export function get_conversations(search_string = ""): DisplayObject[] {
             user_id,
         };
         display_objects.push(display_object);
-        
+
     }
     return display_objects;
 }

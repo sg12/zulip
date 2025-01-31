@@ -30,6 +30,8 @@ import * as overlays from "./overlays.ts";
 import {page_params} from "./page_params.ts";
 import type {User} from "./people.ts";
 import * as people from "./people.ts";
+import {update_private_messages} from "./pm_list.ts";
+import {getPinnedConversations} from "./pm_list_data.ts";
 import * as popover_menus from "./popover_menus.ts";
 import {hide_all} from "./popovers.ts";
 import * as rows from "./rows.ts";
@@ -331,7 +333,7 @@ function get_user_card_popover_data(
     return args;
 }
 
-function show_user_card_popover(
+async function show_user_card_popover(
     user: User,
     $popover_element: JQuery,
     is_sender_popover: boolean,
@@ -341,7 +343,7 @@ function show_user_card_popover(
     popover_placement: tippy.Placement,
     show_as_overlay = false,
     on_mount?: (instance: tippy.Instance) => void,
-): void {
+): Promise<void> {
     let popover_html;
     let args;
     if (user.is_inaccessible_user) {
@@ -354,12 +356,16 @@ function show_user_card_popover(
         };
         popover_html = render_user_card_popover_for_unknown_user(args);
     } else {
+        const pinned_conversations = await getPinnedConversations();
+        const user_isPinned = pinned_conversations.includes(user.user_id.toString());
+
         args = get_user_card_popover_data(
             user,
             has_message_context,
             is_sender_popover,
             private_msg_class,
         );
+        args = { ...args, isPin: user_isPinned };
         popover_html = render_user_card_popover(args);
     }
 
@@ -718,6 +724,50 @@ function register_click_handlers(): void {
             });
         }
         user_deactivation_ui.confirm_reactivation(user_id, handle_confirm, true);
+    });
+
+    $("body").on("click", ".user-card-popover-actions .sidebar-popover-pin-to-top", function (e) {
+        const user_id = elem_to_user_id($(this).parents("ul"));
+        const url = "/json/users/me/favorites/" + user_id;
+
+        channel.post({
+            url: url,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success() {
+                update_private_messages(true); // Обновляем личные сообщения
+                hide_all_user_card_popovers();
+            },
+            error(err) {
+                console.error("Error pinning to top", err.responseJSON);
+            },
+        });
+
+        e.stopPropagation();
+        e.preventDefault();
+    });
+
+    $("body").on("click", ".user-card-popover-actions .sidebar-popover-unpin-from-top", function (e) {
+        const user_id = elem_to_user_id($(this).parents("ul"));
+        const url = "/json/users/me/favorites/" + user_id;
+
+        channel.del({
+            url: url,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success() {
+                update_private_messages(true); // Обновляем личные сообщения
+                hide_all_user_card_popovers();
+            },
+            error(err) {
+                console.error("Error unpinning from top", err.responseJSON);
+            },
+        });
+
+        e.stopPropagation();
+        e.preventDefault();
     });
 
     $("body").on("click", ".user-card-popover-actions .view_full_user_profile", function (e) {

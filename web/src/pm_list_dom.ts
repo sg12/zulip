@@ -1,8 +1,9 @@
+import { $t } from "./i18n.ts";
 import _ from "lodash";
 
 import render_more_private_conversations from "../templates/more_pms.hbs";
 import render_pm_list_item from "../templates/pm_list_item.hbs";
-
+import render_pm_subheader from "../templates/pm_subheader.hbs";
 import * as vdom from "./vdom.ts";
 
 // TODO/typescript: Move this to pm_list_data
@@ -18,7 +19,16 @@ export type PMNode =
     | {
           type: "more_items";
           more_conversations_unread_count: number;
+      }
+    | {
+          type: "subheader";
+          subheader_name: string;
       };
+
+const subheaderTranslations: { [key: string]: string } = {
+    "Pinned": $t({ defaultMessage: "Pinned" }),
+    "All": $t({ defaultMessage: "Another direct message" }),
+};
 
 export function keyed_pm_li(conversation: PMListConversation): vdom.Node<PMNode> {
     const render = (): string => render_pm_list_item(conversation);
@@ -58,6 +68,24 @@ export function more_private_conversations_li(
         eq,
         type: "more_items",
         more_conversations_unread_count,
+    };
+}
+
+export function pm_subheader(subheader_name: string): vdom.Node<PMNode> {
+    const translated_subheader_name = subheaderTranslations[subheader_name] || subheader_name;
+    const render = (): string => render_pm_subheader({ subheader_name: translated_subheader_name });
+
+    const eq = (other: PMNode): boolean =>
+        other.type === "subheader" && subheader_name === other.subheader_name;
+
+    const key = `subheader-${subheader_name}`;
+
+    return {
+        key,
+        render,
+        eq,
+        type: "subheader",
+        subheader_name,
     };
 }
 
