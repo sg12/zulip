@@ -12,6 +12,7 @@ import * as scroll_util from "./scroll_util.ts";
 import * as ui_util from "./ui_util.ts";
 import type {FullUnreadCountsData} from "./unread.ts";
 import * as vdom from "./vdom.ts";
+import * as topic_list from "./topic_list.ts";
 
 // import { toggle_sidebar_user_card_popover } from "./user_card_popover";
 
@@ -269,7 +270,7 @@ export function initialize(): void {
     $(".direct-messages-container").on("click", "#show-more-direct-messages", (e) => {
         e.stopPropagation();
         e.preventDefault();
-
+        
         zoom_in();
     });
 
@@ -300,6 +301,12 @@ export function initialize(): void {
 
     $(".direct-messages-container").on("mouseleave", () => {
         $("#direct-messages-section-header").removeClass("hover-over-dm-section");
+    });
+
+    $(".direct-messages-container").on("click", ".dm-list a", function (e) {
+        e.stopPropagation();
+        console.log("--------222222");
+        topic_list.clearButtonsAndPropsForVideo();
     });
 
     // Добавляем обработчик для кнопки меню
