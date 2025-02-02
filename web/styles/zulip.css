@@ -517,7 +517,7 @@ body.has-overlay-scrollbar {
     top: 0;
 }
 
-#message_feed_container, .column-video, #video-container,
+#message_feed_container,
 .app-main .column-left .left-sidebar,
 .app-main .column-right .right-sidebar {
     padding-top: calc(
@@ -558,30 +558,35 @@ body.has-overlay-scrollbar {
     }
 
     .column-video {
-/* <<<<<<< HEAD
-        flex: 1 1 0; 
-        height: 65%; 
+        flex: 1 1 auto; 
+        min-height: 400px;
+        max-height: 65vh;
         display: flex; 
         justify-content: center; 
         align-items: center; 
         margin-left: 5px; 
         margin-right: 5px; 
-        margin-top: var(--header-height);
-        width: 38%; Учитываем ширину боковых панелей
-=======  */
-        position: sticky;
+        width: 38%; 
         top: calc((var(--header-padding-bottom) - 3px));
-        flex: 1; /* Фиксированная ширина */
-        height: 100%; /* Высота на всю центральную часть */
-        display: flex; /* Включаем Flexbox */
-        justify-content: center; /* Центрируем содержимое по горизонтали */
-        align-items: center; /* Центрируем содержимое по вертикали */
-        margin-left: 10px; /* Убираем лишние отступы */
-/* >>>>>>> dev_scrollVideoContainer */
         margin-right: var(--right-sidebar-width);
         overflow: hidden;
         margin-bottom: var(--header-height);
+        position: "fixed"; 
     }
+/* 
+    #floating-video-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 320px;
+        height: 180px;
+        z-index: 10003;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        display: none;
+    } */
 }
 
 /* .column-middle,
@@ -599,15 +604,13 @@ body.has-overlay-scrollbar {
 }
 
 #loading-spinner {
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     border: 5px solid rgba(0, 0, 0, 0.1);
     border-top-color: #4CAF50;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    position: fixed;
     transform: translate(-50%, -50%);
 }
 

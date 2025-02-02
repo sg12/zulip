@@ -374,32 +374,26 @@ export function initialize({
             if ($(e.target).hasClass("visibility-policy-icon")) {
                 return;
             }
-            console.log("--------00");
             const $stream_row = $(e.target).parents(".narrow-filter");
             const stream_id_string = $stream_row.attr("data-stream-id");
             assert(stream_id_string !== undefined);
             const stream_id = Number.parseInt(stream_id_string, 10);
             const topic = $(e.target).parents("li").attr("data-topic-name");
             const is_audio_topic = topic.startsWith("🔊");
-            on_topic_click(stream_id, topic, is_audio_topic);
-            const videoContainer = document.getElementById("video-container"); // очистка предыдущего видеоконтейнера, если он активен
 
-            if (is_audio_topic) {
-                if (videoContainer) {
-                    videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
-                    videoContainer.innerHTML = ""; //очитска вего (она работает)
-                }
-                console.log("--------3: " + topic);
-                const bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
-                console.log("--------4: " + bbb_url);
-                if (bbb_url.length > 0) {
-                    const char_code = topic.split('').map(char => char.charCodeAt(0)).join('');
-                    const bbb_url2 = bbb_url + "-" + char_code;
-                    console.log("--------5: " + char_code);
-                    // compose_call_ui.generate_and_insert_audio_or_video_call_link(bbb_url2);
-                    compose_call_ui.showEnterButton(bbb_url2);
-                }
+            on_topic_click(stream_id, topic, is_audio_topic);
+            const char_code = compose_call_ui.topicNameToChar(topic);
+            const isSameTopic = (char_code == compose_call_ui.CURRENT_TOPIC_CHARNAME);
+            
+            if (is_audio_topic){
+                if(!isSameTopic || !compose_call_ui.isShowingVideo())
+                    clickVideoTopic(stream_id, topic, char_code);
+                else if(compose_call_ui.isShowingVideo())
+                    compose_call_ui.clickLeftSidebar(isSameTopic);
             }
+            else
+                compose_call_ui.clickLeftSidebar(isSameTopic);
+
             e.preventDefault();
             e.stopPropagation();
         },
@@ -410,4 +404,16 @@ export function initialize({
         assert(stream_id !== undefined);
         active_widgets.get(stream_id)?.build();
     });
+}
+
+export function clickVideoTopic(stream_id: number, topic_name: string, char_code: string) {
+    const bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
+    if (bbb_url.length > 0) {
+        const bbb_url2 = bbb_url + "-" + char_code;
+        compose_call_ui.showEnterButton(bbb_url2, topic_name);
+    }
+}
+
+export function clearButtonsAndPropsForVideo() {
+    compose_call_ui.clickLeftSidebar(false);
 }

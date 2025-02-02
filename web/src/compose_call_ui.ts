@@ -1,24 +1,20 @@
 import $ from "jquery";
-import { z } from "zod";
-
-import * as channel from "./channel.ts";
 import * as compose_call from "./compose_call.ts";
-import { get_recipient_label } from "./compose_closed_ui.ts";
-import * as compose_ui from "./compose_ui.ts";
-import { $t, $t_html } from "./i18n.ts";
-import * as rows from "./rows.ts";
-import { current_user, realm } from "./state_data.ts";
+import { current_user } from "./state_data.ts";
 import * as narrow_state from "./narrow_state.ts";
-import * as ui_report from "./ui_report.ts";
 import * as util from "./util.ts";
 
 import { SignJWT } from 'jose';
-import render_audio_iframe from "../templates/audio_iframe.hbs";
 
 let api: any = null;
 let isMicMuted = true;
 let isCameraMuted = true;
 let isScreenSharing = false;
+let url_video = "";
+let topicNameVideo = "";
+let videoContainer: HTMLElement;
+let isFloatingVideo = false;
+export let CURRENT_TOPIC_CHARNAME: string = "";
 
 function updateMicIcon() {
     const micIcon = document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-mic`);
@@ -41,12 +37,6 @@ function updateScreenIcon() {
     }
 }
 
-const call_response_schema = z.object({
-    msg: z.string(),
-    result: z.string(),
-    url: z.string(),
-});
-
 export function update_audio_and_video_chat_button_display(): void {
     update_audio_chat_button_display();
     update_video_chat_button_display();
@@ -64,60 +54,27 @@ export function update_audio_chat_button_display(): void {
     $(".message-edit-feature-group .audio_link").toggle(show_audio_chat_button);
 }
 
-function insert_video_call_url(url: string, $target_textarea: JQuery<HTMLTextAreaElement>): void {
-    const link_text = $t({ defaultMessage: "Join video call." });
-    compose_ui.insert_syntax_and_focus(`[${link_text}](${url})`, $target_textarea, "block", 1);
-}
-
-function insert_audio_call_url_old(url: string, $target_textarea: JQuery<HTMLTextAreaElement>): void {
-    const link_text = $t({ defaultMessage: "Join voice call." });
-    compose_ui.insert_syntax_and_focus(`[${link_text}](${url})`, $target_textarea, "block", 1);
-}
-
-let defaultVideoX = 0;
-let defaultVideoY = 0;
-let url_video = "";
 
 function insert_audio_call_url(url: string): void {
-    // const container = $("#message_feed_container");
-    // container.hide();
     url_video = url;
-    let videoContainer = document.getElementById("video-container");
-
+    // let videoContainer = document.getElementById("floating-video-container");
+    if (!videoContainer) initVideoContainer();
     if (!videoContainer) return;
 
-    videoContainer.style.display = "block"; // Показываем контейнер
+    const videoStaticContainer = document.getElementById("video-container");
+    if (videoStaticContainer)
+        showLoadBar(videoStaticContainer);
+
+    updateVideoFramePosition();
+    // console.log("-------videoContainer.style.left: " + videoContainer.style.left);
     videoContainer.innerHTML = "";
-
-    const loadingBar = document.createElement("div");
-    loadingBar.id = "loading-spinner";
-    videoContainer.appendChild(loadingBar);
-
-    const rect = videoContainer.getBoundingClientRect();
-    videoContainer.style.position = "absolute";
-    videoContainer.style.flex = "1";
-    // videoContainer.style.position = "fixed";
-    
-    if (defaultVideoX == 0)
-        defaultVideoX = rect.left;
-    videoContainer.style.left = `${defaultVideoX}px`;
-    if (defaultVideoY == 0)
-        videoContainer.style.top = `${defaultVideoY}px`;
-    videoContainer.style.zIndex = "9999";
-    videoContainer.style.resize = "both";
-
     const cleanUrl = url.split('#')[0];
-
-    // Вставляем ссылку в iframe с использованием Jitsi Meet API
-    const iframeHeight = Math.floor(rect.right - rect.left - 80);
-    const iframeWidth = Math.floor(rect.right - rect.left);
+    // // Вставляем ссылку в iframe с использованием Jitsi Meet API
     const domain = "jitsi-connectrm.ru:8443";
     const roomName = encodeURIComponent(cleanUrl.split('/').pop()?.split('?')[0] || ""); // Кодируем имя комнаты
     const jwt = encodeURIComponent(cleanUrl.split('jwt=')[1] || ""); // Кодируем JWT
     const options = {
         roomName: roomName,
-        width: iframeWidth + "px",
-        height: iframeHeight + "px",
         parentNode: videoContainer,
         jwt: jwt,
         configOverwrite: { startWithAudioMuted: true, startWithVideoMuted: true, prejoinConfig: { enabled: false } },
@@ -134,9 +91,42 @@ function insert_audio_call_url(url: string): void {
     };
     api = new JitsiMeetExternalAPI(domain, options);
 
-    document.querySelector('iframe').setAttribute('allow', 'camera; microphone; fullscreen; display-capture');
-    console.log("--------Compose_call_ui");
-    // Подписываемся на событие входа в конференцию
+    CURRENT_TOPIC_CHARNAME = topicNameToChar(topicNameVideo);
+
+    const columnMiddle = document.getElementById("video-container");
+    const resizeObserver = new ResizeObserver(() => {
+        requestAnimationFrame(updateVideoFramePosition);
+    });
+
+    if (columnMiddle)
+        resizeObserver.observe(columnMiddle);
+    // new ResizeObserver(updateVideoFramePosition).observe(columnMiddle);
+
+    addListenersVideo();
+
+    const iframe = document.querySelector('iframe');
+    if (iframe) {
+        iframe.style.display = "none";
+        iframe.addEventListener('load', () => {
+            setTimeout(() => {
+                const iframe = videoContainer.querySelector("iframe") as HTMLIFrameElement;
+                if (iframe) {
+                    // makeResizable(videoContainer, iframe);
+                    // addExitButton();
+                    // addTestButton();
+                    // loadingBar.style.display = "none"; // Скрываем бар загрузки
+                    removeLoadBar();
+                    iframe.style.display = "block";
+                    // handleOverlayMouseEvents(videoContainer, overlay, iframe);
+                    // logAbsolutePositions();
+                }
+            }, 1000);
+        });
+    }
+
+}
+
+function addListenersVideo() {
     api.addListener('videoConferenceJoined', () => {
         const controls = document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #custom-controls`);
         if (controls) {
@@ -183,144 +173,181 @@ function insert_audio_call_url(url: string): void {
         if (videoContainer) {
             videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
             videoContainer.innerHTML = ""; //очитска вего (она работает)
-            isDragging = false;
-            offsetX = 0;
-            offsetY = 0;
         }
+        showEnterButton(url_video, topicNameVideo);
         updateScreenIcon();
     });
-
-    let isDragging = false;
-    let offsetX = 0, offsetY = 0;
-
-    const iframe = document.querySelector('iframe');
-    if (iframe) {
-        iframe.style.display = "none";
-        iframe.addEventListener('load', () => {
-            isDragging = false;
-            offsetX = 0;
-            offsetY = 0;
-            const overlay = document.createElement('div');
-            overlay.id = 'overlay';
-            overlay.style.position = 'absolute';
-            overlay.style.top = '0';
-            overlay.style.left = '0';
-            overlay.style.width = '100%';
-            overlay.style.height = '80%';
-            overlay.style.zIndex = '10';
-            overlay.style.background = 'transparent';
-
-            videoContainer.appendChild(overlay);
-
-            overlay.addEventListener('mousedown', (e) => {
-                console.log('****mousedown detected on overlay');
-                isDragging = true;
-                offsetX = e.clientX - videoContainer.getBoundingClientRect().left;
-                offsetY = e.clientY - videoContainer.getBoundingClientRect().top;
-            });
-
-            overlay.addEventListener('mousemove', (e) => {
-                if (isDragging) {
-                    videoContainer.style.left = `${e.clientX - offsetX}px`;
-                    videoContainer.style.top = `${e.clientY - offsetY}px`;
-                }
-            });
-
-            overlay.addEventListener('mouseup', () => {
-                // console.log("--------Compose_call_ui - mouseup");
-                isDragging = false;
-            });
-
-            // makeResizable(videoContainer);
-            // makeResizable(videoContainer, iframe);
-            setTimeout(() => {
-                const videoContainer = document.getElementById("video-container");
-                const iframe = videoContainer?.querySelector("iframe") as HTMLIFrameElement;
-                if (videoContainer && iframe) {
-                    makeResizable(videoContainer, iframe);
-                    addExitButton(videoContainer, iframe);
-                    loadingBar.style.display = "none"; // Скрываем бар загрузки
-                    iframe.style.display = "block"; 
-                }
-            }, 1000);
-        });
-    }
-
 }
 
-function makeResizable(videoContainer: HTMLElement, iframe: HTMLIFrameElement) {
-    if (!videoContainer || !iframe) return;
-
-    const resizer = document.createElement("div");
-    resizer.style.position = "absolute";
-    resizer.style.width = "15px";
-    resizer.style.height = "15px";
-    resizer.style.cursor = "nwse-resize";
-    resizer.style.background = "rgba(0, 0, 0, 0.5)"; // Сделаем его видимым
-    resizer.style.zIndex = "10000";
-    resizer.style.borderRadius = "3px";
-
-    // Добавляем ресайзер в контейнер
-    videoContainer.appendChild(resizer);
-
-    function updateResizerPosition() {
-        const iframeRect = iframe.getBoundingClientRect();
-        const containerRect = videoContainer.getBoundingClientRect();
-
-        // Позиционируем resizer относительно iframe внутри videoContainer
-        resizer.style.left = `${iframeRect.left - containerRect.left + iframeRect.width - 15}px`;
-        resizer.style.top = `${iframeRect.top - containerRect.top + iframeRect.height - 15}px`;
+function initVideoContainer() {
+    var htmlDoc = document.getElementById("floating-video-container");
+    if (htmlDoc) {
+        videoContainer = htmlDoc;
+        videoContainer.style.display = "block"; // Показываем контейнер
+        videoContainer.style.zIndex = "9999";
+        videoContainer.style.position = "fixed";
+        // videoContainer.style.background = "rgba(0, 0, 0, 0.1)";
+        // videoContainer.style.borderRadius = "10px";
+        // videoContainer.style.boxShadow = "0px 4px 10px rgba(0, 0, 0, 0.05)";
+        isFloatingVideo = false;
     }
+}
 
-    updateResizerPosition(); // Устанавливаем начальную позицию
+function updateVideoFramePosition() {
+    if (!videoContainer)
+        return;
+    if (!isFloatingVideo) {
+        const columnMiddle = document.getElementById("column-middle-container");
+        const rightSidebar = document.getElementById("right-sidebar-container");
+        const settingsContent = document.getElementById("settings_content");
+        const columnMiddlePosition = getAbsolutePosition(columnMiddle, "column-middle-container");
+        const rightSidebarPosition = getAbsolutePosition(rightSidebar, "right-sidebar-container");
+        const settingsContentPosition = getAbsolutePosition(settingsContent, "settings_conten");
+        const iframeLeft = columnMiddlePosition?.x + columnMiddlePosition?.width;
+        const iframeTop = columnMiddlePosition?.y + settingsContentPosition?.y - window.scrollY;
+        let iframeWidth = (rightSidebarPosition?.x - iframeLeft);
+        if (iframeWidth >= window.innerWidth * 0.33)
+            iframeWidth = window.innerWidth * 0.33;
+        if (rightSidebarPosition?.width == 0)
+            iframeWidth = window.innerWidth * 0.45;
+        const iframeHeight = window.innerHeight * 75 / 100;
+        videoContainer.style.left = `${iframeLeft + 5}px`;
+        videoContainer.style.width = `${iframeWidth}px`;
+        videoContainer.style.top = `${iframeTop + 12}px`;
+        videoContainer.style.height = `${iframeHeight}px`;
+    } else {
+        // videoContainer.style.removeProperty("top");
+        // videoContainer.style.removeProperty("left");
+        videoContainer.style.width = "320px";
+        videoContainer.style.height = "160px";
+        videoContainer.style.bottom = "20px";
+        videoContainer.style.right = "20px";
+    }
+}
 
-    let isResizing = false;
+export function restoreVideoPosition() {
+    videoContainer.style.removeProperty("bottom");
+    videoContainer.style.removeProperty("right");
+    isFloatingVideo = false;
+    updateVideoFramePosition(); 
+}
 
-    resizer.addEventListener("mousedown", (e) => {
-        e.preventDefault();
-        isResizing = true;
+export function topicNameToChar(topicName): string {
+    return topicName.split('').map(char => char.charCodeAt(0)).join('');
+}
 
-        let startX = e.clientX;
-        let startY = e.clientY;
-        let startWidth = iframe.clientWidth;
-        let startHeight = iframe.clientHeight;
+function moveVideoToCorner() {
+    videoContainer.style.removeProperty("top");
+    videoContainer.style.removeProperty("left");
+    // videoContainer.style.width = "320px";
+    // videoContainer.style.height = "160px";
+    // videoContainer.style.bottom = "20px";
+    // videoContainer.style.right = "20px";
+    // videoContainer.style.zIndex = "10003"; // Поверх всех элементов
+    isFloatingVideo = true;
+    updateVideoFramePosition();
+}
 
-        function doResize(e: MouseEvent) {
-            if (!isResizing) return;
+export function clickLeftSidebar(isSameTopic: boolean) {
+    if (!isShowingVideo()) {
+        if (isSameTopic) return; // if the same topic, but have no video, so need sho buttons
+        clearButtonsAndPropsForVideo();
+        return;
+    }
+    if (!isSameTopic && !isFloatingVideo)
+        moveVideoToCorner();
+    else if (isSameTopic && isFloatingVideo)
+        restoreVideoPosition();
+}
 
-            // Новые размеры iframe
-            const newWidth = startWidth + (e.clientX - startX);
-            const newHeight = startHeight + (e.clientY - startY);
+export function isShowingVideo(): boolean {
+    if (videoContainer && videoContainer.querySelector("iframe"))
+        return true;
+    else
+        return false;
+}
 
-            iframe.style.width = `${newWidth}px`;
-            iframe.style.height = `${newHeight}px`;
+function clearButtonsAndPropsForVideo() {
+    const enterButton = document.getElementById("enter-button");
+    if (enterButton) enterButton.remove();
+    const topicLabel = document.getElementById("topic-label");
+    if (topicLabel) topicLabel.remove();
+    removeLoadBar();
+}
 
-            // Подгоняем videoContainer
-            videoContainer.style.width = `${newWidth}px`;
-            videoContainer.style.height = `${newHeight}px`;
+function showLoadBar(loadContainer: HTMLElement) {
+    const loadingBar = document.createElement("div");
+    loadingBar.id = "loading-spinner";
+    const rect = loadContainer?.getBoundingClientRect();
+    if (rect) {
+        loadingBar.style.left = `${rect.left + rect.width / 2 - 50}px`; // Отступ справа
+        loadingBar.style.top = `${200}px`; // Отступ сверху
+    }
+    loadContainer?.appendChild(loadingBar);
+}
 
-            updateResizerPosition(); // Перемещаем ресайзер
-        }
+function removeLoadBar() {
+    const loadingBar = document.getElementById("loading-spinner");
+    if (loadingBar)
+        loadingBar.remove();
+}
 
-        function stopResize() {
-            isResizing = false;
-            window.removeEventListener("mousemove", doResize);
-            window.removeEventListener("mouseup", stopResize);
-        }
+function addTestButton() {
+    const testButton = document.createElement("button");
+    testButton.innerText = "!";
+    testButton.style.position = "fixed";
+    testButton.style.width = "35px";
+    testButton.style.height = "35px";
+    testButton.style.background = "rgba(255, 0, 0, 0.7)";
+    testButton.style.color = "white";
+    testButton.style.border = "none";
+    testButton.style.borderRadius = "50%";
+    testButton.style.cursor = "pointer";
+    testButton.style.zIndex = "10001"; // Выше iframe
+    testButton.style.fontSize = "18px";
 
-        window.addEventListener("mousemove", doResize);
-        window.addEventListener("mouseup", stopResize);
+    // Добавляем кнопку в контейнер
+    videoContainer.appendChild(testButton);
+
+    testButton.addEventListener("click", () => {
+        if (isFloatingVideo) restoreVideoPosition();
+        else moveVideoToCorner();
     });
+
+    // Обновляем позицию кнопки
+    function updateTestButtonPosition() {
+        const rect = videoContainer.getBoundingClientRect();
+        testButton.style.left = `${rect.left + rect.width - 80}px`;
+        testButton.style.top = `${rect.top + 10}px`;
+    }
+
+    updateTestButtonPosition();
+    new ResizeObserver(updateTestButtonPosition).observe(videoContainer);
 }
 
-function addExitButton(videoContainer: HTMLElement, iframe: HTMLIFrameElement) {
-    if (!videoContainer || !iframe) return;
+function getAbsolutePosition(element: any, name: string) {
+    if (!element) {
+        console.error(`❌ Элемент ${name} не найден!`);
+        return null;
+    }
 
+    const rect = element.getBoundingClientRect();
+    const absoluteX = rect.left + window.scrollX;
+    const absoluteY = rect.top + window.scrollY;// + getCSSVariableValue('--header-padding-bottom');
+
+    // console.log(`📍 [${name}] Абсолютные координаты: X=${absoluteX}, Y=${absoluteY}, Width=${rect.width}, Height=${rect.height}`);
+
+    // const headerPaddingBottom = getCSSVariableValue('--header-padding-bottom');
+    // console.log("🎯 Значение --header-padding-bottom:", headerPaddingBottom);
+
+    return { x: absoluteX, y: absoluteY, width: rect.width, height: rect.height };
+}
+
+function addExitButton() {
     const exitButton = document.createElement("button");
     exitButton.innerText = "✖";
-    exitButton.style.position = "absolute";
-    exitButton.style.top = "10px";
-    exitButton.style.right = "10px";
+
+    exitButton.style.position = "fixed";
     exitButton.style.width = "35px";
     exitButton.style.height = "35px";
     exitButton.style.background = "rgba(255, 0, 0, 0.7)";
@@ -330,9 +357,6 @@ function addExitButton(videoContainer: HTMLElement, iframe: HTMLIFrameElement) {
     exitButton.style.cursor = "pointer";
     exitButton.style.zIndex = "10001"; // Выше iframe
     exitButton.style.fontSize = "18px";
-    exitButton.style.display = "flex";
-    exitButton.style.alignItems = "center";
-    exitButton.style.justifyContent = "center";
 
     // Добавляем кнопку в контейнер
     videoContainer.appendChild(exitButton);
@@ -341,28 +365,52 @@ function addExitButton(videoContainer: HTMLElement, iframe: HTMLIFrameElement) {
     exitButton.addEventListener("click", () => {
         videoContainer.innerHTML = ""; // Удаляем iframe
         // videoContainer.style.display = "none"; // Скрываем контейнер
-        showEnterButton(url_video); // Показываем кнопку "Войти"
+        showEnterButton(url_video, topicNameVideo); // Показываем кнопку "Войти"
     });
 
-    // Обновляем позицию кнопки
     function updateExitButtonPosition() {
-        const iframeRect = iframe.getBoundingClientRect();
-        const containerRect = videoContainer.getBoundingClientRect();
-        exitButton.style.left = `${iframeRect.left - containerRect.left + iframeRect.width - 50}px`;
-        exitButton.style.top = `${iframeRect.top - containerRect.top + 10}px`;
+        if (!videoContainer) return;
+        const rect = videoContainer.getBoundingClientRect();
+        exitButton.style.left = `${rect.left + rect.width - 40}px`;
+        exitButton.style.top = `${rect.top + 10}px`;
     }
 
     updateExitButtonPosition();
-    new ResizeObserver(updateExitButtonPosition).observe(iframe);
+    new ResizeObserver(updateExitButtonPosition).observe(videoContainer);
 }
 
-export function showEnterButton(url: string) {
-    const videoContainer = document.getElementById("video-container");
+export function showEnterButton(url: string, topic_name: string) {
+    topicNameVideo = topic_name;
+    if (!videoContainer) initVideoContainer();
     if (!videoContainer) return;
 
+    videoContainer.innerHTML = ""; //очитска вего (она работает)
+
+    updateVideoFramePosition();
+
+    const container = document.getElementById("floating-video-container");
+    if (!container) return;
+
+    // Удаляем старую кнопку и надпись, если они есть
+    const existingButton = document.getElementById("enter-button");
+    if (existingButton) existingButton.remove();
+    const existingLabel = document.getElementById("topic-label");
+    if (existingLabel) existingLabel.remove();
+
+    // Создаем надпись с темой
+    const topicLabel = document.createElement("div");
+    topicLabel.innerText = topicNameVideo;
+    topicLabel.style.position = "fixed";
+    topicLabel.style.fontSize = "18px";
+    topicLabel.style.fontWeight = "bold";
+    topicLabel.style.color = "black";
+    topicLabel.style.zIndex = "10001";
+    topicLabel.id = "topic-label";
+
+    // Создаем кнопку
     const enterButton = document.createElement("button");
     enterButton.innerText = "Войти в видео";
-    enterButton.style.position = "absolute"; // Привязываем к экрану, но позиционируем как у videoContainer
+    enterButton.style.position = "fixed";
     enterButton.style.width = "120px";
     enterButton.style.height = "60px";
     enterButton.style.background = "green";
@@ -371,41 +419,33 @@ export function showEnterButton(url: string) {
     enterButton.style.borderRadius = "5px";
     enterButton.style.cursor = "pointer";
     enterButton.style.fontSize = "16px";
-    enterButton.style.zIndex = "10001"; // Поверх всех элементов
-
-    // Удаляем кнопку "Войти", если она уже есть
-    const existingButton = document.getElementById("enter-button");
-    if (existingButton) {
-        existingButton.remove();
-    }
-
-    // Добавляем ID для кнопки, чтобы можно было ее легко удалить
+    enterButton.style.zIndex = "10001";
     enterButton.id = "enter-button";
 
-    // Добавляем кнопку в body (НЕ внутрь videoContainer!)
+    // Добавляем элементы в body
+    document.body.appendChild(topicLabel);
     document.body.appendChild(enterButton);
 
-    // Функция обновления позиции кнопки
-    function updateEnterButtonPosition() {
+    // Функция обновления позиции
+    function updatePositions() {
         if (!videoContainer) return;
         const rect = videoContainer.getBoundingClientRect();
-
-        // Размещаем кнопку в том же месте, где была кнопка "Выйти"
-        enterButton.style.left = `${rect.left + rect.width / 2}px`; // Отступ справа
-        enterButton.style.top = `${rect.top + 150}px`; // Отступ сверху
+        enterButton.style.left = `${rect.left + rect.width / 2 - 60}px`;
+        enterButton.style.top = `${150}px`;
+        topicLabel.style.left = `${rect.left + rect.width / 2 - topicLabel.offsetWidth / 2}px`;
+        topicLabel.style.top = `${120}px`;
     }
 
-    updateEnterButtonPosition(); // Устанавливаем начальное положение кнопки
+    updatePositions();
+    window.addEventListener("resize", updatePositions);
 
-    // Обновляем положение кнопки при изменении размера окна
-    window.addEventListener("resize", updateEnterButtonPosition);
-
-    // При нажатии создаем конференцию заново
     enterButton.addEventListener("click", () => {
-        document.body.removeChild(enterButton); // Удаляем кнопку "Войти"
+        document.body.removeChild(enterButton);
+        document.body.removeChild(topicLabel);
         insert_audio_call_url(url);
     });
 }
+
 
 export function generate_and_insert_audio_or_video_call_link(
     bbb_url: string
@@ -567,60 +607,6 @@ function generate_call_link(video_call_id: string, token: String) {
         );
     }
 }
-
-function generate_call_link_old(video_call_id: string, $target_textarea: JQuery<HTMLTextAreaElement>, token: String) {
-    const video_call_link = compose_call.get_jitsi_server_url() + "/" + video_call_id;
-    // console.log('Generated JWT:', token)
-    if (token.length > 0) {
-        insert_audio_call_url(
-            // video_call_link + "?jwt=" + token + "#config.startWithVideoMuted=true",
-            video_call_link + "?jwt=" + token + "#config.prejoinConfig.enabled=false&config.startWithVideoMuted=true",
-            $target_textarea,
-        );
-    } else {
-        insert_audio_call_url(
-            video_call_link + "#config.startWithVideoMuted=true",
-            $target_textarea,
-        );
-    }
-}
-
-
-// function generate_jitsi_jwt(userEmail: string, full_name: string): string {
-//     const appId = "connectrm_svz";
-//     const appSecret = "HguV/8QBrJdCih2Ycpoz0g5q5m85apT3Nu6E+lDvufg=";
-//     const payload = {
-//         aud: appId,
-//         iss: appId,
-//         sub: "joinrm-svz.ru",
-//         room: "*",
-//         exp: Math.floor(Date.now() / 1000) + 3600, // Текущее время + 1 час (в секундах)
-//         context: {
-//             user: {
-//                 email: userEmail,
-//                 name: full_name,
-//                 id: userEmail,
-//                 avatar: "https://e7.pngegg.com/pngimages/971/686/png-clipart-computer-icons-social-media-blog-avatar-material-service-logo.png",
-//             }
-//         }
-//     };
-
-//     // Генерация токена
-//     const token = jwt.sign(payload, appSecret, { algorithm: "HS256" });
-//     return token;
-// }
-
-// async function generateToken(): Promise<string> {
-//     const secret = new TextEncoder().encode("HguV/8QBrJdCih2Ycpoz0g5q5m85apT3Nu6E+lDvufg=");
-//     const token = await new SignJWT({
-//         app_id: 'connectrm_svz',
-//     })
-//       .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-//       .setIssuedAt()
-//       .setExpirationTime('20h')
-//       .sign(secret);
-//     return token;
-// }
 
 async function generateToken(): Promise<string> {
     try {

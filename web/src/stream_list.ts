@@ -40,12 +40,9 @@ import * as unread from "./unread.ts";
 import type { FullUnreadCountsData, StreamCountInfo } from "./unread.ts";
 import { user_settings } from "./user_settings.ts";
 
-///------------
-import * as compose_call_ui from "./compose_call_ui.ts";
-///-------------
-
 let pending_stream_list_rerender = false;
 let zoomed_in = false;
+
 
 export let stream_cursor: ListCursor<number>;
 
@@ -937,6 +934,7 @@ export function set_event_handlers({
         const current_narrow_stream_id = narrow_state.stream_id();
         const current_topic = narrow_state.topic();
         console.log("--------0");
+        topic_list.clearButtonsAndPropsForVideo();
         if (current_narrow_stream_id === stream_id && current_topic) {
             const channel_feed_url = hash_util.by_stream_url(stream_id);
             browser_history.go_to_location(channel_feed_url);
@@ -954,39 +952,60 @@ export function set_event_handlers({
         console.log("--------2");
         const navigate_to_stream = (): void => {
             console.log("--------3");
-            const topic_list_info = topic_list_data.get_list_info(stream_id, false, "");
-            const topic_item = topic_list_info.items[0];
-            const videoContainer = document.getElementById("video-container"); // очистка предыдущего видеоконтейнера, если он активен
-            
-            let isReadyShowVideo = false;
-            if (topic_item !== undefined) {
-                const destination_url = hash_util.by_stream_topic_url(
-                    stream_id,
-                    topic_item.topic_name,
-                );
-                browser_history.go_to_location(destination_url); // Обновляем основной чат диалога (от прежнего орригинального кода)
-                if (!topic_item.is_muted) {
-                    if (videoContainer) {
-                        videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
-                        videoContainer.innerHTML = ""; //очитска вего (она работает)
-        
-                    }
-                    let bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
-                    if (bbb_url.length > 0) {
-                        if (topic_item.topic_name) {
-                            bbb_url = bbb_url + "-" + topic_item.topic_name.split('').map(char => char.charCodeAt(0)).join('');
-                        }
-                        isReadyShowVideo = true;
-                        console.log("--------4: " + bbb_url);
-                        compose_call_ui.showEnterButton(bbb_url);
-                        // compose_call_ui.generate_and_insert_audio_or_video_call_link(bbb_url);
-                    }
-                }
-            }
-            if (!isReadyShowVideo) {
+
+            // const topic_list_info = topic_list_data.get_list_info(stream_id, false, "");
+            // const topic_item = topic_list_info.items[0];
+            // const videoContainer = document.getElementById("floating-video-container"); // очистка предыдущего видеоконтейнера, если он активен
+            // topic_list.clearButtonsInContainer();
+            // let isReadyShowVideo = false;
+            // if (topic_item !== undefined) {
+            //     const destination_url = hash_util.by_stream_topic_url(
+            //         stream_id,
+            //         topic_item.topic_name,
+            //     );
+            //     browser_history.go_to_location(destination_url); // Обновляем основной чат диалога (от прежнего орригинального кода)
+            //     if (!topic_item.is_muted && topic_item.topic_name) {
+            //         topic_list.clickAudioTopic(stream_id, topic_item.topic_name);
+            //         // const bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
+            //         // console.log("--------4: " + bbb_url);
+            //         // if (bbb_url.length > 0) {
+            //         //     const char_code = topic_item.split('').map(char => char.charCodeAt(0)).join('');
+            //         //     const bbb_url2 = bbb_url + "-" + char_code;
+            //         //     if (topic_list.CURRENT_TOPIC_NAME != char_code) {
+            //         //         if (videoContainer) {
+            //         //             videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
+            //         //             videoContainer.innerHTML = ""; //очитска вего (она работает)
+            //         //         }
+            //         //         topic_list.CURRENT_TOPIC_NAME = char_code;
+            //         //         console.log("--------5: " + char_code);
+            //         //         // compose_call_ui.generate_and_insert_audio_or_video_call_link(bbb_url2);
+            //         //         compose_call_ui.showEnterButton(bbb_url2);
+            //         //     }
+            //         // }
+            //     }
+            //     // if (!topic_item.is_muted && CURRENT_STREAM_ID != stream_id) {
+            //     //     CURRENT_STREAM_ID = stream_id;
+            //     //     if (videoContainer) {
+            //     //         videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
+            //     //         videoContainer.innerHTML = ""; //очитска вего (она работает)
+
+            //     //     }
+            //     //     let bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
+            //     //     if (bbb_url.length > 0) {
+            //     //         if (topic_item.topic_name) {
+            //     //             bbb_url = bbb_url + "-" + topic_item.topic_name.split('').map(char => char.charCodeAt(0)).join('');
+            //     //         }
+            //     //         isReadyShowVideo = true;
+            //     //         console.log("--------4: " + bbb_url);
+            //     //         compose_call_ui.showEnterButton(bbb_url);
+            //     //         // compose_call_ui.generate_and_insert_audio_or_video_call_link(bbb_url);
+            //     //     }
+            //     // }
+            // }
+            // if (!isReadyShowVideo) {
                 on_stream_click(stream_id, "sidebar");
                 return;
-            }
+            // }
         };
 
         if (topics.length === 0) {
