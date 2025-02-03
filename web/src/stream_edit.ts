@@ -681,12 +681,6 @@ export function initialize(): void {
         $(".dialog_submit_button").attr("data-stream-id", stream_id);
     });
 
-    $("#channels_overlay_container").on("click", ".stream-row", function (this: HTMLElement) {
-        if ($(this).closest(".check, .subscription_settings").length === 0) {
-            open_edit_panel_for_row(this);
-        }
-    });
-
     $<HTMLSelectElement>("#channels_overlay_container").on(
         "change",
         "select.stream_message_retention_setting",

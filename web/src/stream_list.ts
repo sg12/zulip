@@ -1047,6 +1047,12 @@ export function set_event_handlers({
 
                 return;
             }
+
+            if (e.target.id === "streams_all_inline_icon") {
+                window.location.assign("#channels/all");
+
+                return;
+            }
             toggle_filter_displayed(e);
         });
 

@@ -326,6 +326,7 @@ export function initialize(): void {
             "#stream-specific-notify-table .unmute_stream",
             "#add_streams_tooltip",
             "#filter_streams_tooltip",
+            "#view_all_channels_tooltip",
             ".error-icon-message-recipient .zulip-icon",
             "#personal-menu-dropdown .status-circle",
             ".popover-group-menu-member-list .popover-group-menu-user-presence",

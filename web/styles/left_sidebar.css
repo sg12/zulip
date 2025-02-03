@@ -44,7 +44,8 @@
 }
 
 #streams_inline_icon,
-.streams_filter_icon {
+.streams_filter_icon,
+#streams_all_inline_icon{
     color: var(--color-left-sidebar-heads-up-icon);
     border-radius: 3px;
 
@@ -1652,12 +1653,14 @@ li.topic-list-item {
         }
     }
 
-    #add_streams_tooltip {
+    #add_streams_tooltip,
+    #view_all_channels_tooltip {
         grid-row: 1 / 1;
         margin: 2px 0;
     }
 
-    #streams_inline_icon {
+    #streams_inline_icon,
+    #streams_all_inline_icon {
         display: none;
         align-items: center;
         justify-content: center;
@@ -1681,7 +1684,8 @@ li.topic-list-item {
         }
 
         #filter_streams_tooltip,
-        #streams_inline_icon {
+        #streams_inline_icon,
+        #streams_all_inline_icon {
             display: flex;
         }
     }
