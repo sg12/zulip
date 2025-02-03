@@ -835,17 +835,23 @@ export function change_state(
     assert(toggler !== undefined);
     // if in #channels/new form.
     if (section === "new") {
+        $("#left_panel").hide();
+        $("#right_panel").show();
         do_open_create_stream();
         return;
     }
 
     if (section === "all") {
+        $("#left_panel").show();
+        $("#right_panel").hide();
         toggler.goto("all-streams");
         stream_edit.empty_right_panel();
         return;
     }
 
     if (section === "notsubscribed") {
+        $("#left_panel").show();
+        $("#right_panel").hide();
         toggler.goto("not-subscribed");
         stream_edit.empty_right_panel();
         return;
@@ -854,6 +860,8 @@ export function change_state(
     // if the section is a valid number.
     if (/\d+/.test(section)) {
         const stream_id = Number.parseInt(section, 10);
+        $("#left_panel").hide();
+        $("#right_panel").show();
         show_right_section();
         stream_edit_toggler.set_select_tab(right_side_tab);
 
@@ -874,6 +882,8 @@ export function change_state(
         return;
     }
 
+    $("#left_panel").show();
+    $("#right_panel").hide();
     toggler.goto("subscribed");
     stream_edit.empty_right_panel();
 }
