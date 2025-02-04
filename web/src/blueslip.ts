@@ -29,9 +29,9 @@ function make_logger_func(name: "debug" | "log" | "info" | "warn" | "error") {
             this._memory_log.shift();
         }
 
-        if (console[name] !== undefined) {
-            console[name](...args);
-        }
+        // if (console[name] !== undefined) {
+        //     console[name](...args);
+        // }
     };
 }
 
@@ -99,9 +99,9 @@ export function error(msg: string, more_info?: object, original_error?: unknown)
     logger.error(...args);
 
     // Throw an error in development; this will show a dialog (see below).
-    if (DEVELOPMENT) {
-        throw new BlueslipError(msg, more_info, original_error);
-    }
+    // if (DEVELOPMENT) {
+    //     throw new BlueslipError(msg, more_info, original_error);
+    // }
     // This function returns to its caller in production!  To raise a
     // fatal error even in production, use throw new Error(…) instead.
 }

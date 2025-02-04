@@ -448,7 +448,7 @@ export class BuddyList extends BuddyListConf {
             this.update_section_header_counts();
             return;
         }
-        this.current_filter = narrow_state.filter();
+        // this.current_filter = narrow_state.filter();
 
         const {current_sub, total_human_subscribers_count, other_users_count} = this.render_data;
         $(".buddy-list-subsection-header").empty();
@@ -602,7 +602,7 @@ export class BuddyList extends BuddyListConf {
         }
 
         this.$other_users_list = $(this.other_user_list_selector);
-        if (other_users.length > 0) {
+        if (other_users.length < 10) {
             // Remove the empty list message before adding users
             if ($(`${this.other_user_list_selector} .empty-list-message`).length > 0) {
                 this.$other_users_list.empty();
