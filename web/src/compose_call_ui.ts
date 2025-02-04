@@ -184,7 +184,7 @@ function initVideoContainer() {
     if (htmlDoc) {
         videoContainer = htmlDoc;
         videoContainer.style.display = "block"; // Показываем контейнер
-        videoContainer.style.zIndex = "9999";
+        videoContainer.style.zIndex = "1";
         videoContainer.style.position = "fixed";
         // videoContainer.style.background = "rgba(0, 0, 0, 0.1)";
         // videoContainer.style.borderRadius = "10px";
