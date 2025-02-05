@@ -410,7 +410,9 @@ export function clickVideoTopic(stream_id: number, topic_name: string, char_code
     const bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
     if (bbb_url.length > 0) {
         const bbb_url2 = bbb_url + "-" + char_code;
-        compose_call_ui.showEnterButton(bbb_url2, topic_name);
+        // compose_call_ui.showEnterButton(bbb_url2, topic_name);
+        clearButtonsAndPropsForVideo();
+        compose_call_ui.insert_audio_call_url(bbb_url2, topic_name);
     }
 }
 

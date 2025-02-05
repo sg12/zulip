@@ -1,3 +1,4 @@
+import { topic } from './compose_state';
 import $ from "jquery";
 import * as compose_call from "./compose_call.ts";
 import { current_user } from "./state_data.ts";
@@ -13,7 +14,7 @@ let isScreenSharing = false;
 let url_video = "";
 let topicNameVideo = "";
 let videoContainer: HTMLElement;
-let isFloatingVideo = false;
+// let isFloatingVideo = false;
 export let CURRENT_TOPIC_CHARNAME: string = "";
 
 function updateMicIcon() {
@@ -55,8 +56,9 @@ export function update_audio_chat_button_display(): void {
 }
 
 
-function insert_audio_call_url(url: string): void {
+export function insert_audio_call_url(url: string, topic_name: string): void {
     url_video = url;
+    topicNameVideo = topic_name;
     // let videoContainer = document.getElementById("floating-video-container");
     if (!videoContainer) initVideoContainer();
     if (!videoContainer) return;
@@ -77,7 +79,7 @@ function insert_audio_call_url(url: string): void {
         roomName: roomName,
         parentNode: videoContainer,
         jwt: jwt,
-        configOverwrite: { startWithAudioMuted: true, startWithVideoMuted: true, prejoinConfig: { enabled: false } },
+        configOverwrite: { startWithAudioMuted: false, startWithVideoMuted: true, prejoinConfig: { enabled: false } },
         interfaceConfigOverwrite: {
             TOOLBAR_BUTTONS: [
                 'camera',
@@ -189,14 +191,14 @@ function initVideoContainer() {
         // videoContainer.style.background = "rgba(0, 0, 0, 0.1)";
         // videoContainer.style.borderRadius = "10px";
         // videoContainer.style.boxShadow = "0px 4px 10px rgba(0, 0, 0, 0.05)";
-        isFloatingVideo = false;
+        // isFloatingVideo = false;
     }
 }
 
 function updateVideoFramePosition() {
     if (!videoContainer)
         return;
-    if (!isFloatingVideo) {
+    // if (!isFloatingVideo) {
         const columnMiddle = document.getElementById("column-middle-container");
         const rightSidebar = document.getElementById("right-sidebar-container");
         const settingsContent = document.getElementById("settings_content");
@@ -215,22 +217,22 @@ function updateVideoFramePosition() {
         videoContainer.style.width = `${iframeWidth}px`;
         videoContainer.style.top = `${iframeTop + 12}px`;
         videoContainer.style.height = `${iframeHeight}px`;
-    } else {
-        // videoContainer.style.removeProperty("top");
-        // videoContainer.style.removeProperty("left");
-        videoContainer.style.width = "320px";
-        videoContainer.style.height = "160px";
-        videoContainer.style.bottom = "20px";
-        videoContainer.style.right = "20px";
-    }
+    // } else {
+    //     // videoContainer.style.removeProperty("top");
+    //     // videoContainer.style.removeProperty("left");
+    //     videoContainer.style.width = "320px";
+    //     videoContainer.style.height = "160px";
+    //     videoContainer.style.bottom = "20px";
+    //     videoContainer.style.right = "20px";
+    // }
 }
 
-export function restoreVideoPosition() {
-    videoContainer.style.removeProperty("bottom");
-    videoContainer.style.removeProperty("right");
-    isFloatingVideo = false;
-    updateVideoFramePosition(); 
-}
+// export function restoreVideoPosition() {
+//     videoContainer.style.removeProperty("bottom");
+//     videoContainer.style.removeProperty("right");
+//     // isFloatingVideo = false;
+//     updateVideoFramePosition(); 
+// }
 
 export function topicNameToChar(topicName): string {
     return topicName.split('').map(char => char.charCodeAt(0)).join('');
@@ -244,20 +246,21 @@ function moveVideoToCorner() {
     // videoContainer.style.bottom = "20px";
     // videoContainer.style.right = "20px";
     // videoContainer.style.zIndex = "10003"; // Поверх всех элементов
-    isFloatingVideo = true;
+    // isFloatingVideo = true;
     updateVideoFramePosition();
 }
 
 export function clickLeftSidebar(isSameTopic: boolean) {
-    if (!isShowingVideo()) {
-        if (isSameTopic) return; // if the same topic, but have no video, so need sho buttons
-        clearButtonsAndPropsForVideo();
-        return;
-    }
-    if (!isSameTopic && !isFloatingVideo)
-        moveVideoToCorner();
-    else if (isSameTopic && isFloatingVideo)
-        restoreVideoPosition();
+    clearButtonsAndPropsForVideo();
+    // if (!isShowingVideo()) {
+    //     if (isSameTopic) return; // if the same topic, but have no video, so need sho buttons
+    //     clearButtonsAndPropsForVideo();
+    //     return;
+    // }
+    // if (!isSameTopic && !isFloatingVideo)
+        // moveVideoToCorner();
+    // else if (isSameTopic && isFloatingVideo)
+        // restoreVideoPosition();
 }
 
 export function isShowingVideo(): boolean {
@@ -310,8 +313,8 @@ function addTestButton() {
     videoContainer.appendChild(testButton);
 
     testButton.addEventListener("click", () => {
-        if (isFloatingVideo) restoreVideoPosition();
-        else moveVideoToCorner();
+        // if (isFloatingVideo) restoreVideoPosition();
+        // else moveVideoToCorner();
     });
 
     // Обновляем позицию кнопки
@@ -442,7 +445,7 @@ export function showEnterButton(url: string, topic_name: string) {
     enterButton.addEventListener("click", () => {
         document.body.removeChild(enterButton);
         document.body.removeChild(topicLabel);
-        insert_audio_call_url(url);
+        insert_audio_call_url(url, topicNameVideo);
     });
 }
 
@@ -599,11 +602,11 @@ function generate_call_link(video_call_id: string, token: String) {
     const video_call_link = compose_call.get_jitsi_server_url() + "/" + video_call_id;
     if (token.length > 0) {
         insert_audio_call_url(
-            video_call_link + "?jwt=" + token + "#config.prejoinConfig.enabled=false&config.startWithVideoMuted=true",
+            video_call_link + "?jwt=" + token + "#config.prejoinConfig.enabled=false&config.startWithVideoMuted=true&config.startWithAudioMuted=false", topicNameVideo,
         );
     } else {
         insert_audio_call_url(
-            video_call_link + "#config.startWithVideoMuted=true",
+            video_call_link + "#config.startWithVideoMuted=true&config.startWithAudioMuted=false", topicNameVideo,
         );
     }
 }
