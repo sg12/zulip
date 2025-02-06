@@ -20,10 +20,17 @@ function get_new_heights(): {
     let stream_filters_max_height =
         viewport_height -
         Number.parseInt($("#left-sidebar").css("paddingTop"), 10) -
-        Number.parseInt($("#left-sidebar-navigation-area").css("marginTop"), 10) -
-        Number.parseInt($("#left-sidebar-navigation-area").css("marginBottom"), 10) -
-        ($("#left-sidebar-navigation-list").outerHeight(true) ?? 0) -
-        ($("#direct-messages-section-header").outerHeight(true) ?? 0);
+        ($("#direct-messages-section-header").outerHeight(true) ?? 0) -
+        ($("#streams_header").outerHeight(true) ?? 0);
+
+    const $left_sidebar_navigation_area = $("#left-sidebar-navigation-area");
+    if ($left_sidebar_navigation_area.length > 0) {
+        const left_sidebar_navigation_list_height = $("#left-sidebar-navigation-list").outerHeight(true) ?? 0;
+        stream_filters_max_height -=
+            Number.parseInt($left_sidebar_navigation_area.css("marginTop"), 10) -
+            Number.parseInt($left_sidebar_navigation_area.css("marginBottom"), 10) -
+            left_sidebar_navigation_list_height;
+    }
 
     // Don't let us crush the stream sidebar completely out of view
     stream_filters_max_height = Math.max(80, stream_filters_max_height);
