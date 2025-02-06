@@ -91,7 +91,48 @@ export function insert_audio_call_url(url: string, topic_name: string): void {
         roomName: roomName,
         parentNode: videoContainer,
         jwt: jwt,
-        configOverwrite: { startWithAudioMuted: false, startWithVideoMuted: true, prejoinConfig: { enabled: false } },
+        configOverwrite: {
+            prejoinConfig: { enabled: false },
+            constraints: {
+                video: {
+                    height: {
+                        ideal: 240, // Обычное низкое качество
+                        max: 360,    // Максимальное ограничение (можно 480, если нужно)
+                        min: 180     // Минимум
+                    },
+                    width: {
+                        ideal: 320,
+                        max: 640,
+                        min: 240
+                    },
+                    frameRate: {
+                        ideal: 15,  // Низкая частота кадров для экономии ресурсов
+                        max: 20
+                    }
+                },
+                audio: {
+                    autoGainControl: true,  // Автоусиление звука
+                    echoCancellation: true, // Подавление эха
+                    noiseSuppression: true, // Подавление шума
+                    sampleRate: 48000,      // Частота дискретизации для чёткого звука
+                    sampleSize: 16,         // Глубина аудио (16 бит)
+                    channelCount: 1         // Моно-канал (для стабильности)
+                }
+            },
+            videoQuality: {
+                maxBitratesVideo: {
+                    low: 100000,  // 100 kbps (очень низкое качество)
+                    standard: 200000, // 200 kbps (чуть лучше, но всё равно низкое)
+                    high: 400000 // 400 kbps (максимально низкий порог)
+                }
+            },
+            disableSimulcast: true, // Отключаем многопоточное видео (важно для стабильности)
+            startWithVideoMuted: true,  // Отключаем видео по умолчанию (экономия трафика)
+            startWithAudioMuted: false, // Включаем звук сразу
+            disableAudioLevels: false,  // Оставляем индикатор громкости
+            stereo: false, // Отключаем стерео (экономия трафика)
+            enableLipSync: false // Отключаем синхронизацию губ (не нужно при низком качестве)
+        },
         interfaceConfigOverwrite: {
             TOOLBAR_BUTTONS: [
                 'camera',
@@ -106,42 +147,42 @@ export function insert_audio_call_url(url: string, topic_name: string): void {
             displayName: current_user.full_name,
             email: current_user.email,
         }
-    };
-    api = new JitsiMeetExternalAPI(domain, options);
+};
+api = new JitsiMeetExternalAPI(domain, options);
 
-    CURRENT_TOPIC_CHARNAME = topicNameToChar(topicNameVideo);
+CURRENT_TOPIC_CHARNAME = topicNameToChar(topicNameVideo);
 
-    const columnMiddle = document.getElementById("video-container");
-    const resizeObserver = new ResizeObserver(() => {
-        requestAnimationFrame(updateVideoFramePosition);
+const columnMiddle = document.getElementById("video-container");
+const resizeObserver = new ResizeObserver(() => {
+    requestAnimationFrame(updateVideoFramePosition);
+});
+
+if (columnMiddle)
+    resizeObserver.observe(columnMiddle);
+// new ResizeObserver(updateVideoFramePosition).observe(columnMiddle);
+
+addListenersVideo();
+
+const iframe = document.querySelector('iframe');
+if (iframe) {
+    iframe.style.display = "none";
+    iframe.addEventListener('load', () => {
+        setTimeout(() => {
+            const iframe = videoContainer.querySelector("iframe") as HTMLIFrameElement;
+            if (iframe) {
+                // makeResizable(videoContainer, iframe);
+                // addExitButton();
+                // addTestButton();
+                // loadingBar.style.display = "none"; // Скрываем бар загрузки
+                removeLoadBar();
+                iframe.style.display = "block";
+                addRoomNameOverlay(topicNameVideo);
+                // handleOverlayMouseEvents(videoContainer, overlay, iframe);
+                // logAbsolutePositions();
+            }
+        }, 10);
     });
-
-    if (columnMiddle)
-        resizeObserver.observe(columnMiddle);
-    // new ResizeObserver(updateVideoFramePosition).observe(columnMiddle);
-
-    addListenersVideo();
-
-    const iframe = document.querySelector('iframe');
-    if (iframe) {
-        iframe.style.display = "none";
-        iframe.addEventListener('load', () => {
-            setTimeout(() => {
-                const iframe = videoContainer.querySelector("iframe") as HTMLIFrameElement;
-                if (iframe) {
-                    // makeResizable(videoContainer, iframe);
-                    // addExitButton();
-                    // addTestButton();
-                    // loadingBar.style.display = "none"; // Скрываем бар загрузки
-                    removeLoadBar();
-                    iframe.style.display = "block";
-                    addRoomNameOverlay(topicNameVideo);
-                    // handleOverlayMouseEvents(videoContainer, overlay, iframe);
-                    // logAbsolutePositions();
-                }
-            }, 10);
-        });
-    }
+}
 
 }
 
@@ -332,9 +373,9 @@ export function clickLeftSidebar(isSameTopic: boolean) {
     // }
     clearButtonsAndPropsForVideo();
     if (!isShowingVideo()) {
-    //     if (isSameTopic) return; // if the same topic, but have no video, so need sho buttons
-    //     clearButtonsAndPropsForVideo();
-    //     return;
+        //     if (isSameTopic) return; // if the same topic, but have no video, so need sho buttons
+        //     clearButtonsAndPropsForVideo();
+        //     return;
         const topicLabel = document.getElementById("video-room-overlay");
         if (topicLabel) topicLabel.remove();
     }
