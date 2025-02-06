@@ -22,6 +22,7 @@ import * as spectators from "./spectators.ts";
 import {current_user} from "./state_data.ts";
 import * as ui_util from "./ui_util.ts";
 import {user_settings} from "./user_settings.ts";
+import * as compose_call_ui from "./compose_call_ui.ts";
 
 function save_sidebar_toggle_status(): void {
     const ls = localstorage();
@@ -134,14 +135,31 @@ export function initialize(): void {
                 fix_invite_user_button_flicker();
             }
             save_sidebar_toggle_status();
+            compose_call_ui.update_video_position();
             return;
         }
 
         if (right_sidebar_expanded_as_overlay) {
             hide_userlist_sidebar();
+            compose_call_ui.update_video_position();
             return;
         }
         show_userlist_sidebar();
+        compose_call_ui.update_video_position();
+    });
+
+    $("#video-toggle-menu-button").on("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    
+        const $middleColumn = $(".app-main .column-middle");
+    
+        if ($middleColumn.is(":visible")) {
+            $middleColumn.hide();
+        } else {
+            $middleColumn.show();
+        }
+        compose_call_ui.update_video_position();
     });
 
     $(".left-sidebar-toggle-button").on("click", (e) => {

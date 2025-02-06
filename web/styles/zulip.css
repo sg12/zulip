@@ -1862,7 +1862,7 @@ body:not(.hide-left-sidebar) {
         right: 4px;
     }
 
-    #top_navbar .column-right #personal-menu .header-button-avatar {
+    #top_navbar .column-right #personal-menu #video-toggle_menu .header-button-avatar {
         width: 20px;
         height: 20px;
     }
@@ -2139,6 +2139,9 @@ body:not(.hide-left-sidebar) {
 
     .zulip-icon-help-bigger,
     .zulip-icon-user-list {
+        font-size: 20px;
+    }
+    .zulip-icon-video-call {
         font-size: 20px;
     }
 

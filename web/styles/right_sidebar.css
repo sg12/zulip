@@ -448,6 +448,20 @@ $user_status_emoji_width: 24px;
     }
 }
 
+#video-toggle-menu {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#video-toggle-menu-button {
+    text-decoration: none;
+    color: hsl(0deg 0% 60%);
+
+    &:hover {
+        color: inherit;
+    }
+}
+
 .right-sidebar-items:first-of-type #userlist-header {
     border-top: none;
 }

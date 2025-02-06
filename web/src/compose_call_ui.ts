@@ -1,11 +1,11 @@
-import { topic } from './compose_state';
 import $ from "jquery";
 import * as compose_call from "./compose_call.ts";
 import { current_user } from "./state_data.ts";
 import * as narrow_state from "./narrow_state.ts";
 import * as util from "./util.ts";
-
 import { SignJWT } from 'jose';
+import { media_breakpoints_num } from "./css_variables.ts";
+
 
 let api: any = null;
 let isMicMuted = true;
@@ -62,14 +62,26 @@ export function insert_audio_call_url(url: string, topic_name: string): void {
     // let videoContainer = document.getElementById("floating-video-container");
     if (!videoContainer) initVideoContainer();
     if (!videoContainer) return;
+    const $middleColumn = $(".app-main .column-middle");
+    if (isNarrowScreen()) {
+        console.log("Мобильный режим!");
+        $middleColumn.hide();
+    } else {
+        $middleColumn.show();
+    }
+
+    updateVideoFramePosition();
 
     const videoStaticContainer = document.getElementById("video-container");
     if (videoStaticContainer)
         showLoadBar(videoStaticContainer);
 
-    updateVideoFramePosition();
+
     // console.log("-------videoContainer.style.left: " + videoContainer.style.left);
     videoContainer.innerHTML = "";
+    const topicLabel = document.getElementById("video-room-overlay");
+    if (topicLabel) topicLabel.remove();
+
     const cleanUrl = url.split('#')[0];
     // // Вставляем ссылку в iframe с использованием Jitsi Meet API
     const domain = "jitsi-connectrm.ru:8443";
@@ -89,6 +101,10 @@ export function insert_audio_call_url(url: string, topic_name: string): void {
                 'fullscreen',
                 'hangup'
             ]
+        },
+        userInfo: {
+            displayName: current_user.full_name,
+            email: current_user.email,
         }
     };
     api = new JitsiMeetExternalAPI(domain, options);
@@ -119,10 +135,11 @@ export function insert_audio_call_url(url: string, topic_name: string): void {
                     // loadingBar.style.display = "none"; // Скрываем бар загрузки
                     removeLoadBar();
                     iframe.style.display = "block";
+                    addRoomNameOverlay(topicNameVideo);
                     // handleOverlayMouseEvents(videoContainer, overlay, iframe);
                     // logAbsolutePositions();
                 }
-            }, 1000);
+            }, 10);
         });
     }
 
@@ -175,6 +192,8 @@ function addListenersVideo() {
         if (videoContainer) {
             videoContainer.replaceChildren(); // Удаляет всех дочерних элементов
             videoContainer.innerHTML = ""; //очитска вего (она работает)
+            const topicLabel = document.getElementById("video-room-overlay");
+            if (topicLabel) topicLabel.remove();
         }
         showEnterButton(url_video, topicNameVideo);
         updateScreenIcon();
@@ -199,24 +218,36 @@ function updateVideoFramePosition() {
     if (!videoContainer)
         return;
     // if (!isFloatingVideo) {
-        const columnMiddle = document.getElementById("column-middle-container");
-        const rightSidebar = document.getElementById("right-sidebar-container");
-        const settingsContent = document.getElementById("settings_content");
-        const columnMiddlePosition = getAbsolutePosition(columnMiddle, "column-middle-container");
-        const rightSidebarPosition = getAbsolutePosition(rightSidebar, "right-sidebar-container");
-        const settingsContentPosition = getAbsolutePosition(settingsContent, "settings_conten");
-        const iframeLeft = columnMiddlePosition?.x + columnMiddlePosition?.width;
-        const iframeTop = columnMiddlePosition?.y + settingsContentPosition?.y - window.scrollY;
-        let iframeWidth = (rightSidebarPosition?.x - iframeLeft);
-        if (iframeWidth >= window.innerWidth * 0.33)
-            iframeWidth = window.innerWidth * 0.33;
-        if (rightSidebarPosition?.width == 0)
-            iframeWidth = window.innerWidth * 0.45;
-        const iframeHeight = window.innerHeight * 75 / 100;
-        videoContainer.style.left = `${iframeLeft + 5}px`;
-        videoContainer.style.width = `${iframeWidth}px`;
-        videoContainer.style.top = `${iframeTop + 12}px`;
-        videoContainer.style.height = `${iframeHeight}px`;
+    let columnMiddle = document.getElementById("column-middle-container");
+    let columnMiddlePosition = getAbsolutePosition(columnMiddle, "column-middle-container");
+    const rightSidebar = document.getElementById("right-sidebar-container");
+    const rightSidebarPosition = getAbsolutePosition(rightSidebar, "right-sidebar-container");
+    let rightSidebarX = rightSidebarPosition?.x;
+    let rightSidebarWidth = rightSidebarPosition?.width;
+    if (columnMiddlePosition?.width == 0) {
+        columnMiddle = document.getElementById("left-sidebar-container");
+        columnMiddlePosition = getAbsolutePosition(columnMiddle, "left-sidebar-container");
+        rightSidebarX = window.innerWidth;
+        rightSidebarWidth = 0;
+    }
+
+    const settingsContent = document.getElementById("settings_content");
+    const settingsContentPosition = getAbsolutePosition(settingsContent, "settings_conten");
+    const iframeLeft = columnMiddlePosition?.x + columnMiddlePosition?.width;
+    const iframeTop = columnMiddlePosition?.y + settingsContentPosition?.y - window.scrollY;
+    let iframeWidth = (rightSidebarX - iframeLeft);
+    // if (iframeWidth >= window.innerWidth * 0.33)
+    //     iframeWidth = window.innerWidth * 0.33;
+    if (rightSidebarWidth == 0 && columnMiddlePosition?.width == 0)
+        iframeWidth = window.innerWidth * 0.95;
+    else if (rightSidebarWidth == 0 && columnMiddlePosition?.width > 0)
+        iframeWidth = window.innerWidth * 0.45;
+    const iframeHeight = window.innerHeight * 75 / 100;
+    videoContainer.style.left = `${iframeLeft + 5}px`;
+    videoContainer.style.width = `${iframeWidth}px`;
+    videoContainer.style.top = `${iframeTop + 12}px`;
+    videoContainer.style.height = `${iframeHeight}px`;
+    console.log("---videoContainer.style.left:", videoContainer.style.left);
     // } else {
     //     // videoContainer.style.removeProperty("top");
     //     // videoContainer.style.removeProperty("left");
@@ -226,6 +257,47 @@ function updateVideoFramePosition() {
     //     videoContainer.style.right = "20px";
     // }
 }
+
+function addRoomNameOverlay(roomName: string) {
+    if (!videoContainer) return;
+
+    // Проверяем, существует ли уже панель
+    let overlay = document.getElementById("video-room-overlay");
+    if (!overlay) {
+        overlay = document.createElement("div");
+        overlay.id = "video-room-overlay";
+        overlay.style.position = "fixed";
+        overlay.style.background = "rgba(255, 255, 255, 0.6)"; // Белая полупрозрачная панель
+        overlay.style.height = "16px";
+        overlay.style.display = "flex";
+        overlay.style.alignItems = "center";
+        overlay.style.justifyContent = "center";
+        overlay.style.fontSize = "10px";
+        overlay.style.fontWeight = "bold";
+        overlay.style.color = "#333";
+        overlay.style.zIndex = "2"; // Выше видео
+        overlay.style.borderBottom = "1px solid rgba(0, 0, 0, 0.1)";
+
+        document.body.appendChild(overlay);
+    }
+
+    // Обновляем текст
+    overlay.textContent = `Комната: ${roomName}`;
+
+    // Вычисляем и обновляем позицию
+    function updateOverlayPosition() {
+        if (!videoContainer) return;
+
+        const rect = videoContainer.getBoundingClientRect();
+        overlay.style.left = `${rect.left}px`;
+        overlay.style.top = `${rect.top}px`;
+        overlay.style.width = `${rect.width}px`;
+    }
+
+    updateOverlayPosition();
+    window.addEventListener("resize", updateOverlayPosition);
+}
+
 
 // export function restoreVideoPosition() {
 //     videoContainer.style.removeProperty("bottom");
@@ -251,16 +323,25 @@ function moveVideoToCorner() {
 }
 
 export function clickLeftSidebar(isSameTopic: boolean) {
+    const $middleColumn = $(".app-main .column-middle");
+
+    // if ($middleColumn.is(":visible")) {
+    //     $middleColumn.hide();
+    // } else {
+    $middleColumn.show();
+    // }
     clearButtonsAndPropsForVideo();
-    // if (!isShowingVideo()) {
+    if (!isShowingVideo()) {
     //     if (isSameTopic) return; // if the same topic, but have no video, so need sho buttons
     //     clearButtonsAndPropsForVideo();
     //     return;
-    // }
+        const topicLabel = document.getElementById("video-room-overlay");
+        if (topicLabel) topicLabel.remove();
+    }
     // if (!isSameTopic && !isFloatingVideo)
-        // moveVideoToCorner();
+    // moveVideoToCorner();
     // else if (isSameTopic && isFloatingVideo)
-        // restoreVideoPosition();
+    // restoreVideoPosition();
 }
 
 export function isShowingVideo(): boolean {
@@ -273,20 +354,26 @@ export function isShowingVideo(): boolean {
 function clearButtonsAndPropsForVideo() {
     const enterButton = document.getElementById("enter-button");
     if (enterButton) enterButton.remove();
-    const topicLabel = document.getElementById("topic-label");
-    if (topicLabel) topicLabel.remove();
+    // const topicLabel = document.getElementById("video-room-overlay");
+    // if (topicLabel) topicLabel.remove();
     removeLoadBar();
 }
 
 function showLoadBar(loadContainer: HTMLElement) {
     const loadingBar = document.createElement("div");
     loadingBar.id = "loading-spinner";
-    const rect = loadContainer?.getBoundingClientRect();
-    if (rect) {
-        loadingBar.style.left = `${rect.left + rect.width / 2 - 50}px`; // Отступ справа
-        loadingBar.style.top = `${200}px`; // Отступ сверху
-    }
-    loadContainer?.appendChild(loadingBar);
+    // const rect = loadContainer?.getBoundingClientRect();
+    // if (rect) {
+    //     loadingBar.style.left = `${rect.left + rect.width / 2 - 50}px`; // Отступ справа
+    //     loadingBar.style.top = `${200}px`; // Отступ сверху
+    // }
+    const left = parseFloat(videoContainer.style.left) || 0;
+    const width = parseFloat(videoContainer.style.width) || 0;
+    loadingBar.style.left = `${left + width / 2 - 50}px`; // Отступ справа
+    loadingBar.style.top = `${200}px`; // Отступ сверху
+    console.log("---- 55: " + loadingBar.style.left);
+    // loadContainer?.appendChild(loadingBar);
+    document.body.appendChild(loadingBar);
 }
 
 function removeLoadBar() {
@@ -367,6 +454,8 @@ function addExitButton() {
     // Функция выхода (закрытие iframe)
     exitButton.addEventListener("click", () => {
         videoContainer.innerHTML = ""; // Удаляем iframe
+        const topicLabel = document.getElementById("video-room-overlay");
+        if (topicLabel) topicLabel.remove();
         // videoContainer.style.display = "none"; // Скрываем контейнер
         showEnterButton(url_video, topicNameVideo); // Показываем кнопку "Войти"
     });
@@ -388,6 +477,10 @@ export function showEnterButton(url: string, topic_name: string) {
     if (!videoContainer) return;
 
     videoContainer.innerHTML = ""; //очитска вего (она работает)
+    const topicLabel = document.getElementById("video-room-overlay");
+    if (topicLabel) topicLabel.remove();
+
+    addRoomNameOverlay(topicNameVideo);
 
     updateVideoFramePosition();
 
@@ -401,14 +494,14 @@ export function showEnterButton(url: string, topic_name: string) {
     if (existingLabel) existingLabel.remove();
 
     // Создаем надпись с темой
-    const topicLabel = document.createElement("div");
-    topicLabel.innerText = topicNameVideo;
-    topicLabel.style.position = "fixed";
-    topicLabel.style.fontSize = "18px";
-    topicLabel.style.fontWeight = "bold";
-    topicLabel.style.color = "black";
-    topicLabel.style.zIndex = "10001";
-    topicLabel.id = "topic-label";
+    // const topicLabel = document.createElement("div");
+    // topicLabel.innerText = topicNameVideo;
+    // topicLabel.style.position = "fixed";
+    // topicLabel.style.fontSize = "18px";
+    // topicLabel.style.fontWeight = "bold";
+    // topicLabel.style.color = "black";
+    // topicLabel.style.zIndex = "10001";
+    // topicLabel.id = "topic-label";
 
     // Создаем кнопку
     const enterButton = document.createElement("button");
@@ -426,7 +519,7 @@ export function showEnterButton(url: string, topic_name: string) {
     enterButton.id = "enter-button";
 
     // Добавляем элементы в body
-    document.body.appendChild(topicLabel);
+    // document.body.appendChild(topicLabel);
     document.body.appendChild(enterButton);
 
     // Функция обновления позиции
@@ -435,8 +528,8 @@ export function showEnterButton(url: string, topic_name: string) {
         const rect = videoContainer.getBoundingClientRect();
         enterButton.style.left = `${rect.left + rect.width / 2 - 60}px`;
         enterButton.style.top = `${150}px`;
-        topicLabel.style.left = `${rect.left + rect.width / 2 - topicLabel.offsetWidth / 2}px`;
-        topicLabel.style.top = `${120}px`;
+        // topicLabel.style.left = `${rect.left + rect.width / 2 - topicLabel.offsetWidth / 2}px`;
+        // topicLabel.style.top = `${120}px`;
     }
 
     updatePositions();
@@ -444,7 +537,7 @@ export function showEnterButton(url: string, topic_name: string) {
 
     enterButton.addEventListener("click", () => {
         document.body.removeChild(enterButton);
-        document.body.removeChild(topicLabel);
+        // document.body.removeChild(topicLabel);
         insert_audio_call_url(url, topicNameVideo);
     });
 }
@@ -638,4 +731,16 @@ async function generateToken(): Promise<string> {
         console.error('Error generating token:', error);
         return "";
     }
+}
+
+export function update_video_position() {
+    updateVideoFramePosition();
+    const topicLabel = document.getElementById("video-room-overlay");
+    if (topicLabel) topicLabel.remove();
+    addRoomNameOverlay(topicNameVideo);
+}
+
+function isNarrowScreen(): boolean {
+    console.log("Мобильный режим - 1: " + media_breakpoints_num.lg + " - " + window.innerWidth);
+    return window.innerWidth < media_breakpoints_num.lg;
 }
