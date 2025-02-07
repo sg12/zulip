@@ -1080,9 +1080,9 @@ li.top_left_scheduled_messages {
 
 .subscription_block {
     grid-template-columns:
-        var(--left-sidebar-toggle-width-offset) var(
+        var(--left-sidebar-toggle-width-offset) calc(var(
             --left-sidebar-icon-column-width
-        )
+        ) * 2)
         var(--left-sidebar-icon-content-gap) minmax(0, 1fr) minmax(
             0,
             max-content
@@ -1090,11 +1090,15 @@ li.top_left_scheduled_messages {
         minmax(0, max-content)
         var(--left-sidebar-vdots-width) 0;
     white-space: nowrap;
+    min-height: 54px;
 
     .stream-privacy {
         grid-area: starting-anchor-element;
         display: flex;
         place-content: center center;
+
+        width: 32px;
+        height: 32px;
 
         .zulip-icon.zulip-icon-globe {
             /* 12px at 14px/1em */
@@ -1298,6 +1302,7 @@ li.top_left_scheduled_messages {
     color: var(--color-left-sidebar-heads-up-icon);
     margin: 2px 0;
     border-radius: 3px;
+    font-size: 18px;
 
     &:hover {
         color: var(--color-left-sidebar-heads-up-icon-hover);
@@ -1353,7 +1358,7 @@ li.top_left_scheduled_messages {
     padding-left: 1px;
     /* Set the icon size, which will be inherited
        by .zulip-icon */
-    font-size: 17px;
+    font-size: 18px;
 
     /*
         If you hover directly over the ellipsis itself,
