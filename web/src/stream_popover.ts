@@ -182,6 +182,17 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
                 e.stopPropagation();
             });
 
+            // Add subscribers
+            $popper.on("click", ".invite_people_stream", (e) => {
+                const sub = stream_popover_sub(e);
+                hide_stream_popover();
+
+                // Admin can change any stream's name & description either stream is public or
+                // private, subscribed or unsubscribed.
+                let stream_edit_hash = hash_util.channels_settings_edit_url(sub, "subscribers");
+                browser_history.go_to_location(stream_edit_hash);
+            });
+
             // Mark all messages in stream as read
             $popper.on("click", ".mark_stream_as_read", (e) => {
                 const sub = stream_popover_sub(e);

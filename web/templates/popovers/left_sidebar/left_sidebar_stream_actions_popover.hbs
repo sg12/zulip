@@ -44,8 +44,8 @@
             </a>
         </li>
 
-        {{#if canChangeAvatar}}
         <li role="separator" class="popover-menu-separator hidden-for-spectators"></li>
+        {{#if canChangeAvatar}}
         <li role="none" class="link-item popover-menu-list-item hidden-for-spectators no-auto-hide-left-sidebar-overlay">
             <a role="menuitem" class="change_stream_avatar popover-menu-link" tabindex="0">
                 <i class="popover-menu-icon zulip-icon zulip-icon-file-text" aria-hidden="true"></i>
@@ -53,5 +53,11 @@
             </a>
         </li>
         {{/if}}
+        <li role="none" class="link-item popover-menu-list-item hidden-for-spectators no-auto-hide-left-sidebar-overlay">
+            <a role="menuitem" class="invite_people_stream popover-menu-link" tabindex="0">
+                <i class="popover-menu-icon zulip-icon zulip-icon-user-plus" aria-hidden="true"></i>
+                <span class="popover-menu-label">{{t "Add subscribers"}}</span>
+            </a>
+        </li>
     </ul>
 </div>
