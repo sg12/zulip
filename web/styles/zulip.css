@@ -1316,7 +1316,9 @@ div.toggle_resolve_topic_spinner .loading_indicator_spinner {
 #invite-user-form {
     margin: 0;
 }
-
+#invite_as{
+    display: none;
+}
 .invite-user-select {
     vertical-align: middle;
 }
