@@ -151,13 +151,16 @@ export function initialize(): void {
     $("#video-toggle-menu-button").on("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
-    
+
         const $middleColumn = $(".app-main .column-middle");
-    
+        const $icon = $("#video-toggle-menu-button .zulip-icon");
+
         if ($middleColumn.is(":visible")) {
             $middleColumn.hide();
+            $icon.removeClass("zulip-icon-message-square").addClass("zulip-icon-message-square-off");
         } else {
             $middleColumn.show();
+            $icon.removeClass("zulip-icon-message-square-off").addClass("zulip-icon-message-square");
         }
         compose_call_ui.update_video_position();
     });
