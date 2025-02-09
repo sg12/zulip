@@ -20,6 +20,7 @@ $user_status_emoji_width: 24px;
 }
 
 #buddy_list_wrapper {
+    max-height: 70vh;
     position: relative;
     margin-left: 0;
     overflow: auto;
@@ -47,6 +48,7 @@ $user_status_emoji_width: 24px;
 }
 
 .buddy-list-section-container {
+    max-height: 80vh;
     &.no-display {
         display: none;
     }
