@@ -42,7 +42,7 @@ function get_new_heights(): {
         Number.parseInt($("#right-sidebar").css("paddingTop"), 10) -
         ($("#userlist-header").outerHeight(true) ?? 0);
 
-    const buddy_list_wrapper_max_height = Math.max(80, usable_height);
+    const buddy_list_wrapper_max_height = Math.max(700);
 
     return {
         stream_filters_max_height,
