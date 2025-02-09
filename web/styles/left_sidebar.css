@@ -1082,7 +1082,7 @@ li.top_left_scheduled_messages {
     grid-template-columns:
         var(--left-sidebar-toggle-width-offset) calc(var(
             --left-sidebar-icon-column-width
-        ) * 2)
+        ) * 3)
         var(--left-sidebar-icon-content-gap) minmax(0, 1fr) minmax(
             0,
             max-content
@@ -1090,15 +1090,15 @@ li.top_left_scheduled_messages {
         minmax(0, max-content)
         var(--left-sidebar-vdots-width) 0;
     white-space: nowrap;
-    min-height: 54px;
+    min-height: 76px;
 
     .stream-privacy {
         grid-area: starting-anchor-element;
         display: flex;
         place-content: center center;
 
-        width: 32px;
-        height: 32px;
+        width: 48px;
+        height: 48px;
 
         .zulip-icon.zulip-icon-globe {
             /* 12px at 14px/1em */
