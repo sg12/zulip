@@ -85,25 +85,25 @@
                   label=settings_label.send_read_receipts
                   tooltip_text=send_read_receipts_tooltip
                   hide_tooltip=realm.realm_enable_read_receipts
-                  help_link="/help/read-receipts"
                   }}
                 {{> settings_checkbox
                   setting_name="presence_enabled"
                   is_checked=settings_object.presence_enabled
                   label=settings_label.presence_enabled
                   label_parens_text=settings_label.presence_enabled_parens_text
-                  help_link="/help/status-and-availability"
                   prefix="user_"}}
                 {{> settings_checkbox
                   setting_name="allow_private_data_export"
                   is_checked=settings_object.allow_private_data_export
                   label=settings_label.allow_private_data_export
-                  help_link="/help/export-your-organization#export-your-organization"
                   }}
             </div>
+            {{#if is_admin}}
             <div class="input-group">
                 <label for="user_email_address_visibility" class="settings-field-label">{{t "Who can access your email address" }}
+                    {{#if is_admin}}
                     {{> ../help_link_widget link="/help/configure-email-visibility" }}
+                    {{/if}}
                 </label>
                 <div id="user_email_address_dropdown_container" class="inline-block {{#unless user_has_email_set}}disabled_setting_tooltip{{/unless}}">
                     <select name="email_address_visibility" class="email_address_visibility prop-element settings_select bootstrap-focus-style" data-setting-widget-type="number"
@@ -112,8 +112,9 @@
                     </select>
                 </div>
             </div>
+            {{/if}}
         </div>
-
+{{#if is_admin}}
         <div id="api_key_button_box">
             <h3>{{t "API key" }}</h3>
 
@@ -135,6 +136,7 @@
                 </div>
             </div>
         </div>
+        {{/if}}
         <!-- Render /settings/api_key_modal.hbs after #api_key_button is clicked
         to avoid password being inserted by password manager too aggressively. -->
     </div>
