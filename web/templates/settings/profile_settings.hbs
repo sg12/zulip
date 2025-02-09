@@ -54,9 +54,11 @@
                   disabled_text = (t "Avatar changes are disabled in this organization")
                   is_editable_by_current_user = user_can_change_avatar
                   image = current_user.avatar_url_medium}}
+                {{#if is_admin}}
                 <div id="user-avatar-source">
                     <a href="https://en.gravatar.com/" target="_blank" rel="noopener noreferrer">{{t "Avatar from Gravatar" }}</a>
                 </div>
+                {{/if}}
             </div>
             <div class="user-details">
                 <div class="input-group">
