@@ -42,9 +42,11 @@
 {{#if description}}
     <span class="narrow_description rendered_markdown single-line-rendered-markdown">{{description}}
         {{#if link}}
+        {{#if is_admin}}
         <a class="help_link_widget" href="{{link}}" target="_blank" rel="noopener noreferrer">
             <i class="fa fa-question-circle-o" aria-hidden="true"></i>
         </a>
+        {{/if}}
         {{/if}}
     </span>
 {{/if}}
