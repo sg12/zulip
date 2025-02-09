@@ -92,39 +92,44 @@ export function insert_audio_call_url(url: string, topic_name: string): void {
         parentNode: videoContainer,
         jwt: jwt,
         configOverwrite: {
-            prejoinConfig: { enabled: false },
-            constraints: {
-                video: {
-                    height: {
-                        ideal: 240, // Обычное низкое качество
-                        max: 360,    // Максимальное ограничение (можно 480, если нужно)
-                        min: 180     // Минимум
-                    },
-                    width: {
-                        ideal: 320,
-                        max: 640,
-                        min: 240
-                    },
-                    frameRate: {
-                        ideal: 15,  // Низкая частота кадров для экономии ресурсов
-                        max: 20
-                    }
+            performanceSettings: {
+                videoQuality: {
+                    preferredCodec: "VP8", // Можно VP9 или H264 (зависит от поддержки браузера)
+                    maxBitrate: 50000, // Ограничение битрейта видео (в битах)
+                    maxFrameRate: 5, // Ограничение FPS (уменьшает нагрузку)
+                    resolution: 180, // Разрешение видео (360p, 720p, 1080p)
                 },
-                audio: {
-                    autoGainControl: true,  // Автоусиление звука
+                audioQuality: {
+                    opusDtx: true, // Включает DTX для экономии трафика
+                    stereo: false, // Выключает стереозвук (экономия CPU)
                     echoCancellation: true, // Подавление эха
                     noiseSuppression: true, // Подавление шума
-                    sampleRate: 48000,      // Частота дискретизации для чёткого звука
-                    sampleSize: 16,         // Глубина аудио (16 бит)
-                    channelCount: 1         // Моно-канал (для стабильности)
+                    autoGainControl: true // Автоматическое усиление звука
+                },
+                cpuOveruseDetection: {
+                    enabled: true, // Включает адаптацию качества при перегрузке CPU
+                    suspendHighFPS: true, // Отключает высокие FPS при нагрузке
+                    disableSuspendVideo: false
                 }
             },
+            prejoinConfig: { enabled: false },
             videoQuality: {
-                maxBitratesVideo: {
-                    low: 100000,  // 100 kbps (очень низкое качество)
-                    standard: 200000, // 200 kbps (чуть лучше, но всё равно низкое)
-                    high: 400000 // 400 kbps (максимально низкий порог)
-                }
+                preferredCodec: "VP8", // VP8 менее требователен к ресурсам
+                maxBitrate: 50000, // 100 Kbps (очень низкое качество видео)
+                maxFrameRate: 5, // Ограничение кадров в секунду (экономия CPU)
+                resolution: 240 // 240p – минимальное разрешение для снижения нагрузки
+            },
+            audioQuality: {
+                opusDtx: true, // DTX снижает трафик на передаче тишины
+                stereo: false, // Отключаем стерео (уменьшаем нагрузку)
+                echoCancellation: true, // Подавление эха
+                noiseSuppression: true, // Подавление шума
+                autoGainControl: false // Отключаем автоусиление (снижает нагрузку)
+            },
+            cpuOveruseDetection: {
+                enabled: true, // Включаем адаптивное управление нагрузкой CPU
+                suspendHighFPS: true, // Отключаем высокие FPS при перегрузке
+                disableSuspendVideo: false // Разрешаем отключение видео при перегрузке
             },
             disableSimulcast: true, // Отключаем многопоточное видео (важно для стабильности)
             startWithVideoMuted: true,  // Отключаем видео по умолчанию (экономия трафика)
@@ -134,6 +139,11 @@ export function insert_audio_call_url(url: string, topic_name: string): void {
             enableLipSync: false // Отключаем синхронизацию губ (не нужно при низком качестве)
         },
         interfaceConfigOverwrite: {
+            DISABLE_VIDEO_BACKGROUND: true, // Отключаем размытие фона (экономия CPU)
+            DISABLE_DOMINANT_SPEAKER_INDICATOR: true, // Отключаем индикатор активного говорящего
+            SHOW_POWERED_BY: false, // Убираем "Powered by Jitsi"
+            SHOW_BRAND_WATERMARK: false, // Убираем логотип Jitsi
+            SHOW_WATERMARK_FOR_GUESTS: false, // Убираем логотип для гостей
             TOOLBAR_BUTTONS: [
                 'camera',
                 'desktop',
@@ -146,43 +156,44 @@ export function insert_audio_call_url(url: string, topic_name: string): void {
         userInfo: {
             displayName: current_user.full_name,
             email: current_user.email,
-        }
-};
-api = new JitsiMeetExternalAPI(domain, options);
+        },
+        
+    };
+    api = new JitsiMeetExternalAPI(domain, options);
 
-CURRENT_TOPIC_CHARNAME = topicNameToChar(topicNameVideo);
+    CURRENT_TOPIC_CHARNAME = topicNameToChar(topicNameVideo);
 
-const columnMiddle = document.getElementById("video-container");
-const resizeObserver = new ResizeObserver(() => {
-    requestAnimationFrame(updateVideoFramePosition);
-});
-
-if (columnMiddle)
-    resizeObserver.observe(columnMiddle);
-// new ResizeObserver(updateVideoFramePosition).observe(columnMiddle);
-
-addListenersVideo();
-
-const iframe = document.querySelector('iframe');
-if (iframe) {
-    iframe.style.display = "none";
-    iframe.addEventListener('load', () => {
-        setTimeout(() => {
-            const iframe = videoContainer.querySelector("iframe") as HTMLIFrameElement;
-            if (iframe) {
-                // makeResizable(videoContainer, iframe);
-                // addExitButton();
-                // addTestButton();
-                // loadingBar.style.display = "none"; // Скрываем бар загрузки
-                removeLoadBar();
-                iframe.style.display = "block";
-                addRoomNameOverlay(topicNameVideo);
-                // handleOverlayMouseEvents(videoContainer, overlay, iframe);
-                // logAbsolutePositions();
-            }
-        }, 10);
+    const columnMiddle = document.getElementById("video-container");
+    const resizeObserver = new ResizeObserver(() => {
+        requestAnimationFrame(updateVideoFramePosition);
     });
-}
+
+    if (columnMiddle)
+        resizeObserver.observe(columnMiddle);
+    // new ResizeObserver(updateVideoFramePosition).observe(columnMiddle);
+
+    addListenersVideo();
+
+    const iframe = document.querySelector('iframe');
+    if (iframe) {
+        iframe.style.display = "none";
+        iframe.addEventListener('load', () => {
+            setTimeout(() => {
+                const iframe = videoContainer.querySelector("iframe") as HTMLIFrameElement;
+                if (iframe) {
+                    // makeResizable(videoContainer, iframe);
+                    // addExitButton();
+                    // addTestButton();
+                    // loadingBar.style.display = "none"; // Скрываем бар загрузки
+                    removeLoadBar();
+                    iframe.style.display = "block";
+                    addRoomNameOverlay(topicNameVideo);
+                    // handleOverlayMouseEvents(videoContainer, overlay, iframe);
+                    // logAbsolutePositions();
+                }
+            }, 10);
+        });
+    }
 
 }
 
@@ -211,6 +222,7 @@ function addListenersVideo() {
             e.stopPropagation();
             api.executeCommand('toggleShareScreen');
         });
+
     });
 
     // Подписываемся на события изменения статуса микрофона, камеры и шаринга экрана
@@ -276,6 +288,8 @@ function updateVideoFramePosition() {
     const settingsContentPosition = getAbsolutePosition(settingsContent, "settings_conten");
     const iframeLeft = columnMiddlePosition?.x + columnMiddlePosition?.width;
     const iframeTop = columnMiddlePosition?.y + settingsContentPosition?.y - window.scrollY;
+    // const iframeTop = settingsContentPosition?.y - window.scrollY;
+
     let iframeWidth = (rightSidebarX - iframeLeft);
     // if (iframeWidth >= window.innerWidth * 0.33)
     //     iframeWidth = window.innerWidth * 0.33;
