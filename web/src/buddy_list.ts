@@ -602,7 +602,7 @@ export class BuddyList extends BuddyListConf {
         }
 
         this.$other_users_list = $(this.other_user_list_selector);
-        if (other_users.length < 10) {
+        if (other_users.length < 5) {
             // Remove the empty list message before adding users
             if ($(`${this.other_user_list_selector} .empty-list-message`).length > 0) {
                 this.$other_users_list.empty();
