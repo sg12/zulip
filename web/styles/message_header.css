@@ -48,7 +48,7 @@
 
         .stream_topic {
             display: inline-block;
-            padding: 5px 6px 5px 2px;
+            padding: 5px 6px 5px 10px;
             height: 17px;
             line-height: 17px;
             overflow: hidden;
