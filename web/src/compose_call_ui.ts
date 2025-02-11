@@ -157,7 +157,7 @@ export function insert_audio_call_url(url: string, topic_name: string): void {
             displayName: current_user.full_name,
             email: current_user.email,
         },
-        
+
     };
     api = new JitsiMeetExternalAPI(domain, options);
 
@@ -327,7 +327,7 @@ function addRoomNameOverlay(roomName: string) {
         overlay.style.display = "flex";
         overlay.style.alignItems = "center";
         overlay.style.justifyContent = "center";
-        overlay.style.fontSize = "10px";
+        overlay.style.fontSize = "16px";
         overlay.style.fontWeight = "bold";
         overlay.style.color = "#333";
         overlay.style.zIndex = "2"; // Выше видео
@@ -358,7 +358,7 @@ function addRoomNameOverlay(roomName: string) {
 //     videoContainer.style.removeProperty("bottom");
 //     videoContainer.style.removeProperty("right");
 //     // isFloatingVideo = false;
-//     updateVideoFramePosition(); 
+//     updateVideoFramePosition();
 // }
 
 export function topicNameToChar(topicName): string {

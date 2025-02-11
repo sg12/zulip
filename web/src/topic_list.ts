@@ -384,7 +384,7 @@ export function initialize({
             on_topic_click(stream_id, topic, is_audio_topic);
             const char_code = compose_call_ui.topicNameToChar(topic);
             const isSameTopic = (char_code == compose_call_ui.CURRENT_TOPIC_CHARNAME);
-            
+
             if (is_audio_topic){
                 if(!isSameTopic || !compose_call_ui.isShowingVideo())
                     clickVideoTopic(stream_id, topic, char_code);
@@ -408,11 +408,12 @@ export function initialize({
 
 export function clickVideoTopic(stream_id: number, topic_name: string, char_code: string) {
     const bbb_url = stream_data.get_sub_by_id(stream_id)?.bbb_url || "";
+    const topicName_streamName = stream_data.get_stream_name_from_id(stream_id) + ` > ` + topic_name;
     if (bbb_url.length > 0) {
         const bbb_url2 = bbb_url + "-" + char_code;
         // compose_call_ui.showEnterButton(bbb_url2, topic_name);
         clearButtonsAndPropsForVideo();
-        compose_call_ui.insert_audio_call_url(bbb_url2, topic_name);
+        compose_call_ui.insert_audio_call_url(bbb_url2, topicName_streamName);
     }
 }
 
