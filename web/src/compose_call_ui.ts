@@ -345,7 +345,7 @@ function addRoomNameOverlay(roomName: string) {
 
         const rect = videoContainer.getBoundingClientRect();
         overlay.style.left = `${rect.left}px`;
-        overlay.style.top = `${rect.top}px`;
+        overlay.style.top = `${rect.top - 27}px`;
         overlay.style.width = `${rect.width}px`;
     }
 
