@@ -13,6 +13,7 @@ let isCameraMuted = true;
 let isScreenSharing = false;
 let url_video = "";
 let topicNameVideo = "";
+let streamNameVideo = "";
 let videoContainer: HTMLElement;
 // let isFloatingVideo = false;
 export let CURRENT_TOPIC_CHARNAME: string = "";
@@ -55,9 +56,10 @@ export function update_audio_chat_button_display(): void {
     $(".message-edit-feature-group .audio_link").toggle(show_audio_chat_button);
 }
 
-export function insert_audio_call_url(url: string, topic_name: string): void {
+export function insert_audio_call_url(url: string, topic_name: string, stream_name: string): void {
     url_video = url;
     topicNameVideo = topic_name;
+    streamNameVideo = stream_name;
 
     // Инициализируем контейнер для видео
     if (!videoContainer) initVideoContainer();
@@ -143,7 +145,7 @@ export function insert_audio_call_url(url: string, topic_name: string): void {
                     if (iframe) {
                         removeLoadBar();
                         iframe.style.display = "block";
-                        addRoomNameOverlay(topicNameVideo);
+                        addRoomNameOverlay(streamNameVideo + ` > ` + topicNameVideo);
                     }
                 }, 10);
             });
@@ -252,7 +254,7 @@ export function insert_audio_call_url_old(url: string, topic_name: string): void
                     // loadingBar.style.display = "none"; // Скрываем бар загрузки
                     removeLoadBar();
                     iframe.style.display = "block";
-                    addRoomNameOverlay(topicNameVideo);
+                    addRoomNameOverlay(streamNameVideo + ` > ` + topicNameVideo);
                     // handleOverlayMouseEvents(videoContainer, overlay, iframe);
                     // logAbsolutePositions();
                 }
@@ -365,7 +367,7 @@ function updateVideoFramePosition() {
     const iframeHeight = window.innerHeight * 75 / 100;
     videoContainer.style.left = `${iframeLeft + 5}px`;
     videoContainer.style.width = `${iframeWidth}px`;
-    videoContainer.style.top = `${iframeTop + 12}px`;
+    videoContainer.style.top = `${iframeTop + 12 + 16}px`;
     videoContainer.style.height = `${iframeHeight}px`;
     console.log("---videoContainer.style.left:", videoContainer.style.left);
     // } else {
@@ -392,7 +394,7 @@ function addRoomNameOverlay(roomName: string) {
         overlay.style.display = "flex";
         overlay.style.alignItems = "center";
         overlay.style.justifyContent = "center";
-        overlay.style.fontSize = "10px";
+        overlay.style.fontSize = "16px";
         overlay.style.fontWeight = "bold";
         overlay.style.color = "#333";
         overlay.style.zIndex = "2"; // Выше видео
@@ -410,7 +412,8 @@ function addRoomNameOverlay(roomName: string) {
 
         const rect = videoContainer.getBoundingClientRect();
         overlay.style.left = `${rect.left}px`;
-        overlay.style.top = `${rect.top}px`;
+        //overlay.style.top = `${rect.top}px`;
+        overlay.style.top = `${rect.top - 16}px`;
         overlay.style.width = `${rect.width}px`;
     }
 
@@ -592,7 +595,7 @@ export function showEnterButton(url: string, topic_name: string) {
     const topicLabel = document.getElementById("video-room-overlay");
     if (topicLabel) topicLabel.remove();
 
-    addRoomNameOverlay(topicNameVideo);
+    addRoomNameOverlay(streamNameVideo + ` > ` + topicNameVideo);
 
     updateVideoFramePosition();
 
@@ -650,7 +653,7 @@ export function showEnterButton(url: string, topic_name: string) {
     enterButton.addEventListener("click", () => {
         document.body.removeChild(enterButton);
         // document.body.removeChild(topicLabel);
-        insert_audio_call_url(url, topicNameVideo);
+        insert_audio_call_url(url, topicNameVideo, streamNameVideo);
     });
 }
 
@@ -687,7 +690,7 @@ export function update_video_position() {
     updateVideoFramePosition();
     const topicLabel = document.getElementById("video-room-overlay");
     if (topicLabel) topicLabel.remove();
-    addRoomNameOverlay(topicNameVideo);
+    addRoomNameOverlay(streamNameVideo + ` > ` + topicNameVideo);
 }
 
 function isNarrowScreen(): boolean {
