@@ -55,8 +55,107 @@ export function update_audio_chat_button_display(): void {
     $(".message-edit-feature-group .audio_link").toggle(show_audio_chat_button);
 }
 
-
 export function insert_audio_call_url(url: string, topic_name: string): void {
+    url_video = url;
+    topicNameVideo = topic_name;
+
+    // Инициализируем контейнер для видео
+    if (!videoContainer) initVideoContainer();
+    if (!videoContainer) return;
+
+    const $middleColumn = $(".app-main .column-middle");
+    if (isNarrowScreen()) {
+        console.log("Мобильный режим!");
+        $middleColumn.hide();
+    } else {
+        $middleColumn.show();
+    }
+
+    updateVideoFramePosition();
+
+    const videoStaticContainer = document.getElementById("video-container");
+    if (videoStaticContainer) showLoadBar(videoStaticContainer);
+
+    videoContainer.innerHTML = "";
+    const topicLabel = document.getElementById("video-room-overlay");
+    if (topicLabel) topicLabel.remove();
+
+    const cleanUrl = url.split('#')[0];
+    const domain = "jitsi-connectrm-test.ru:8443";
+    const roomName = encodeURIComponent(cleanUrl.split('/').pop()?.split('?')[0] || "");
+
+    // Генерация токена с использованием .then()
+    generateToken().then((jwt) => {
+        console.log("----jwt: " + jwt);  // Логируем токен
+
+        const options = {
+            roomName: roomName,
+            parentNode: videoContainer,
+            jwt: jwt,
+            configOverwrite: {
+                prejoinConfig: { enabled: false },
+                disableSimulcast: true,
+                startWithVideoMuted: true,
+                startWithAudioMuted: false,
+                disableAudioLevels: false,
+                stereo: false,
+                enableLipSync: false
+            },
+            interfaceConfigOverwrite: {
+                DISABLE_VIDEO_BACKGROUND: true,
+                DISABLE_DOMINANT_SPEAKER_INDICATOR: true,
+                TOOLBAR_BUTTONS: [
+                    'camera',
+                    'desktop',
+                    'microphone',
+                    'settings',
+                    'fullscreen',
+                    'hangup'
+                ]
+            },
+            userInfo: {
+                displayName: current_user.full_name,
+                email: current_user.email,
+            },
+        };
+
+        console.log('Jitsi Options:', JSON.stringify(options, null, 2));  // Логируем объект с отступами для удобства чтения
+
+        api = new JitsiMeetExternalAPI(domain, options);
+
+        CURRENT_TOPIC_CHARNAME = topicNameToChar(topicNameVideo);
+
+        const columnMiddle = document.getElementById("video-container");
+        const resizeObserver = new ResizeObserver(() => {
+            requestAnimationFrame(updateVideoFramePosition);
+        });
+
+        if (columnMiddle) resizeObserver.observe(columnMiddle);
+
+        addListenersVideo();
+
+        const iframe = document.querySelector('iframe');
+        if (iframe) {
+            iframe.style.display = "none";
+            iframe.addEventListener('load', () => {
+                setTimeout(() => {
+                    const iframe = videoContainer.querySelector("iframe") as HTMLIFrameElement;
+                    if (iframe) {
+                        removeLoadBar();
+                        iframe.style.display = "block";
+                        addRoomNameOverlay(topicNameVideo);
+                    }
+                }, 10);
+            });
+        }
+    }).catch((error) => {
+        console.error('Error generating token:', error);
+    });
+}
+
+
+
+export function insert_audio_call_url_old(url: string, topic_name: string): void {
     url_video = url;
     topicNameVideo = topic_name;
     // let videoContainer = document.getElementById("floating-video-container");
@@ -84,53 +183,17 @@ export function insert_audio_call_url(url: string, topic_name: string): void {
 
     const cleanUrl = url.split('#')[0];
     // // Вставляем ссылку в iframe с использованием Jitsi Meet API
-    const domain = "jitsi-connectrm.ru:8443";
+    const domain = "jitsi-connectrm-test.ru:8443";
     const roomName = encodeURIComponent(cleanUrl.split('/').pop()?.split('?')[0] || ""); // Кодируем имя комнаты
-    const jwt = encodeURIComponent(cleanUrl.split('jwt=')[1] || ""); // Кодируем JWT
+    // const jwt = encodeURIComponent(cleanUrl.split('jwt=')[1] || ""); // Кодируем JWT
+    const jwt = generateToken();
+    console.log("----jwt: " + jwt);
     const options = {
         roomName: roomName,
         parentNode: videoContainer,
         jwt: jwt,
         configOverwrite: {
-            performanceSettings: {
-                videoQuality: {
-                    preferredCodec: "VP8", // Можно VP9 или H264 (зависит от поддержки браузера)
-                    maxBitrate: 50000, // Ограничение битрейта видео (в битах)
-                    maxFrameRate: 5, // Ограничение FPS (уменьшает нагрузку)
-                    resolution: 180, // Разрешение видео (360p, 720p, 1080p)
-                },
-                audioQuality: {
-                    opusDtx: true, // Включает DTX для экономии трафика
-                    stereo: false, // Выключает стереозвук (экономия CPU)
-                    echoCancellation: true, // Подавление эха
-                    noiseSuppression: true, // Подавление шума
-                    autoGainControl: true // Автоматическое усиление звука
-                },
-                cpuOveruseDetection: {
-                    enabled: true, // Включает адаптацию качества при перегрузке CPU
-                    suspendHighFPS: true, // Отключает высокие FPS при нагрузке
-                    disableSuspendVideo: false
-                }
-            },
             prejoinConfig: { enabled: false },
-            videoQuality: {
-                preferredCodec: "VP8", // VP8 менее требователен к ресурсам
-                maxBitrate: 50000, // 100 Kbps (очень низкое качество видео)
-                maxFrameRate: 5, // Ограничение кадров в секунду (экономия CPU)
-                resolution: 240 // 240p – минимальное разрешение для снижения нагрузки
-            },
-            audioQuality: {
-                opusDtx: true, // DTX снижает трафик на передаче тишины
-                stereo: false, // Отключаем стерео (уменьшаем нагрузку)
-                echoCancellation: true, // Подавление эха
-                noiseSuppression: true, // Подавление шума
-                autoGainControl: false // Отключаем автоусиление (снижает нагрузку)
-            },
-            cpuOveruseDetection: {
-                enabled: true, // Включаем адаптивное управление нагрузкой CPU
-                suspendHighFPS: true, // Отключаем высокие FPS при перегрузке
-                disableSuspendVideo: false // Разрешаем отключение видео при перегрузке
-            },
             disableSimulcast: true, // Отключаем многопоточное видео (важно для стабильности)
             startWithVideoMuted: true,  // Отключаем видео по умолчанию (экономия трафика)
             startWithAudioMuted: false, // Включаем звук сразу
@@ -159,6 +222,8 @@ export function insert_audio_call_url(url: string, topic_name: string): void {
         },
         
     };
+    console.log('Jitsi Options:', JSON.stringify(options, null, 2));  // Логируем объект с отступами для удобства чтения
+
     api = new JitsiMeetExternalAPI(domain, options);
 
     CURRENT_TOPIC_CHARNAME = topicNameToChar(topicNameVideo);
@@ -353,15 +418,7 @@ function addRoomNameOverlay(roomName: string) {
     window.addEventListener("resize", updateOverlayPosition);
 }
 
-
-// export function restoreVideoPosition() {
-//     videoContainer.style.removeProperty("bottom");
-//     videoContainer.style.removeProperty("right");
-//     // isFloatingVideo = false;
-//     updateVideoFramePosition(); 
-// }
-
-export function topicNameToChar(topicName): string {
+export function topicNameToChar(topicName: string): string {
     return topicName.split('').map(char => char.charCodeAt(0)).join('');
 }
 
@@ -597,168 +654,6 @@ export function showEnterButton(url: string, topic_name: string) {
     });
 }
 
-
-export function generate_and_insert_audio_or_video_call_link(
-    bbb_url: string
-): void {
-    let video_call_id = bbb_url;
-    if (bbb_url.length < 7) {
-        video_call_id = util.random_int(100000000000000, 999999999999999).toString();
-    }
-    generateToken()
-        .then((token) => generate_call_link(video_call_id, token))
-        .catch(() => generate_call_link(video_call_id, ""));
-}
-
-export function generate_and_insert_audio_or_video_call_link_old(
-    $target_element: JQuery,
-    is_audio_call: boolean,
-    bbb_url: string
-): void {
-    // let $target_textarea: JQuery<HTMLTextAreaElement>;
-    // let edit_message_id: string | undefined;
-    // if ($target_element.parents(".message_edit_form").length === 1) {
-    //     edit_message_id = rows.id($target_element.parents(".message_row")).toString();
-    //     $target_textarea = $(`#edit_form_${CSS.escape(edit_message_id)} .message_edit_content`);
-    // } else {
-    //     $target_textarea = $<HTMLTextAreaElement>("textarea#compose-textarea");
-    // }
-
-    // const available_providers = realm.realm_available_video_chat_providers;
-
-    // if (
-    //     available_providers.zoom &&
-    //     realm.realm_video_chat_provider === available_providers.zoom.id
-    // ) {
-    //     compose_call.abort_video_callbacks(edit_message_id);
-    //     const key = edit_message_id ?? "";
-
-    //     const request = {
-    //         is_video_call: !is_audio_call,
-    //     };
-
-    //     const make_zoom_call = (): void => {
-    //         const xhr = channel.post({
-    //             url: "/json/calls/zoom/create",
-    //             data: request,
-    //             success(res) {
-    //                 const data = call_response_schema.parse(res);
-    //                 compose_call.video_call_xhrs.delete(key);
-    //                 if (is_audio_call) {
-    //                     insert_audio_call_url(data.url, $target_textarea);
-    //                 } else {
-    //                     insert_video_call_url(data.url, $target_textarea);
-    //                 }
-    //             },
-    //             error(xhr, status) {
-    //                 compose_call.video_call_xhrs.delete(key);
-    //                 let parsed;
-    //                 if (
-    //                     status === "error" &&
-    //                     (parsed = z.object({code: z.string()}).safeParse(xhr.responseJSON))
-    //                         .success &&
-    //                     parsed.data.code === "INVALID_ZOOM_TOKEN"
-    //                 ) {
-    //                     current_user.has_zoom_token = false;
-    //                 }
-    //                 if (status !== "abort") {
-    //                     ui_report.generic_embed_error(
-    //                         $t_html({defaultMessage: "Failed to create video call."}),
-    //                     );
-    //                 }
-    //             },
-    //         });
-    //         if (xhr !== undefined) {
-    //             compose_call.video_call_xhrs.set(key, xhr);
-    //         }
-    //     };
-
-    //     if (current_user.has_zoom_token) {
-    //         make_zoom_call();
-    //     } else {
-    //         compose_call.zoom_token_callbacks.set(key, make_zoom_call);
-    //         window.open(
-    //             window.location.protocol + "//" + window.location.host + "/calls/zoom/register",
-    //             "_blank",
-    //             "width=800,height=500,noopener,noreferrer",
-    //         );
-    //     }
-    // } else if (
-    //     available_providers.big_blue_button &&
-    //     realm.realm_video_chat_provider === available_providers.big_blue_button.id
-    // ) {
-    //     if (is_audio_call) {
-    //         // TODO: Add support for audio-only BigBlueButton calls here.
-    //         return;
-    //     }
-    //     const meeting_name = get_recipient_label() + " meeting";
-    //     void channel.get({
-    //         url: "/json/calls/bigbluebutton/create",
-    //         data: {
-    //             meeting_name,
-    //         },
-    //         success(response) {
-    //             const data = call_response_schema.parse(response);
-    //             insert_video_call_url(data.url, $target_textarea);
-    //         },
-    //     });
-    // } else {
-    // TODO: Use `new URL` to generate the URLs here.
-
-
-    // const video_call_id = util.random_int(100000000000000, 999999999999999);
-    // const token = generate_jitsi_jwt(current_user.email, current_user.full_name);
-    console.log("------token bbb_url: ", bbb_url);
-    let video_call_id = bbb_url;
-    if (bbb_url.length < 3) {
-        video_call_id = util.random_int(100000000000000, 999999999999999).toString();
-    }
-    console.log("------token bbb_url 2: ", video_call_id);
-    generateToken()
-        .then((token) => generate_call_link(video_call_id, token))
-        .catch(() => generate_call_link(video_call_id, ""));
-
-    // const video_call_link = compose_call.get_jitsi_server_url() + "/" + video_call_id;
-    // // if (is_audio_call) {
-    // insert_audio_call_url(
-    //     video_call_link + "?jwt=" + token + "#config.startWithVideoMuted=true",
-    //     $target_textarea,
-    // );
-    // } else {
-    //     /* Because Jitsi remembers what last call type you joined
-    //        in browser local storage, we need to specify that video
-    //        should not be muted in the video call case, or your
-    //        next call will also join without video after joining an
-    //        audio-only call.
-
-    //        This has the annoying downside that it requires users
-    //        who have a personal preference to disable video every
-    //        time, but Jitsi's UI makes that very easy to do, and
-    //        that inconvenience is probably less important than letting
-    //        the person organizing a call specify their intended
-    //        call type (video vs audio).
-    //    */
-    //     insert_video_call_url(
-    //         video_call_link + "#config.startWithVideoMuted=false",
-    //         $target_textarea,
-    //     );
-    // }
-    // }
-}
-
-function generate_call_link(video_call_id: string, token: String) {
-    const video_call_link = compose_call.get_jitsi_server_url() + "/" + video_call_id;
-    if (token.length > 0) {
-        insert_audio_call_url(
-            video_call_link + "?jwt=" + token + "#config.prejoinConfig.enabled=false&config.startWithVideoMuted=true&config.startWithAudioMuted=false", topicNameVideo,
-        );
-    } else {
-        insert_audio_call_url(
-            video_call_link + "#config.startWithVideoMuted=true&config.startWithAudioMuted=false", topicNameVideo,
-        );
-    }
-}
-
 async function generateToken(): Promise<string> {
     try {
         const secret = new TextEncoder().encode("HguV/8QBrJdCih2Ycpoz0g5q5m85apT3Nu6E+lDvufg="); // Используйте переменную окружения
@@ -774,7 +669,7 @@ async function generateToken(): Promise<string> {
             app_id: 'connectrm_svz',
             aud: 'jitsi',
             iss: 'connectrm_svz',
-            sub: 'jitsi-connectrm.ru',
+            sub: 'jitsi-connectrm-test.ru',
             room: '*',
         })
             .setProtectedHeader({ alg: 'HS256', typ: 'JWT' }) // Заголовок

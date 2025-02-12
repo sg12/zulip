@@ -370,16 +370,16 @@ export function initialize() {
 
         // const streams = stream_data.subscribed_stream_ids();
 
-        console.log("stream - 1: " + compose_state.stream_id());
+        // console.log("stream - 1: " + compose_state.stream_id());
 
-        let bbb_url = stream_data.get_sub_by_id(compose_state.stream_id())?.bbb_url;
+        // let bbb_url = stream_data.get_sub_by_id(compose_state.stream_id())?.bbb_url;
 
 
-        if (narrow_state.topic() && Object.keys(narrow_state.topic()).length > 0) {
-            bbb_url += "-" + user_topics.get_topic_id(narrow_state.stream_id(), narrow_state.topic());
-            console.log("Объект не пустой");
-            console.log("user_topics.get_topic_id: " + user_topics.get_topic_id(narrow_state.stream_id(), narrow_state.topic()));
-        } 
+        // if (narrow_state.topic() && Object.keys(narrow_state.topic()).length > 0) {
+        //     bbb_url += "-" + user_topics.get_topic_id(narrow_state.stream_id(), narrow_state.topic());
+        //     console.log("Объект не пустой");
+        //     console.log("user_topics.get_topic_id: " + user_topics.get_topic_id(narrow_state.stream_id(), narrow_state.topic()));
+        // } 
 
             // console.log("stream - 2: " + stream_data.get_sub_by_id(streams[0])?.bbb_url);
         
@@ -390,7 +390,7 @@ export function initialize() {
 
         
 
-        compose_call_ui.generate_and_insert_audio_or_video_call_link($(e.target), false, bbb_url);
+        // compose_call_ui.generate_and_insert_audio_or_video_call_link($(e.target), false, bbb_url);
     });
 
     $("body").on("click", ".audio_link", (e) => {
@@ -406,14 +406,14 @@ export function initialize() {
         // const streams = stream_data.subscribed_stream_ids();
         // const bbb_url = stream_data.get_sub_by_id(streams[0])?.bbb_url;
 
-        let bbb_url = stream_data.get_sub_by_id(compose_state.stream_id())?.bbb_url;
+        // let bbb_url = stream_data.get_sub_by_id(compose_state.stream_id())?.bbb_url;
 
 
-        if (narrow_state.topic() && Object.keys(narrow_state.topic()).length > 0) {
-            bbb_url += "-" + user_topics.get_topic_id(narrow_state.stream_id(), narrow_state.topic());
-        } 
+        // if (narrow_state.topic() && Object.keys(narrow_state.topic()).length > 0) {
+        //     bbb_url += "-" + user_topics.get_topic_id(narrow_state.stream_id(), narrow_state.topic());
+        // } 
 
-        compose_call_ui.generate_and_insert_audio_or_video_call_link($(e.target), true, bbb_url);
+        // compose_call_ui.generate_and_insert_audio_or_video_call_link($(e.target), true, bbb_url);
     });
 
     $("body").on("click", ".time_pick", function (e) {
