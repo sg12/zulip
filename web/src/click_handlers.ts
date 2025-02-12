@@ -8,7 +8,7 @@ import {$t_html} from "./i18n.ts";
 
 import render_buddy_list_tooltip_content from "../templates/buddy_list_tooltip_content.hbs";
 import render_create_topic_modal from "../templates/confirm_dialog/confirm_create_topic.hbs";
-
+import * as dialog_widget from "./dialog_widget.ts";
 import * as activity_ui from "./activity_ui.ts";
 import * as browser_history from "./browser_history.ts";
 import * as buddy_data from "./buddy_data.ts";
@@ -652,32 +652,39 @@ export function initialize(): void {
         e.stopPropagation();
         const stream_id = Number.parseInt(this.dataset.streamId!, 10);
         const html_body = render_create_topic_modal();
-
+    
         confirm_dialog.launch({
             html_heading: $t_html({defaultMessage: "Создать комнату"}),
             html_body,
+            close_on_submit: false,
             on_click() {
                 let topic_name = $("#new-topic-name").val();
-                const channel_type = $("input[name='channel-type']:checked").val();
-
-                if (topic_name) {
-                    if (channel_type === "audio") {
-                        topic_name = "🔊 " + topic_name;
-                    } else {
-                        topic_name = "✏️ " + topic_name;
-                    }
-
-                    compose_actions.start_and_send_message({
-                        message_type: "stream",
-                        stream_id,
-                        topic: topic_name,
-                        content: `Создана новая комната **${topic_name}**`,
-                        keep_composebox_empty: true,
-                    });
+    
+                if (!topic_name) {
+                    $("#new-topic-name").focus();
+                    return;
                 }
+    
+                const channel_type = $("input[name='channel-type']:checked").val();
+              
+                if (channel_type === "audio") {
+                    topic_name = "🎧 " + topic_name;
+                } else {
+                    topic_name = "✏️ " + topic_name;
+                }
+    
+                compose_actions.start_and_send_message({
+                    message_type: "stream",
+                    stream_id,
+                    topic: topic_name,
+                    content: `Создана новая комната **${topic_name}**`,
+                    keep_composebox_empty: false,
+                });
+                dialog_widget.close();
             },
         });
     });
+    
 
     // Recent conversations direct messages (Not displayed on small widths)
     $("body").on(
