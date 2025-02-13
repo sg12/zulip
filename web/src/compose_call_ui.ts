@@ -56,7 +56,7 @@ export function update_audio_chat_button_display(): void {
     $(".message-edit-feature-group .audio_link").toggle(show_audio_chat_button);
 }
 
-export function insert_audio_call_url_old2(url: string, topic_name: string, stream_name: string): void {
+export function insert_audio_call_url(url: string, topic_name: string, stream_name: string): void {
     url_video = url;
     topicNameVideo = topic_name;
     streamNameVideo = stream_name;
@@ -264,7 +264,7 @@ export function insert_audio_call_url_old(url: string, topic_name: string): void
 
 }
 
-export function insert_audio_call_url(url: string, topic_name: string, stream_name: string): void {
+export function insert_audio_call_url_new(url: string, topic_name: string, stream_name: string): void {
     url_video = url;
     topicNameVideo = topic_name;
     streamNameVideo = stream_name;
