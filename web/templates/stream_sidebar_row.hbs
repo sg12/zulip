@@ -4,17 +4,17 @@
     <div class="bottom_left_row">
         <div class="subscription_block selectable_sidebar_block {{#if hide_unread_count}}hide_unread_counts{{/if}}">
 
-            <img class="stream-avatar stream-privacy" src="{{avatar}}" alt="{{name}} avatar" data-stream-id="{{id}}">
+            <img class="stream-avatar stream-privacy" src="{{avatar}}" alt="{{name}} avatar" data-stream-id="{{id}}" data-url="{{url}}">
 
-            <a href="{{url}}" class="stream-name">{{name}}</a>
+            <a href="{{url}}" class="stream-name" data-description="{{description}}">{{name}}</a>
 
             <div class="left-sidebar-controls">
                 {{#unless (eq name "Администрация RM")}}
-                {{#if can_post_messages}}
-                <div class="channel-new-topic-button tippy-zulip-tooltip hidden-for-spectators" data-tippy-content="{{t 'New topic'}}" data-stream-id="{{id}}">
-                    <i class="channel-new-topic-icon zulip-icon zulip-icon-square-plus" aria-hidden="true"></i>
-                </div>
-                {{/if}}
+                    {{#if can_post_messages}}
+                        <div class="channel-new-topic-button tippy-zulip-tooltip hidden-for-spectators" data-tippy-content="{{t 'New topic'}}" data-stream-id="{{id}}">
+                            <i class="channel-new-topic-icon zulip-icon zulip-icon-square-plus" aria-hidden="true"></i>
+                        </div>
+                    {{/if}}
                 {{/unless}}
             </div>
 
@@ -27,7 +27,7 @@
             </div>
 
             {{#unless (eq name "Администрация RM")}}
-            <span class="sidebar-menu-icon stream-sidebar-menu-icon"><i class="zulip-icon zulip-icon-more-vertical" aria-hidden="true"></i></span>
+                <span class="sidebar-menu-icon stream-sidebar-menu-icon"><i class="zulip-icon zulip-icon-more-vertical" aria-hidden="true"></i></span>
             {{/unless}}
         </div>
     </div>

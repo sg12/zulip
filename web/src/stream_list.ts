@@ -500,7 +500,8 @@ function build_stream_sidebar_li(sub: StreamSubscription): JQuery {
     const is_muted = stream_data.is_muted(sub.stream_id);
     const can_post_messages = stream_data.can_post_messages_in_stream(sub);
     const args = {
-        name,
+        name: name,
+        description: sub.description,
         id: sub.stream_id,
         url: hash_util.by_stream_url(sub.stream_id),
         is_muted,

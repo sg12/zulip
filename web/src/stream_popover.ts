@@ -894,6 +894,10 @@ export function initialize(): void {
         e.stopPropagation();
     });
 
+    $("body").on("click", ".stream-avatar", function (this: HTMLElement, e) {
+        window.location.href = $(this).attr("data-url");
+    });
+
     $("body").on("click", ".inbox-stream-menu", function (this: HTMLElement, e) {
         const stream_id = Number.parseInt($(this).attr("data-stream-id")!, 10);
 
