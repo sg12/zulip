@@ -56,7 +56,7 @@ export function update_audio_chat_button_display(): void {
     $(".message-edit-feature-group .audio_link").toggle(show_audio_chat_button);
 }
 
-export function insert_audio_call_url(url: string, topic_name: string, stream_name: string): void {
+export function insert_audio_call_url_old2(url: string, topic_name: string, stream_name: string): void {
     url_video = url;
     topicNameVideo = topic_name;
     streamNameVideo = stream_name;
@@ -263,6 +263,131 @@ export function insert_audio_call_url_old(url: string, topic_name: string): void
     }
 
 }
+
+export function insert_audio_call_url(url: string, topic_name: string, stream_name: string): void {
+    url_video = url;
+    topicNameVideo = topic_name;
+    streamNameVideo = stream_name;
+
+    // Сначала запрашиваем разрешения
+    requestPermissions().then(() => {
+        console.log("Все необходимые разрешения получены.");
+        startConference(url, topic_name, stream_name);
+    }).catch((error) => {
+        console.error("Ошибка при получении разрешений: ", error);
+    });
+}
+
+async function requestPermissions(): Promise<void> {
+    try {
+        console.log("Запрос разрешений на использование камеры и микрофона...");
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        stream.getTracks().forEach(track => track.stop()); // Остановка стрима после проверки
+        console.log("Разрешение на камеру и микрофон получено.");
+
+        console.log("Запрос разрешения на демонстрацию экрана...");
+        await navigator.mediaDevices.getDisplayMedia({ video: true });
+        console.log("Разрешение на демонстрацию экрана получено.");
+    } catch (error) {
+        throw new Error("Пользователь отклонил запрос на доступ к камере или экрану.");
+    }
+}
+
+function startConference(url: string, topic_name: string, stream_name: string): void {
+    // Инициализируем контейнер для видео
+    if (!videoContainer) initVideoContainer();
+    if (!videoContainer) return;
+
+    const $middleColumn = $(".app-main .column-middle");
+    if (isNarrowScreen()) {
+        console.log("Мобильный режим!");
+        $middleColumn.hide();
+    } else {
+        $middleColumn.show();
+    }
+
+    updateVideoFramePosition();
+
+    const videoStaticContainer = document.getElementById("video-container");
+    if (videoStaticContainer) showLoadBar(videoStaticContainer);
+
+    videoContainer.innerHTML = "";
+    const topicLabel = document.getElementById("video-room-overlay");
+    if (topicLabel) topicLabel.remove();
+
+    const cleanUrl = url.split('#')[0];
+    const domain = "jitsi-connectrm-test.ru:8443";
+    const roomName = encodeURIComponent(cleanUrl.split('/').pop()?.split('?')[0] || "");
+
+    // Генерация токена с использованием .then()
+    generateToken().then((jwt) => {
+        console.log("----jwt: " + jwt);  // Логируем токен
+
+        const options = {
+            roomName: roomName,
+            parentNode: videoContainer,
+            jwt: jwt,
+            configOverwrite: {
+                prejoinConfig: { enabled: false },
+                disableSimulcast: true,
+                startWithVideoMuted: true,
+                startWithAudioMuted: false,
+                disableAudioLevels: false,
+                stereo: false,
+                enableLipSync: false
+            },
+            interfaceConfigOverwrite: {
+                DISABLE_VIDEO_BACKGROUND: true,
+                DISABLE_DOMINANT_SPEAKER_INDICATOR: true,
+                TOOLBAR_BUTTONS: [
+                    'camera',
+                    'desktop',
+                    'microphone',
+                    'settings',
+                    'fullscreen',
+                    'hangup'
+                ]
+            },
+            userInfo: {
+                displayName: current_user.full_name,
+                email: current_user.email,
+            },
+        };
+
+        console.log('Jitsi Options:', JSON.stringify(options, null, 2));  // Логируем объект с отступами для удобства чтения
+
+        api = new JitsiMeetExternalAPI(domain, options);
+
+        CURRENT_TOPIC_CHARNAME = topicNameToChar(topicNameVideo);
+
+        const columnMiddle = document.getElementById("video-container");
+        const resizeObserver = new ResizeObserver(() => {
+            requestAnimationFrame(updateVideoFramePosition);
+        });
+
+        if (columnMiddle) resizeObserver.observe(columnMiddle);
+
+        addListenersVideo();
+
+        const iframe = document.querySelector('iframe');
+        if (iframe) {
+            iframe.style.display = "none";
+            iframe.addEventListener('load', () => {
+                setTimeout(() => {
+                    const iframe = videoContainer.querySelector("iframe") as HTMLIFrameElement;
+                    if (iframe) {
+                        removeLoadBar();
+                        iframe.style.display = "block";
+                        addRoomNameOverlay(streamNameVideo + ` > ` + topicNameVideo);
+                    }
+                }, 10);
+            });
+        }
+    }).catch((error) => {
+        console.error('Error generating token:', error);
+    });
+}
+
 
 function addListenersVideo() {
     api.addListener('videoConferenceJoined', () => {
