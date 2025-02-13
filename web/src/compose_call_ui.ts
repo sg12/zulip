@@ -83,7 +83,7 @@ export function insert_audio_call_url(url: string, topic_name: string, stream_na
     if (topicLabel) topicLabel.remove();
 
     const cleanUrl = url.split('#')[0];
-    const domain = "jitsi-connectrm-test.ru:8443";
+    const domain = "jitsi-connectrm.ru:8443";
     const roomName = encodeURIComponent(cleanUrl.split('/').pop()?.split('?')[0] || "");
 
     // Генерация токена с использованием .then()
@@ -185,7 +185,7 @@ export function insert_audio_call_url_old(url: string, topic_name: string): void
 
     const cleanUrl = url.split('#')[0];
     // // Вставляем ссылку в iframe с использованием Jitsi Meet API
-    const domain = "jitsi-connectrm-test.ru:8443";
+    const domain = "jitsi-connectrm.ru:8443";
     const roomName = encodeURIComponent(cleanUrl.split('/').pop()?.split('?')[0] || ""); // Кодируем имя комнаты
     // const jwt = encodeURIComponent(cleanUrl.split('jwt=')[1] || ""); // Кодируем JWT
     const jwt = generateToken();
@@ -316,7 +316,7 @@ function startConference(url: string, topic_name: string, stream_name: string): 
     if (topicLabel) topicLabel.remove();
 
     const cleanUrl = url.split('#')[0];
-    const domain = "jitsi-connectrm-test.ru:8443";
+    const domain = "jitsi-connectrm.ru:8443";
     const roomName = encodeURIComponent(cleanUrl.split('/').pop()?.split('?')[0] || "");
 
     // Генерация токена с использованием .then()
@@ -797,7 +797,7 @@ async function generateToken(): Promise<string> {
             app_id: 'connectrm_svz',
             aud: 'jitsi',
             iss: 'connectrm_svz',
-            sub: 'jitsi-connectrm-test.ru',
+            sub: 'jitsi-connectrm.ru',
             room: '*',
         })
             .setProtectedHeader({ alg: 'HS256', typ: 'JWT' }) // Заголовок
