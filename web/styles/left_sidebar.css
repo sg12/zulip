@@ -1099,6 +1099,7 @@ li.top_left_scheduled_messages {
 
         width: 48px;
         height: 48px;
+        border-radius: 4px;
 
         .zulip-icon.zulip-icon-globe {
             /* 12px at 14px/1em */
@@ -1123,6 +1124,14 @@ li.top_left_scheduled_messages {
         &:hover {
             text-decoration: none;
         }
+    }
+
+    .stream-name::after {
+        content: attr(data-description);
+        display: block;
+        font-size: 0.875em;
+        line-height: 1.2;
+        opacity: 0.5;
     }
 }
 
@@ -1183,6 +1192,11 @@ li.top_left_scheduled_messages {
 
         line-height: var(--line-height-sidebar-topic-inner);
         margin: var(--spacing-top-bottom-sidebar-topic-inner) 0;
+    }
+
+    /* Увеличение размера иконки */
+    &::first-letter {
+        font-size: 20px;
     }
 }
 
