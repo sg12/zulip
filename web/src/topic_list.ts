@@ -379,7 +379,7 @@ export function initialize({
             assert(stream_id_string !== undefined);
             const stream_id = Number.parseInt(stream_id_string, 10);
             const topic = $(e.target).parents("li").attr("data-topic-name");
-            const is_audio_topic = topic.startsWith("🔊");
+            const is_audio_topic = topic.startsWith("🔊") || topic.startsWith("🎧");;
 
             on_topic_click(stream_id, topic, is_audio_topic);
             const char_code = compose_call_ui.topicNameToChar(topic);
