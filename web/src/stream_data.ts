@@ -35,7 +35,7 @@ export type InviteStreamData = {
     default_stream: boolean;
 };
 
-const DEFAULT_COLOR = "#c2c2c2";
+const DEFAULT_COLOR = "#a6c7e5";
 
 // Expose get_subscriber_count for our automated puppeteer tests.
 export const get_subscriber_count = peer_data.get_subscriber_count;
@@ -455,14 +455,7 @@ export function canonicalized_name(stream_name: string): string {
 }
 
 export let get_color = (stream_id: number | undefined): string => {
-    if (stream_id === undefined) {
-        return DEFAULT_COLOR;
-    }
-    const sub = get_sub_by_id(stream_id);
-    if (sub === undefined) {
-        return DEFAULT_COLOR;
-    }
-    return sub.color;
+    return DEFAULT_COLOR;
 };
 
 export function rewire_get_color(value: typeof get_color): void {
