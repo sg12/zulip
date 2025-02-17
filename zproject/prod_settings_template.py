@@ -74,17 +74,18 @@ EXTERNAL_HOST = "zulip.example.com"
 ## EMAIL_HOST and EMAIL_HOST_USER are generally required.  If your
 ## SMTP server does not require authentication, leave EMAIL_HOST_USER
 ## commented out.
-# EMAIL_HOST = "smtp.example.com"
-# EMAIL_HOST_USER = ""
+EMAIL_HOST = "smtp.spaceweb.ru"
+EMAIL_HOST_USER = "noreply@connect-rm.ru"
 
 ## Passwords and secrets are not stored in this file.  The password
 ## for user EMAIL_HOST_USER goes in `/etc/zulip/zulip-secrets.conf`.
 ## In that file, set `email_password`.  For example:
-# email_password = abcd1234
+email_password = abcd1234
 
 ## EMAIL_USE_TLS and EMAIL_PORT are required for most SMTP providers.
-# EMAIL_USE_TLS = True
-# EMAIL_PORT = 587
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
+EMAIL_PORT = 2525
 
 ## The noreply address to be used as the sender for certain generated
 ## emails.  Messages sent to this address could contain sensitive user

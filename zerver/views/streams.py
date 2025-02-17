@@ -7,7 +7,7 @@ import orjson
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.db import transaction
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.utils.translation import gettext as _
 from django.utils.translation import override as override_language
 from pydantic import BaseModel, Field, Json, NonNegativeInt, StringConstraints, model_validator
@@ -1153,6 +1153,9 @@ def set_avatar_by_id(request: HttpRequest,
         stream_id,
     )
 
+    if stream.creator != user_profile:
+        return JsonResponse(data = {"status" : 403, "data" : "Permission denied"})
+
     upload_stream_avatar_image(user_file, stream)
     do_change_stream_avatar_fields(stream, Stream.AVATAR_FROM_USER, acting_user=user_profile)
     user_avatar_url = stream_avatar_url(stream=stream)
@@ -1173,6 +1176,9 @@ def delete_avatar_by_id(request: HttpRequest,
         stream_id,
     )
 
+    if stream.creator != user_profile:
+        return JsonResponse(data = {"status" : 403, "data" : "Permission denied"})
+    
     do_change_stream_avatar_fields(
         stream, Stream.AVATAR_FROM_GRAVATAR, acting_user=user_profile
     )
@@ -1197,7 +1203,6 @@ def get_avatar_by_id(request: HttpRequest,
         user_profile,
         stream_id,
     )
-    print(stream, sub)
 
     url = stream_avatar_url(stream=stream)
     
