@@ -83,7 +83,8 @@ EMAIL_HOST_USER = "noreply@connect-rm.ru"
 email_password = abcd1234
 
 ## EMAIL_USE_TLS and EMAIL_PORT are required for most SMTP providers.
-EMAIL_USE_TLS = True
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
 EMAIL_PORT = 2525
 
 ## The noreply address to be used as the sender for certain generated
