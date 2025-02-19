@@ -1154,7 +1154,7 @@ def set_avatar_by_id(request: HttpRequest,
     )
 
     if stream.creator != user_profile:
-        return JsonResponse(data = {"status" : 403, "data" : "Permission denied"})
+        return JsonResponse(data = {"status" : 403, "data" : "Permission denied."})
 
     upload_stream_avatar_image(user_file, stream)
     do_change_stream_avatar_fields(stream, Stream.AVATAR_FROM_USER, acting_user=user_profile)
@@ -1177,8 +1177,8 @@ def delete_avatar_by_id(request: HttpRequest,
     )
 
     if stream.creator != user_profile:
-        return JsonResponse(data = {"status" : 403, "data" : "Permission denied"})
-    
+        return JsonResponse(data = {"status" : 403, "data" : "Permission denied."})
+
     do_change_stream_avatar_fields(
         stream, Stream.AVATAR_FROM_GRAVATAR, acting_user=user_profile
     )

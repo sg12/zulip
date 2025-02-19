@@ -80,7 +80,7 @@ EMAIL_HOST_USER = "noreply@connect-rm.ru"
 ## Passwords and secrets are not stored in this file.  The password
 ## for user EMAIL_HOST_USER goes in `/etc/zulip/zulip-secrets.conf`.
 ## In that file, set `email_password`.  For example:
-email_password = "abcd1234"
+# email_password = abcd1234
 
 ## EMAIL_USE_TLS and EMAIL_PORT are required for most SMTP providers.
 EMAIL_USE_TLS = False
