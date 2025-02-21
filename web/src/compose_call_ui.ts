@@ -15,25 +15,29 @@ let url_video = "";
 let topicNameVideo = "";
 let streamNameVideo = "";
 let videoContainer: HTMLElement;
+let currentVideoCallRoom: { streamId: string | number, topicName: string | number } | null = null;
 // let isFloatingVideo = false;
 export let CURRENT_TOPIC_CHARNAME: string = "";
 
 function updateMicIcon() {
-    const micIcon = document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-mic`);
+    // @ts-ignore
+    const micIcon = document.querySelector(`[data-stream-id="${currentVideoCallRoom.streamId}"][data-topic-name="${currentVideoCallRoom.topicName}"] #toggle-mic`);
     if (micIcon) {
         micIcon.className = isMicMuted ? "zulip-icon zulip-icon-mic-off" : "zulip-icon zulip-icon-mic-on";
     }
 }
 
 function updateCameraIcon() {
-    const cameraIcon = document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-camera`);
+    // @ts-ignore
+    const cameraIcon = document.querySelector(`[data-stream-id="${currentVideoCallRoom.streamId}"][data-topic-name="${currentVideoCallRoom.topicName}"] #toggle-camera`);
     if (cameraIcon) {
         cameraIcon.className = isCameraMuted ? "zulip-icon zulip-icon-camera-off" : "zulip-icon zulip-icon-camera-on";
     }
 }
 
 function updateScreenIcon() {
-    const screenButton = document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-screen`);
+    // @ts-ignore
+    const screenButton = document.querySelector(`[data-stream-id="${currentVideoCallRoom.streamId}"][data-topic-name="${currentVideoCallRoom.topicName}"] #toggle-screen`);
     if (screenButton) {
         screenButton.style.opacity = isScreenSharing ? "1" : "";
     }
@@ -60,6 +64,12 @@ export function insert_audio_call_url(url: string, topic_name: string, stream_na
     url_video = url;
     topicNameVideo = topic_name;
     streamNameVideo = stream_name;
+
+    // Сохраняем информацию о текущей комнате с видеозвонком
+    currentVideoCallRoom = {
+        streamId: narrow_state.stream_id() ?? "",
+        topicName: narrow_state.topic() ?? ""
+    };
 
     // Инициализируем контейнер для видео
     if (!videoContainer) initVideoContainer();
@@ -222,7 +232,7 @@ export function insert_audio_call_url_old(url: string, topic_name: string): void
             displayName: current_user.full_name,
             email: current_user.email,
         },
-        
+
     };
     console.log('Jitsi Options:', JSON.stringify(options, null, 2));  // Логируем объект с отступами для удобства чтения
 
@@ -397,23 +407,11 @@ function addListenersVideo() {
         }
 
         // Обработчики событий для кнопок
-        document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-mic`)?.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            api.executeCommand('toggleAudio');
-        });
+        document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-mic`)?.addEventListener("click", () => {toggleMicHandler});
 
-        document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-camera`)?.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            api.executeCommand('toggleVideo');
-        });
+        document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-camera`)?.addEventListener("click", () => {toggleCameraHandler});
 
-        document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-screen`)?.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            api.executeCommand('toggleShareScreen');
-        });
+        document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-screen`)?.addEventListener("click", () => {toggleScreenHandler});
 
     });
 
@@ -562,6 +560,12 @@ function moveVideoToCorner() {
     updateVideoFramePosition();
 }
 
+export function clickStream() {
+    if (currentVideoCallRoom && currentVideoCallRoom.streamId === narrow_state.stream_id()) {
+        updateButtonHandlers();
+    }
+}
+
 export function clickLeftSidebar(isSameTopic: boolean) {
     const $middleColumn = $(".app-main .column-middle");
 
@@ -578,6 +582,10 @@ export function clickLeftSidebar(isSameTopic: boolean) {
         const topicLabel = document.getElementById("video-room-overlay");
         if (topicLabel) topicLabel.remove();
     }
+
+    if (currentVideoCallRoom && currentVideoCallRoom.streamId === narrow_state.stream_id()) {
+        updateButtonHandlers();
+    }
     // if (!isSameTopic && !isFloatingVideo)
     // moveVideoToCorner();
     // else if (isSameTopic && isFloatingVideo)
@@ -589,6 +597,84 @@ export function isShowingVideo(): boolean {
         return true;
     else
         return false;
+}
+
+function updateButtonHandlers() {
+    if (!currentVideoCallRoom) return;
+    const controls = document.querySelector(`[data-stream-id="${currentVideoCallRoom.streamId}"][data-topic-name="${currentVideoCallRoom.topicName}"] #custom-controls`);
+    if (controls) {
+        controls.style.display = "flex";
+    }
+
+    // Удаляем старые обработчики событий для кнопок
+    const micButton = document.querySelector(`[data-stream-id="${currentVideoCallRoom.streamId}"][data-topic-name="${currentVideoCallRoom.topicName}"] #toggle-mic`);
+    const cameraButton = document.querySelector(`[data-stream-id="${currentVideoCallRoom.streamId}"][data-topic-name="${currentVideoCallRoom.topicName}"] #toggle-camera`);
+    const screenButton = document.querySelector(`[data-stream-id="${currentVideoCallRoom.streamId}"][data-topic-name="${currentVideoCallRoom.topicName}"] #toggle-screen`);
+
+    if (micButton) {
+        micButton.removeEventListener("click", toggleMicHandler);
+    }
+    if (cameraButton) {
+        cameraButton.removeEventListener("click", toggleCameraHandler);
+    }
+    if (screenButton) {
+        screenButton.removeEventListener("click", toggleScreenHandler);
+    }
+
+    // Добавляем новые обработчики событий для кнопок
+    if (micButton) {
+        micButton.addEventListener("click", toggleMicHandler);
+    }
+    if (cameraButton) {
+        cameraButton.addEventListener("click", toggleCameraHandler);
+    }
+    if (screenButton) {
+        screenButton.addEventListener("click", toggleScreenHandler);
+    }
+
+    api.isAudioMuted().then((muted: boolean) => {
+        isMicMuted = muted;
+        updateMicIcon();
+    });
+
+    api.isVideoMuted().then((muted: boolean) => {
+        isCameraMuted = muted;
+        updateCameraIcon();
+    });
+
+    // Подписываемся на события изменения статуса микрофона, камеры и шаринга экрана
+    api.addListener('audioMuteStatusChanged', (event: { muted: boolean }) => {
+        isMicMuted = event.muted;
+        updateMicIcon();
+    });
+
+    api.addListener('videoMuteStatusChanged', (event: { muted: boolean }) => {
+        isCameraMuted = event.muted;
+        updateCameraIcon();
+    });
+
+    api.addListener('screenSharingStatusChanged', (event: { on: boolean }) => {
+        isScreenSharing = event.on;
+        updateScreenIcon();
+    });
+}
+
+function toggleMicHandler(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+    api.executeCommand('toggleAudio');
+}
+
+function toggleCameraHandler(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+    api.executeCommand('toggleVideo');
+}
+
+function toggleScreenHandler(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+    api.executeCommand('toggleShareScreen');
 }
 
 function clearButtonsAndPropsForVideo() {
