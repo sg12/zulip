@@ -1,7 +1,7 @@
 {% extends "zerver/portico_error_pages/portico_error_page.html" %}
 
 {% block title %}
-<title>{{ _("Internal server error") }} | Zulip</title>
+<title>{{ _("Internal server error") }}</title>
 {% endblock %}
 
 {% block customhead %}
@@ -16,7 +16,7 @@
         <h1 class="lead">{{ _("Internal server error") }}</h1>
         <p>
             {% trans %}
-            Your Zulip chat cannot be loaded because the server is experiencing technical difficulties.
+            Your chat cannot be loaded because the server is experiencing technical difficulties.
             {% endtrans %}
         </p>
         <p>
@@ -25,12 +25,12 @@
             {% endtrans %}
             {% if corporate_enabled %}
                 {% trans %}
-                In the meantime, you can <a href="mailto:{{support_email}}">contact Zulip support</a>.
+                In the meantime, you can contact "admin@connect-rm.ru".
                 {% endtrans %}
             {% else %}
                 {% trans %}
-                In the meantime, you can <a href="mailto:{{support_email}}">contact
-                this server's administrators</a> for support.
+                In the meantime, you can contact
+                this server's administrators for support.
                 {% endtrans %}
             {% endif %}
         </p>
@@ -38,7 +38,7 @@
             <p>
                 {% trans troubleshooting_url="https://zulip.readthedocs.io/en/latest/production/troubleshooting.html" %}
                 If you administer this server, you may want to check out the
-                <a href="{{troubleshooting_url}}">Zulip server troubleshooting guide</a>.
+                server troubleshooting guide.
                 {% endtrans %}
             </p>
         {% endif %}
