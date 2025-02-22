@@ -868,7 +868,7 @@ def send_messages_for_new_subscribers(
                         + f"\n```` quote\n{stream_description}\n````",
                     ),
                 )
-                  notifications.append(
+                notifications.append(
                      internal_prep_stream_message(
                         sender=sender,
                         stream=stream,
