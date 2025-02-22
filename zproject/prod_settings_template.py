@@ -100,7 +100,7 @@ EMAIL_PORT = 2525
 ## contain confirmation links (where the security problem fixed by
 ## ADD_TOKENS_TO_NOREPLY_ADDRESS does not exist), as well as for
 ## confirmation emails when ADD_TOKENS_TO_NOREPLY_ADDRESS=False.
-# NOREPLY_EMAIL_ADDRESS = "noreply@example.com"
+NOREPLY_EMAIL_ADDRESS = "admin@connect-rm.ru"
 
 ## Emails sent by the Zulip server will use a sender name starting
 ## with INSTALLATION_NAME. The default is EXTERNAL_HOST. If INSTALLATION_NAME is
