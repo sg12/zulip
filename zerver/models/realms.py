@@ -379,7 +379,8 @@ class Realm(models.Model):  # type: ignore[django-manager-missing] # django-stub
     ZULIP_DISCUSSION_CHANNEL_NAME = gettext_lazy("Zulip")
     ZULIP_SANDBOX_CHANNEL_NAME = gettext_lazy("sandbox")
     DEFAULT_NOTIFICATION_STREAM_NAME = gettext_lazy("general")
-    STREAM_EVENTS_NOTIFICATION_TOPIC_NAME = gettext_lazy("✏️ Сообщения")
+    STREAM_EVENTS_NOTIFICATION_TOPIC_NAME = gettext_lazy("🔊 Аудио")
+    STREAM_EVENTS_NOTIFICATION_TOPIC_NAME2 = gettext_lazy("✏️ Сообщения")
     moderation_request_channel = models.ForeignKey(
         "Stream",
         related_name="+",
