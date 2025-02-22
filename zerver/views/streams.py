@@ -868,7 +868,25 @@ def send_messages_for_new_subscribers(
                         + f"\n```` quote\n{stream_description}\n````",
                     ),
                 )
-
+                  notifications.append(
+                     internal_prep_stream_message(
+                        sender=sender,
+                        stream=stream,
+                        topic_name=str(Realm.STREAM_EVENTS_NOTIFICATION_TOPIC_NAME2),
+                        content=_(
+                            "**{policy}** channel created by {user_name}. **Description:**"
+                        ).format(
+                            user_name=silent_mention_syntax_for_user(user_profile),
+                            policy=get_stream_permission_policy_name(
+                                invite_only=stream.invite_only,
+                                history_public_to_subscribers=stream.history_public_to_subscribers,
+                                is_web_public=stream.is_web_public,
+                            ),
+                        )
+                        + f"\n```` quote\n{stream_description}\n````",
+                    ),
+                )
+    
     if len(notifications) > 0:
         do_send_messages(notifications, mark_as_read=[user_profile.id])
 
