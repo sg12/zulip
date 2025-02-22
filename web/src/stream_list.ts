@@ -13,6 +13,7 @@ import render_subscribe_to_more_streams from "../templates/subscribe_to_more_str
 
 import * as blueslip from "./blueslip.ts";
 import * as browser_history from "./browser_history.ts";
+import { clickStream } from './compose_call_ui.ts'
 import type { Filter } from "./filter.ts";
 import * as hash_util from "./hash_util.ts";
 import { $t } from "./i18n.ts";
@@ -1005,7 +1006,8 @@ export function set_event_handlers({
             // }
             // if (!isReadyShowVideo) {
                 on_stream_click(stream_id, "sidebar");
-                return;
+                clickStream();
+            return;
             // }
         };
 

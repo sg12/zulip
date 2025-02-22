@@ -384,7 +384,7 @@ export function initialize({
             on_topic_click(stream_id, topic, is_audio_topic);
             const char_code = compose_call_ui.topicNameToChar(topic);
             const isSameTopic = (char_code == compose_call_ui.CURRENT_TOPIC_CHARNAME);
-            
+
             if (is_audio_topic){
                 if(!isSameTopic || !compose_call_ui.isShowingVideo())
                     clickVideoTopic(stream_id, topic, char_code);
