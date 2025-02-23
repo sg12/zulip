@@ -29,7 +29,7 @@ STATIC_URL: str | None = None
 # install of the Zulip server.
 
 # Extra HTTP "Host" values to allow (standard ones added in computed_settings.py)
-# ALLOWED_HOSTS: list[str] = []
+ALLOWED_HOSTS: list[str] = ['connectrm-svz.ru', 'joinrm-svz.ru']
 
 # Basic email settings
 #NOREPLY_EMAIL_ADDRESS = Address(username="noreply", domain=EXTERNAL_HOST_WITHOUT_PORT).addr_spec
