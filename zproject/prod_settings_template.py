@@ -92,7 +92,7 @@ EMAIL_PORT = 2525
 ## data and should not be delivered anywhere.  The default is
 ## e.g. noreply-{token}@zulip.example.com (if EXTERNAL_HOST is
 ## zulip.example.com).  There are potential security issues if you set
-ADD_TOKENS_TO_NOREPLY_ADDRESS=False to remove the token; see
+ADD_TOKENS_TO_NOREPLY_ADDRESS=False #to remove the token; see
 ## https://zulip.readthedocs.io/en/latest/production/email.html for details.
 # ADD_TOKENS_TO_NOREPLY_ADDRESS = True
 # TOKENIZED_NOREPLY_EMAIL_ADDRESS = "noreply-{token}@example.com"
