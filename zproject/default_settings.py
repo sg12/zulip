@@ -29,16 +29,18 @@ STATIC_URL: str | None = None
 # install of the Zulip server.
 
 # Extra HTTP "Host" values to allow (standard ones added in computed_settings.py)
-ALLOWED_HOSTS: list[str] = []
+# ALLOWED_HOSTS: list[str] = []
 
 # Basic email settings
-NOREPLY_EMAIL_ADDRESS = Address(username="noreply", domain=EXTERNAL_HOST_WITHOUT_PORT).addr_spec
-ADD_TOKENS_TO_NOREPLY_ADDRESS = True
+#NOREPLY_EMAIL_ADDRESS = Address(username="noreply", domain=EXTERNAL_HOST_WITHOUT_PORT).addr_spec
+NOREPLY_EMAIL_ADDRESS = Address(username="noreply", domain="connect-rm.ru").addr_spec
+
+ADD_TOKENS_TO_NOREPLY_ADDRESS = False
 TOKENIZED_NOREPLY_EMAIL_ADDRESS = Address(
-    username="noreply-{token}", domain=EXTERNAL_HOST_WITHOUT_PORT
+    username="noreply-{token}", domain="connect-rm.ru"
 ).addr_spec
 PHYSICAL_ADDRESS = ""
-FAKE_EMAIL_DOMAIN = EXTERNAL_HOST_WITHOUT_PORT
+FAKE_EMAIL_DOMAIN = "connect-rm.ru"
 
 # SMTP settings
 EMAIL_HOST: str | None = None
