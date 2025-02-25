@@ -2,7 +2,6 @@ import $ from "jquery";
 import * as compose_call from "./compose_call.ts";
 import { current_user } from "./state_data.ts";
 import * as narrow_state from "./narrow_state.ts";
-import * as util from "./util.ts";
 import { SignJWT } from 'jose';
 import { media_breakpoints_num } from "./css_variables.ts";
 
@@ -18,6 +17,8 @@ let videoContainer: HTMLElement;
 let currentVideoCallRoom: { streamId: string | number, topicName: string | number } | null = null;
 // let isFloatingVideo = false;
 export let CURRENT_TOPIC_CHARNAME: string = "";
+
+const JITSI_DOMAIN = "jitsi-connectrm-test.ru:8443";
 
 function updateMicIcon() {
     // @ts-ignore
@@ -93,7 +94,6 @@ export function insert_audio_call_url(url: string, topic_name: string, stream_na
     if (topicLabel) topicLabel.remove();
 
     const cleanUrl = url.split('#')[0];
-    const domain = "jitsi-connectrm-test.ru:8443";
     const roomName = encodeURIComponent(cleanUrl.split('/').pop()?.split('?')[0] || "");
 
     // Генерация токена с использованием .then()
@@ -133,7 +133,7 @@ export function insert_audio_call_url(url: string, topic_name: string, stream_na
 
         console.log('Jitsi Options:', JSON.stringify(options, null, 2));  // Логируем объект с отступами для удобства чтения
 
-        api = new JitsiMeetExternalAPI(domain, options);
+        api = new JitsiMeetExternalAPI(JITSI_DOMAIN, options);
 
         CURRENT_TOPIC_CHARNAME = topicNameToChar(topicNameVideo);
 
@@ -195,7 +195,6 @@ export function insert_audio_call_url_old(url: string, topic_name: string): void
 
     const cleanUrl = url.split('#')[0];
     // // Вставляем ссылку в iframe с использованием Jitsi Meet API
-    const domain = "jitsi-connectrm-test.ru:8443";
     const roomName = encodeURIComponent(cleanUrl.split('/').pop()?.split('?')[0] || ""); // Кодируем имя комнаты
     // const jwt = encodeURIComponent(cleanUrl.split('jwt=')[1] || ""); // Кодируем JWT
     const jwt = generateToken();
@@ -236,7 +235,7 @@ export function insert_audio_call_url_old(url: string, topic_name: string): void
     };
     console.log('Jitsi Options:', JSON.stringify(options, null, 2));  // Логируем объект с отступами для удобства чтения
 
-    api = new JitsiMeetExternalAPI(domain, options);
+    api = new JitsiMeetExternalAPI(JITSI_DOMAIN, options);
 
     CURRENT_TOPIC_CHARNAME = topicNameToChar(topicNameVideo);
 
@@ -326,7 +325,6 @@ function startConference(url: string, topic_name: string, stream_name: string): 
     if (topicLabel) topicLabel.remove();
 
     const cleanUrl = url.split('#')[0];
-    const domain = "jitsi-connectrm-test.ru:8443";
     const roomName = encodeURIComponent(cleanUrl.split('/').pop()?.split('?')[0] || "");
 
     // Генерация токена с использованием .then()
@@ -366,7 +364,7 @@ function startConference(url: string, topic_name: string, stream_name: string): 
 
         console.log('Jitsi Options:', JSON.stringify(options, null, 2));  // Логируем объект с отступами для удобства чтения
 
-        api = new JitsiMeetExternalAPI(domain, options);
+        api = new JitsiMeetExternalAPI(JITSI_DOMAIN, options);
 
         CURRENT_TOPIC_CHARNAME = topicNameToChar(topicNameVideo);
 
@@ -885,7 +883,7 @@ async function generateToken(): Promise<string> {
             app_id: 'connectrm_svz',
             aud: 'jitsi',
             iss: 'connectrm_svz',
-            sub: 'jitsi-connectrm-test.ru',
+            sub: 'jitsi-connectrm.ru',
             room: '*',
         })
             .setProtectedHeader({ alg: 'HS256', typ: 'JWT' }) // Заголовок
