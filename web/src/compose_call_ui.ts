@@ -413,6 +413,8 @@ function addListenersVideo() {
 
         document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-screen`)?.addEventListener("click", () => {toggleScreenHandler});
 
+        removeLoadBar();
+        videoContainer.style.display = "block";
     });
 
     // Подписываемся на события изменения статуса микрофона, камеры и шаринга экрана
