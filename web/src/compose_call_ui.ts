@@ -410,7 +410,19 @@ function addListenersVideo() {
         document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-camera`)?.addEventListener("click", () => {toggleCameraHandler});
 
         document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-screen`)?.addEventListener("click", () => {toggleScreenHandler});
+        
+        const currentParticipants = api.getParticipantsInfo();
+        console.log("Список участников при присоединении:", currentParticipants);
 
+        currentParticipants.forEach((participant) => {
+            addUserToCall({
+                id: participant.participantId,
+                name: participant.displayName || "Аноним",
+                isMuted: participant.muted || false,
+                volume: 100,
+                hovered: false,
+            })
+        })
         removeLoadBar();
         videoContainer.style.display = "block";
     });
@@ -675,6 +687,39 @@ function toggleScreenHandler(e: Event) {
     e.preventDefault();
     e.stopPropagation();
     api.executeCommand('toggleShareScreen');
+}
+
+function toggleAudio(participantId: string) {
+    let participants = JSON.parse(localStorage.getItem("callUsers"));
+    const participant = participants[participantId];
+
+    if (participant) {
+        participants[participantId].isMuted = !participant.participantId.isMuted;
+        api.executeCommand('setParticipantVolume', participant.id,  participant.isMuted ? 0 : participant.volume/100);
+        localStorage.setItem("callUsers", JSON.stringify(participants))
+    }
+};
+
+function changeVolume(participantId: string, volume: number) {
+    let participants = JSON.parse(localStorage.getItem("callUsers"));
+    const participant = participants[participantId];
+    if (participant) {
+        api.executeCommand('setParticipantVolume', participant.id, volume / 100);
+        participant.participantId.volume = volume;
+        localStorage.setItem("callUsers", JSON.stringify(participants));
+    }
+};
+
+function addUserToCall(participant: JSON) {
+    let participants = JSON.parse(localStorage.getItem("callUsers")) || {};
+    participants[participant.id] = participant;
+    localStorage.setItem("callUsers", JSON.stringify(participants));
+}
+
+function removeUserFromCall(participantId: string) {
+    let participants = JSON.parse(localStorage.getItem("callUsers")) || {};
+    delete participants[participantId];
+    localStorage.setItem("callUsers", JSON.stringify(participants));
 }
 
 function clearButtonsAndPropsForVideo() {
