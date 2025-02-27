@@ -782,11 +782,11 @@ def login_and_go_to_home(request: HttpRequest, user_profile: UserProfile) -> Htt
     do_login(request, user_profile)
     # Using 'mark_sanitized' to work around false positive where Pysa thinks
     # that 'user_profile' is user-controlled
-    return HttpResponseRedirect(mark_sanitized(user_profile.realm.url) + reverse("home"))
-    # email = user_profile.email
-    # logging.info("-------login_and_go_to_home email-------" + str(email))
-    # #return HttpResponseRedirect(f"https://xnnn8ns.github.io/RM_Front/#/login?email={email}")
-    # return HttpResponseRedirect("https://connectrm-svz.ru/")
+    # return HttpResponseRedirect(mark_sanitized(user_profile.realm.url) + reverse("home"))
+    email = user_profile.email
+    logging.info("-------login_and_go_to_home email-------" + str(email))
+    #return HttpResponseRedirect(f"https://xnnn8ns.github.io/RM_Front/#/login?email={email}")
+    return HttpResponseRedirect("https://connectrm-svz.ru/")
 
 def login_and_go_to_app(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     logging.info("-------login_and_go_to_app-------")
