@@ -111,7 +111,17 @@ export function insert_audio_call_url(url: string, topic_name: string, stream_na
                 startWithAudioMuted: false,
                 disableAudioLevels: false,
                 stereo: false,
-                enableLipSync: false
+                echoCancellation: true,
+                noiseSuppression: true,
+                highpassFilter: true,
+                autoGainControl: true,
+                enableLipSync: false,
+                audioProcessing: {
+                    autoGainControl: true,
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    highpassFilter: true
+                }
             },
             interfaceConfigOverwrite: {
                 DISABLE_VIDEO_BACKGROUND: true,
