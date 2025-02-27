@@ -1148,13 +1148,13 @@ def accounts_home(
                 include_realm_default_subscriptions=include_realm_default_subscriptions,
                 multiuse_invite=multiuse_object,
             )
-            try:
-                send_confirm_registration_email(email, activation_url, request=request, realm=realm)
-            except EmailNotDeliveredError:
-                logging.exception("Failed to deliver email during user registration")
-                if settings.CORPORATE_ENABLED:
-                    return server_error(request)
-                return config_error(request, "smtp")
+            # try:
+            #     send_confirm_registration_email(email, activation_url, request=request, realm=realm)
+            # except EmailNotDeliveredError:
+            #     logging.exception("Failed to deliver email during user registration")
+            #     if settings.CORPORATE_ENABLED:
+            #         return server_error(request)
+            #     return config_error(request, "smtp")
             signup_send_confirm_url = reverse("signup_send_confirm")
             query = urlencode({"email": email})
             url = append_url_query_string(signup_send_confirm_url, query)
