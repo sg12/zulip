@@ -40,9 +40,10 @@ function get_new_heights(): {
     const usable_height =
         viewport_height -
         Number.parseInt($("#right-sidebar").css("paddingTop"), 10) -
+        103 - // 103 - высота раскрытого compose
         ($("#userlist-header").outerHeight(true) ?? 0);
 
-    const buddy_list_wrapper_max_height = Math.max(700);
+    const buddy_list_wrapper_max_height = Math.max(80,  usable_height);
 
     return {
         stream_filters_max_height,
