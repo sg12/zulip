@@ -652,27 +652,27 @@ export function initialize(): void {
         e.stopPropagation();
         const stream_id = Number.parseInt(this.dataset.streamId!, 10);
         const html_body = render_create_topic_modal();
-    
+
         confirm_dialog.launch({
             html_heading: $t_html({defaultMessage: "Создать комнату"}),
             html_body,
             close_on_submit: false,
             on_click() {
                 let topic_name = $("#new-topic-name").val();
-    
+
                 if (!topic_name) {
                     $("#new-topic-name").focus();
                     return;
                 }
-    
+
                 const channel_type = $("input[name='channel-type']:checked").val();
-              
+
                 if (channel_type === "audio") {
-                    topic_name = "🎧 " + topic_name;
+                    topic_name = "🔊 " + topic_name;
                 } else {
                     topic_name = "✏️ " + topic_name;
                 }
-    
+
                 compose_actions.start_and_send_message({
                     message_type: "stream",
                     stream_id,
@@ -684,7 +684,7 @@ export function initialize(): void {
             },
         });
     });
-    
+
 
     // Recent conversations direct messages (Not displayed on small widths)
     $("body").on(
