@@ -14,7 +14,7 @@
 # Tim Abbott <tabbott@kandralabs.com>, 2024
 msgid ""
 msgstr ""
-"Project-Id-Version: Zulip\n"
+"Project-Id-Version: RM-connect\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-06 19:37+0000\n"
 "PO-Revision-Date: 2015-12-06 00:18+0000\n"
@@ -73,7 +73,7 @@ msgstr "داده های تحلیلی در دسترس نیست. لطفا با ا�
 #: corporate/lib/registration.py:35
 #, python-brace-format
 msgid ""
-"Your organization has no Zulip licenses remaining and can no longer accept "
+"Your organization has no RM-connect licenses remaining and can no longer accept "
 "new users. Please [increase the number of licenses]({billing_page_link}) or "
 "[deactivate inactive users]({deactivate_user_help_page_link}) to allow new "
 "users to join."
@@ -82,7 +82,7 @@ msgstr "سازمان شما مجوز زولیپ دیگری ندارد و نمی�
 #: corporate/lib/registration.py:42
 #, python-brace-format
 msgid ""
-"Your organization has only one Zulip license remaining. You can [increase "
+"Your organization has only one RM-connect license remaining. You can [increase "
 "the number of licenses]({billing_page_link}) or [deactivate inactive "
 "users]({deactivate_user_help_page_link}) to allow more than one user to "
 "join."
@@ -91,7 +91,7 @@ msgstr "سازمان شما فقط یک مجوز زولیپ دیگر دارد. �
 #: corporate/lib/registration.py:47
 #, python-brace-format
 msgid ""
-"Your organization has only two Zulip licenses remaining. You can [increase "
+"Your organization has only two RM-connect licenses remaining. You can [increase "
 "the number of licenses]({billing_page_link}) or [deactivate inactive "
 "users]({deactivate_user_help_page_link}) to allow more than two users to "
 "join."
@@ -100,7 +100,7 @@ msgstr "سازمان شما فقط دو مجوز زولیپ دیگر دارد. �
 #: corporate/lib/registration.py:52
 #, python-brace-format
 msgid ""
-"Your organization has only three Zulip licenses remaining. You can [increase"
+"Your organization has only three RM-connect licenses remaining. You can [increase"
 " the number of licenses]({billing_page_link}) or [deactivate inactive "
 "users]({deactivate_user_help_page_link}) to allow more than three users to "
 "join."
@@ -110,20 +110,20 @@ msgstr "سازمان شما فقط سه مجوز زولیپ دیگر دارد. �
 #, python-brace-format
 msgid ""
 "A new user ({email}) was unable to join because your organization does not "
-"have enough Zulip licenses. To allow new users to join, make sure that the "
+"have enough RM-connect licenses. To allow new users to join, make sure that the "
 "[number of licenses for the current and next billing "
 "period]({billing_page_link}) is greater than the current number of users."
 msgstr ""
 
 #: corporate/lib/registration.py:119
 msgid ""
-"Your organization does not have enough Zulip licenses. Invitations were not "
+"Your organization does not have enough RM-connect licenses. Invitations were not "
 "sent."
 msgstr ""
 
 #: corporate/lib/registration.py:133
 msgid ""
-"Your organization does not have enough Zulip licenses to change a guest "
+"Your organization does not have enough RM-connect licenses to change a guest "
 "user's role."
 msgstr ""
 
@@ -265,7 +265,7 @@ msgstr "ارسال stripe_session_id یا stripe_invoice_id"
 msgid ""
 "Your organization's request for sponsored hosting has been approved! You have been upgraded to {plan_name}, free of charge. {emoji}\n"
 "\n"
-"If you could {begin_link}list Zulip as a sponsor on your website{end_link}, we would really appreciate it!"
+"If you could {begin_link}list RM-connect as a sponsor on your website{end_link}, we would really appreciate it!"
 msgstr "درخواست سازمان شما برای میزبانی اسپانسری پذیرفته شده است! شما بدون هزینه به طرح {plan_name} ارتقا پیدا کرده‌اید. {emoji}\n\nاگر بتوانید {begin_link}زولیپ را به عنوان اسپانسر در وب‌سایت خود فهرست کنید{end_link}، ما بسیار سپاسپگزار خواهیم بود!"
 
 #: corporate/views/billing_page.py:349
@@ -297,7 +297,7 @@ msgstr "برای ادامه دادن مراحل، باید شرایط خدمات
 
 #: corporate/views/remote_billing_page.py:541
 msgid ""
-"This zulip_org_id is not registered with Zulip's billing management system."
+"This zulip_org_id is not registered with RM-connect's billing management system."
 msgstr "این zulip_org_id با سیستم مدیریت صورتحساب زولیپ ثبت نشده است."
 
 #: corporate/views/remote_billing_page.py:548
@@ -372,7 +372,7 @@ msgstr "خطای داخلی در سرور"
 #: templates/500.html:18
 msgid ""
 "\n"
-"            Your Zulip chat cannot be loaded because the server is experiencing technical difficulties.\n"
+"            Your RM-connect chat cannot be loaded because the server is experiencing technical difficulties.\n"
 "            "
 msgstr "\n                        چت زولیپ شما قابل بارگیری نیست چون سرور دچار مشکلات فنی است.\n                        "
 
@@ -387,7 +387,7 @@ msgstr "\n                        هر زمان که سرویس بازیابی �
 #, python-format
 msgid ""
 "\n"
-"                In the meantime, you can <a href=\"mailto:%(support_email)s\">contact Zulip support</a>.\n"
+"                In the meantime, you can <a href=\"mailto:%(support_email)s\">contact RM-connect support</a>.\n"
 "                "
 msgstr "\n                            در این بین شما می‌توانید <a href=\"mailto:%(support_email)s\">با پشتیبانی زولیپ تماس بگیرید</a>.\n                            "
 
@@ -405,7 +405,7 @@ msgstr "\n                            در این بین شما می‌توان�
 msgid ""
 "\n"
 "                If you administer this server, you may want to check out the\n"
-"                <a href=\"%(troubleshooting_url)s\">Zulip server troubleshooting guide</a>.\n"
+"                <a href=\"%(troubleshooting_url)s\">RM-connect server troubleshooting guide</a>.\n"
 "                "
 msgstr "\n                            اگر شما ادمین این سرور هستید ممکن است بخواهید این را ببینید\n                            <a href=\"%(troubleshooting_url)s\">راهنمای عیب‌یابی سرور زولیپ</a>.\n                            "
 
@@ -413,7 +413,7 @@ msgstr "\n                            اگر شما ادمین این سرور �
 #, python-format
 msgid ""
 "\n"
-"    Analytics for %(target_name)s | Zulip\n"
+"    Analytics for %(target_name)s | RM-connect\n"
 "    "
 msgstr "\n    تجزیه و تحلیل %(target_name)s | زولیپ\n    "
 
@@ -423,7 +423,7 @@ msgstr "تحلیل‌ها طی ۲۴ ساعت پس از ایجاد سازمان �
 
 #: templates/analytics/stats.html:23
 #, python-format
-msgid "Zulip analytics for %(target_name)s"
+msgid "RM-connect analytics for %(target_name)s"
 msgstr "تحلیل زولیپ برای %(target_name)s"
 
 #: templates/analytics/stats.html:25
@@ -559,7 +559,7 @@ msgstr "ایمیل تغییر کرد!"
 #, python-format
 msgid ""
 "\n"
-"            This confirms that the email address for your Zulip account has changed\n"
+"            This confirms that the email address for your RM-connect account has changed\n"
 "            from %(old_email_html_tag)s to %(new_email_html_tag)s\n"
 "            "
 msgstr "\n            تایید می‌شود که ایمیل مرتبط با اکانت زولیپ شما تغییر کرده است\n            از %(old_email_html_tag)s به %(new_email_html_tag)s\n            "
@@ -679,12 +679,12 @@ msgstr "مدیریت طرح در دسترس نیست"
 #, python-format
 msgid ""
 " Plan management is not available for this\n"
-"            organization, because your Zulip server is already on a\n"
+"            organization, because your RM-connect server is already on a\n"
 "            %(server_plan_name)s plan, which covers all\n"
 "            organizations on this server. See the <b>All versions</b> tab of the\n"
 "            <a href=\"https://zulip.com/help/self-hosted-billing#manage-billing\">log\n"
 "            in instructions</a> to administer the plan for your\n"
-"            Zulip server.\n"
+"            RM-connect server.\n"
 "            "
 msgstr " مدیریت طرح‌ها برای این سازمان\n                        در دسترس نیستند, چراکه سرور زولیپ در حال حاضر\n                         روی طرح%(server_plan_name)s است که تمام سازمان‌های این سرور را \n                        پوشش می‌دهد. به بخش <b>تمام نسخه‌ها</b>در \n                        <a href=\"https://zulip.com/help/self-hosted-billing#manage-billing\">دستورالعمل‌های ورود</a> نگاه کنید تا \n                        تا طرح سرور زولیپ خود را \n                        مدیریت کنید.\n                        "
 
@@ -1229,7 +1229,7 @@ msgid "Not available"
 msgstr "موجود نیست"
 
 #: templates/corporate/development-community.html:23
-msgid "The Zulip development community"
+msgid "The RM-connect development community"
 msgstr "جامعه توسعه‌دهنده زولیپ"
 
 #: templates/corporate/development-community.html:30
@@ -1279,7 +1279,7 @@ msgstr ""
 #: templates/corporate/for/research.html:42
 #: templates/corporate/for/research.html:446
 #: templates/corporate/for/use-cases.html:29
-msgid "Self-host Zulip"
+msgid "Self-host RM-connect"
 msgstr "زولیپ خود-میزبان"
 
 #: templates/corporate/for/communities.html:38
@@ -1302,7 +1302,7 @@ msgid "View pricing"
 msgstr "مشاهده قیمت‌ها"
 
 #: templates/corporate/self-hosting.html:33
-msgid "Zulip for business"
+msgid "RM-connect for business"
 msgstr "زولیپ برای کسب و کار"
 
 #: templates/corporate/support/support_request.html:9
@@ -1346,7 +1346,7 @@ msgstr "ما به زودی با شما تماس خواهیم گرفت."
 msgid ""
 "\n"
 "            You can find answers to frequently asked questions in the\n"
-"            <a href=\"/help/\">Zulip help center</a>.\n"
+"            <a href=\"/help/\">RM-connect help center</a>.\n"
 "            "
 msgstr "\n            می‌توانید پاسخ‌هایی برای سوال‌های رایج پیدا کنید\n            <a href=\"/help/\">مرکز کمک‌رسانی زولیپ</a>.\n            "
 
@@ -1355,13 +1355,13 @@ msgid "Avatar"
 msgstr "آواتار "
 
 #: templates/corporate/try-zulip.html:36
-msgid "Try Zulip now"
+msgid "Try RM-connect now"
 msgstr "الان زولیپ را امتحان کنید"
 
 #: templates/corporate/zulipchat_migration_tos.html:3
 msgid ""
 "\n"
-"        This team chat is now being hosted on Zulip Cloud. Please accept the <a href=\"https://zulip.com/policies/terms\">Zulip Terms of Service</a> to continue.\n"
+"        This team chat is now being hosted on RM-connect Cloud. Please accept the <a href=\"https://zulip.com/policies/terms\">RM-connect Terms of Service</a> to continue.\n"
 "        "
 msgstr "\n        این چت تیمی الان بر روی زولیپ ابری میزبانی می‌شود.لطفاً برای ادامه دادن<a href=\"https://zulip.com/policies/terms\">قوانین سرویس زولیپ</a> را بپذیرید.\n        "
 
@@ -1382,7 +1382,7 @@ msgid "Accept the Terms of Service"
 msgstr "پذیرفتن قوانین سرویس"
 
 #: templates/zerver/accounts_accept_terms.html:18
-msgid "Welcome to Zulip"
+msgid "Welcome to RM-connect"
 msgstr "به زولیپ خوش آمدید"
 
 #: templates/zerver/accounts_accept_terms.html:25
@@ -1401,7 +1401,7 @@ msgstr "من موافق <a href=\"%(root_domain_url)s/policies/terms\" target=\"
 
 #: templates/zerver/accounts_accept_terms.html:68
 #: templates/zerver/register.html:250
-msgid "Subscribe me to Zulip's low-traffic newsletter (a few emails a year)."
+msgid "Subscribe me to RM-connect's low-traffic newsletter (a few emails a year)."
 msgstr "من را در خبرنامه کم‌ترافیک زولیپ مشترک کن (چند ایمیل در سال)"
 
 #: templates/zerver/accounts_accept_terms.html:74
@@ -1415,7 +1415,7 @@ msgid "Sign up"
 msgstr "ثبت نام"
 
 #: templates/zerver/accounts_home.html:18
-msgid "Sign up for Zulip"
+msgid "Sign up for RM-connect"
 msgstr "ورود به زولیپ"
 
 #: templates/zerver/accounts_home.html:37
@@ -1458,7 +1458,7 @@ msgstr "آدرس ایمیل خود را تایید کنید"
 msgid ""
 "To complete your registration, check your email account (<span "
 "class=\"user_email semi-bold\">%(email)s</span>) for a confirmation email "
-"from Zulip."
+"from RM-connect."
 msgstr "برای تکمیل ثبت نام، حساب ایمیل (<span class=\"user_email semi-bold\">%(email)s</span>) خود را برای یک ایمیل تأیید از زولیپ بررسی کنید."
 
 #: templates/zerver/accounts_send_confirm.html:25
@@ -1474,11 +1474,11 @@ msgid ""
 msgstr "اگر این پیام در صفحه باقی ماند، صفحه را دوباره <a class=\"reload-lnk\">بارگیری</a> کنید."
 
 #: templates/zerver/app/index.html:135
-msgid "Error loading Zulip. Try <a class=\"reload-lnk\">reloading</a> the page."
+msgid "Error loading RM-connect. Try <a class=\"reload-lnk\">reloading</a> the page."
 msgstr "خطا در بارگیری زولیپ. سعی کنید صفحه را <a class=\"reload-lnk\">دوباره بارگیری</a> کنید."
 
 #: templates/zerver/app/index.html:183
-msgid "Unable to connect to Zulip."
+msgid "Unable to connect to RM-connect."
 msgstr "اتصال به زولیپ ممکن نیست."
 
 #: templates/zerver/app/index.html:184
@@ -1511,7 +1511,7 @@ msgstr "پیکربندی حریم خصوصی آدرس ایمیل"
 
 #: templates/zerver/change_email_address_visibility_modal.html:12
 msgid ""
-"Zulip lets you control which roles in the organization can view your email "
+"RM-connect lets you control which roles in the organization can view your email "
 "address."
 msgstr "زولیپ به شما اجازه می‌دهد که کنترل کنید کدام نقش‌ها در سازمان می‌توانند آدرس ایمیل شما را ببینند."
 
@@ -1570,7 +1570,7 @@ msgid "Account not found"
 msgstr "اکانت پیدا نشد"
 
 #: templates/zerver/confirm_continue_registration.html:14
-msgid "Zulip account not found."
+msgid "RM-connect account not found."
 msgstr "حساب کاربری زولیپ یافت نشد."
 
 #: templates/zerver/confirm_continue_registration.html:18
@@ -1594,7 +1594,7 @@ msgid "Create a new organization"
 msgstr "ایجاد سازمان جدید"
 
 #: templates/zerver/create_realm.html:16
-msgid "Create a new Zulip organization"
+msgid "Create a new RM-connect organization"
 msgstr "یک سازمان جدید در زولیپ ايجاد کنید"
 
 #: templates/zerver/create_realm.html:27 templates/zerver/reset.html:27
@@ -1641,7 +1641,7 @@ msgstr "\n                        این سازمان غیرفعال شده اس
 #, python-format
 msgid ""
 "\n"
-"                            If you are an owner of this organization, you can <a href=\"mailto:%(support_email)s\">contact Zulip support</a> to reactivate it.\n"
+"                            If you are an owner of this organization, you can <a href=\"mailto:%(support_email)s\">contact RM-connect support</a> to reactivate it.\n"
 "                            "
 msgstr "\n                            اگر شما مالک این سازمان هستید، می‌توانید <a href=\"mailto:%(support_email)s\">با پشتیبانی زولیپ تماس بگیرید</a> تا دوباره آن را فعال کنید.\n                            "
 
@@ -1649,7 +1649,7 @@ msgstr "\n                            اگر شما مالک این سازمان
 #, python-format
 msgid ""
 "\n"
-"                            If you are an owner of this organization, you can <a href=\"mailto:%(support_email)s\">contact this Zulip server's administrators</a> to reactivate it.\n"
+"                            If you are an owner of this organization, you can <a href=\"mailto:%(support_email)s\">contact this RM-connect server's administrators</a> to reactivate it.\n"
 "                            "
 msgstr "\n                            اگر شما مالک این سازمان هستید، می‌توانید <a href=\"mailto:%(support_email)s\">با ادمین‌های این سازمان زولیپ تماس بگیرید</a> تا دوباره آن را فعال کنید.\n                            "
 
@@ -1689,7 +1689,7 @@ msgstr "ورود به اپ دسکتاپ"
 
 #: templates/zerver/desktop_redirect.html:12
 msgid ""
-"Copy this login token and return to your Zulip app to finish logging in:"
+"Copy this login token and return to your RM-connect app to finish logging in:"
 msgstr "این توکن ورود را کپی کنید و به اپ زولیپ خود برگردید تا مراحل ورود تکمیل شود:"
 
 #: templates/zerver/desktop_redirect.html:17
@@ -1743,7 +1743,7 @@ msgstr "به روز رسانی"
 #: templates/zerver/development/integrations_dev_panel.html:19
 #: templates/zerver/portico-header.html:8
 #: templates/zerver/portico-header.html:12 zerver/models/realms.py:387
-msgid "Zulip"
+msgid "RM-connect"
 msgstr "زولیپ"
 
 #: templates/zerver/digest_base.html:5
@@ -1753,7 +1753,7 @@ msgstr "هضم"
 #: templates/zerver/emails/account_registered.html:11
 #, python-format
 msgid ""
-"Congratulations, you have created a new Zulip demo organization. Note\n"
+"Congratulations, you have created a new RM-connect demo organization. Note\n"
 "    that this organization will be automatically deleted in 30 days. Learn more\n"
 "    about demo organizations <a\n"
 "    href=\"%(demo_organizations_help_link)s\">here</a>!\n"
@@ -1763,26 +1763,26 @@ msgstr "تبریک، شما یک سازمان جدید آزمایشی زولیپ
 #: templates/zerver/emails/account_registered.html:19
 #, python-format
 msgid ""
-"Congratulations, you have created a new Zulip\n"
+"Congratulations, you have created a new RM-connect\n"
 "    organization: <b>%(realm_name)s</b>."
 msgstr "تبریک، شما یک سازمان جدید زولیپ\nساخته‌اید: <b>%(realm_name)s</b>."
 
 #: templates/zerver/emails/account_registered.html:24
 #: templates/zerver/emails/account_registered.txt:1
-msgid "Welcome to Zulip!"
+msgid "Welcome to RM-connect!"
 msgstr "به زولیپ خوش آمدید!"
 
 #: templates/zerver/emails/account_registered.html:26
 #, python-format
 msgid ""
-"You've joined the Zulip organization <b>%(realm_name)s</b>.\n"
+"You've joined the RM-connect organization <b>%(realm_name)s</b>.\n"
 "    "
 msgstr "شما عضو سازمان زولیپ<b>%(realm_name)s</b> شده‌اید.\n    "
 
 #: templates/zerver/emails/account_registered.html:32
 #, python-format
 msgid ""
-"You will use the following info to log into the Zulip web, <a "
+"You will use the following info to log into the RM-connect web, <a "
 "href=\"%(apps_page_link)s\">mobile and desktop</a> apps:"
 msgstr "شما از اطلاعات زیر برای وارد شده به زولیپ تحت وب و اپ‌های <a href=\"%(apps_page_link)s\">موبایل و دسکتاپ</a> استفاده خواهید کرد:"
 
@@ -1818,7 +1818,7 @@ msgstr "رفتن به سازمان"
 #: templates/zerver/emails/account_registered.html:49
 #, python-format
 msgid ""
-"If you are new to Zulip, check out our <a "
+"If you are new to RM-connect, check out our <a "
 "href=\"%(getting_user_started_link)s\">getting started guide</a>!"
 msgstr ""
 
@@ -1827,7 +1827,7 @@ msgstr ""
 msgid ""
 "We also have a guide for <a "
 "href=\"%(getting_organization_started_link)s\">moving your organization to "
-"Zulip</a>."
+"RM-connect</a>."
 msgstr ""
 
 #: templates/zerver/emails/account_registered.html:57
@@ -1839,18 +1839,18 @@ msgstr "سوال دارید؟ <a href=\"mailto:%(support_email)s\">با ما ت�
 
 #: templates/zerver/emails/account_registered.subject.txt:2
 #, python-format
-msgid "%(realm_name)s on Zulip: Your new organization details"
+msgid "%(realm_name)s on RM-connect: Your new organization details"
 msgstr "%(realm_name)s در زولیپ : جزئیات سازمان جدید شما"
 
 #: templates/zerver/emails/account_registered.subject.txt:4
 #, python-format
-msgid "%(realm_name)s on Zulip: Your new account details"
+msgid "%(realm_name)s on RM-connect: Your new account details"
 msgstr "%(realm_name)s در زولیپ : جزئیات سازمان جدید شما "
 
 #: templates/zerver/emails/account_registered.txt:5
 #, python-format
 msgid ""
-" Congratulations, you have created a new demo Zulip organization. Note that "
+" Congratulations, you have created a new demo RM-connect organization. Note that "
 "this organization will be automatically deleted in 30 days. Learn more about"
 " demo organizations here: %(demo_organizations_help_link)s!"
 msgstr "تبریک، شما یک سازمان جدید آزمایشی زولیپ ساخته‌اید. توجه کنید که این سازمان ظرف 30 روز به طور خودکار حذف می‌شود. در مورد سازمان‌های آزمایشی در اینجا بیشتر بدانید: %(demo_organizations_help_link)s!"
@@ -1858,32 +1858,32 @@ msgstr "تبریک، شما یک سازمان جدید آزمایشی زولیپ
 #: templates/zerver/emails/account_registered.txt:7
 #, python-format
 msgid ""
-"Congratulations, you have created a new Zulip organization: %(realm_name)s."
+"Congratulations, you have created a new RM-connect organization: %(realm_name)s."
 msgstr "تبریک، شما یک سازمان جدید زولیپ ساخته‌اید: %(realm_name)s"
 
 #: templates/zerver/emails/account_registered.txt:10
 #, python-format
-msgid "You've joined the Zulip organization %(realm_name)s."
+msgid "You've joined the RM-connect organization %(realm_name)s."
 msgstr "شما عضو سازمان %(realm_name)s در زولیپ شده‌اید."
 
 #: templates/zerver/emails/account_registered.txt:14
 #, python-format
 msgid ""
-"You will use the following info to log into the Zulip web, mobile and "
+"You will use the following info to log into the RM-connect web, mobile and "
 "desktop apps (%(apps_page_link)s):"
 msgstr "شما از اطلاعات زیر برای ورود به زولیپ تحت وب،‌ اپ موبایل و اپ دسکتاپ استفاده خواهید کرد (%(apps_page_link)s):"
 
 #: templates/zerver/emails/account_registered.txt:29
 #, python-format
 msgid ""
-"If you are new to Zulip, check out our getting started guide "
+"If you are new to RM-connect, check out our getting started guide "
 "(%(getting_user_started_link)s)!"
 msgstr ""
 
 #: templates/zerver/emails/account_registered.txt:31
 #, python-format
 msgid ""
-" We also have a guide for moving your organization to Zulip "
+" We also have a guide for moving your organization to RM-connect "
 "(%(getting_organization_started_link)s)."
 msgstr ""
 
@@ -1900,7 +1900,7 @@ msgstr "سوال دارید؟ با ما تماس بگیرید %(support_email)s 
 #: templates/zerver/emails/realm_reactivation.txt:16
 #, python-format
 msgid ""
-"If you have any questions, please contact this Zulip server's administrators"
+"If you have any questions, please contact this RM-connect server's administrators"
 " at %(support_email)s."
 msgstr "اگر هر سوالی دارید، لطفاً با ادمین این سرور به آدرس %(support_email)s تماس بگیرید."
 
@@ -1917,7 +1917,7 @@ msgstr "سلام، "
 #: templates/zerver/emails/confirm_demo_organization_email.txt:4
 #, python-format
 msgid ""
-"We received a request to add the email address %(new_email)s to your Zulip "
+"We received a request to add the email address %(new_email)s to your RM-connect "
 "demo organization account on %(realm_url)s. To confirm this update and set a"
 " password for this account, please click below:"
 msgstr "ما درخواستی دریافت کرده‌ایم که آدرس ایمیل %(new_email)s را به حساب آزمایشی سازمان زولیپ شما در %(realm_url)s اضافه کنیم. برای تایید این به‌روزرسانی و تعیین یک کلمه عبور برای این حساب، این پایین کلیک کنید."
@@ -1935,7 +1935,7 @@ msgid ""
 msgstr "اگر شما برای این تغییر درخواست نداده‌اید، سریعاً با ما تماس بگیرید %(support_email)s"
 
 #: templates/zerver/emails/confirm_demo_organization_email.subject.txt:1
-msgid "Verify your new email address for your demo Zulip organization"
+msgid "Verify your new email address for your demo RM-connect organization"
 msgstr "آدرس ایمیل جدید خود را برای سازمان آزمایشی زولیپ خود تأیید کنید"
 
 #: templates/zerver/emails/confirm_demo_organization_email.txt:9
@@ -1950,7 +1950,7 @@ msgstr "اگر شما درخواست این تغییر را نداده اید ل
 #: templates/zerver/emails/confirm_new_email.txt:4
 #, python-format
 msgid ""
-"We received a request to change the email address for the Zulip account on "
+"We received a request to change the email address for the RM-connect account on "
 "%(realm_url)s from %(old_email)s to %(new_email)s. To confirm this change, "
 "please click below:"
 msgstr "ما درخواستی برای تغییر آدرس ایمیل حساب کاربری زولیپ %(realm_url)s از %(old_email)s به %(new_email)s دریافت کرده‌ایم. برای تایید تغییرات، کلیک کنید:"
@@ -1966,7 +1966,7 @@ msgstr "آدرس ایمیل جدید خود را برای %(organization_host)s 
 
 #: templates/zerver/emails/confirm_registration.html:10
 #: templates/zerver/emails/confirm_registration.txt:2
-msgid "You have requested a new Zulip organization:"
+msgid "You have requested a new RM-connect organization:"
 msgstr "شما یک سازمان زولیپ جدید درخواست کرده‌اید:"
 
 #: templates/zerver/emails/confirm_registration.html:13
@@ -1977,7 +1977,7 @@ msgstr "نوع سازمان: %(organization_type)s"
 
 #: templates/zerver/emails/confirm_registration.html:16
 #: templates/zerver/emails/confirm_registration.txt:7
-msgid "You recently signed up for Zulip. Awesome!"
+msgid "You recently signed up for RM-connect. Awesome!"
 msgstr "شما اخیراً عضو زولیپ شده‌اید. بسیار هم عالی!"
 
 #: templates/zerver/emails/confirm_registration.html:21
@@ -1998,11 +1998,11 @@ msgid "Complete registration"
 msgstr "تکمیل ثبت نام"
 
 #: templates/zerver/emails/confirm_registration.subject.txt:2
-msgid "Create your Zulip organization"
+msgid "Create your RM-connect organization"
 msgstr "سازمان زولیپ خود را بسازید"
 
 #: templates/zerver/emails/confirm_registration.subject.txt:4
-msgid "Activate your Zulip account"
+msgid "Activate your RM-connect account"
 msgstr "فعال‌سازی حساب کاربری زولیپ شما"
 
 #: templates/zerver/emails/confirm_registration.txt:14
@@ -2036,7 +2036,7 @@ msgstr "لغو اشتراک از ایمیل‌های بازاریابی"
 #, python-format
 msgid ""
 "\n"
-"Your Zulip account on <a href=\"%(realm_url)s\">%(realm_url)s</a> has been deactivated, and you will no longer be able to log in.\n"
+"Your RM-connect account on <a href=\"%(realm_url)s\">%(realm_url)s</a> has been deactivated, and you will no longer be able to log in.\n"
 msgstr "\nاکانت زولیپ شما بر روی <a href=\"%(realm_url)s\">%(realm_url)s</a> غیرفعال شده و شما دیگر نمی‌توانید وارد شوید.\n"
 
 #: templates/zerver/emails/deactivate.html:15
@@ -2053,7 +2053,7 @@ msgstr "اطلاعیه غیرفعال شدن حساب کاربری در %(realm_
 #, python-format
 msgid ""
 "\n"
-"Your Zulip account on %(realm_url)s has been deactivated, and you will no longer be able to log in.\n"
+"Your RM-connect account on %(realm_url)s has been deactivated, and you will no longer be able to log in.\n"
 msgstr "\nحساب زولیپ شما بر روی%(realm_url)s غیرفعال شده است و دیگر نمی‌توانید وارد شوید.\n"
 
 #: templates/zerver/emails/digest.html:27 templates/zerver/emails/digest.txt:8
@@ -2061,7 +2061,7 @@ msgid "New channels"
 msgstr "کانال‌های جدید"
 
 #: templates/zerver/emails/digest.html:34
-msgid "Click here to log in to Zulip and catch up."
+msgid "Click here to log in to RM-connect and catch up."
 msgstr "برای ورود به زولیپ و پیگیری اینجا کلیک کنید."
 
 #: templates/zerver/emails/digest.html:40
@@ -2070,12 +2070,12 @@ msgstr "لغو اشتراک از ایمیل‌های خلاصه"
 
 #: templates/zerver/emails/digest.subject.txt:1
 #, python-format
-msgid "Zulip digest for %(realm_name)s"
+msgid "RM-connect digest for %(realm_name)s"
 msgstr "خلاصه‌های زولیپ برای %(realm_name)s "
 
 #: templates/zerver/emails/digest.txt:12
 #, python-format
-msgid "Click here to log in to Zulip and catch up: %(organization_url)s."
+msgid "Click here to log in to RM-connect and catch up: %(organization_url)s."
 msgstr "برای ورود و پیگیری اینجا کلیک کنید: %(organization_url)s."
 
 #: templates/zerver/emails/digest.txt:15
@@ -2100,7 +2100,7 @@ msgstr "تشکر برای درخواست شما!"
 #: templates/zerver/emails/find_team.txt:5
 #, python-format
 msgid ""
-"Your email address %(email)s has accounts with the following Zulip Cloud "
+"Your email address %(email)s has accounts with the following RM-connect Cloud "
 "organizations:"
 msgstr "آدرس ایمیل شما %(email)s دارای حساب کاریری در سازمان‌های زولیپی زیر است:"
 
@@ -2108,7 +2108,7 @@ msgstr "آدرس ایمیل شما %(email)s دارای حساب کاریری د
 #: templates/zerver/emails/find_team.txt:7
 #, python-format
 msgid ""
-"Your email address %(email)s has accounts with the following Zulip "
+"Your email address %(email)s has accounts with the following RM-connect "
 "organizations hosted by %(external_host)s:"
 msgstr "آدرس ایمیل شما %(email)s دارای حساب کاریری در سازمان زولیپی است که بر روی %(external_host)s میزبانی می‌شود:"
 
@@ -2122,19 +2122,19 @@ msgstr "اگر برای وارد شدن مشکل دارید، می‌توانی�
 #: templates/zerver/emails/find_team.html:28
 #: templates/zerver/emails/find_team.txt:21
 #: templates/zerver/emails/find_team.txt:28
-msgid "You have requested a list of Zulip accounts for this email address."
+msgid "You have requested a list of RM-connect accounts for this email address."
 msgstr "شما لیستی از اکانت‌های زولیپ مرتبط با این ایمیل را درخواست کرده‌اید."
 
 #: templates/zerver/emails/find_team.html:30
 #: templates/zerver/emails/find_team.txt:21
-msgid "Unfortunately, no Zulip Cloud accounts were found."
+msgid "Unfortunately, no RM-connect Cloud accounts were found."
 msgstr "متاسفانه هیچ حساب ابری زولیپ پیدا نشد."
 
 #: templates/zerver/emails/find_team.html:32
 #: templates/zerver/emails/find_team.txt:28
 #, python-format
 msgid ""
-"Unfortunately, no accounts were found in Zulip organizations hosted by "
+"Unfortunately, no accounts were found in RM-connect organizations hosted by "
 "%(external_host)s."
 msgstr "متاسفانه هیچ حساب کاربری در سازمان زولیپی که بر روی %(external_host)s میزبانی می‌شود، پیدا نشد."
 
@@ -2154,11 +2154,11 @@ msgid ""
 msgstr "اگر شما این درخواست را متوجه نمی شوید می‌توانید با خیال راحت این ایمیل را ناديده بگیرید."
 
 #: templates/zerver/emails/find_team.subject.txt:2
-msgid "Your Zulip accounts"
+msgid "Your RM-connect accounts"
 msgstr "حساب‌های زولیپ شما"
 
 #: templates/zerver/emails/find_team.subject.txt:4
-msgid "No Zulip accounts found"
+msgid "No RM-connect accounts found"
 msgstr "اکانت زولیپ پیدا نشد"
 
 #: templates/zerver/emails/find_team.txt:15
@@ -2181,7 +2181,7 @@ msgstr "سلام، "
 #: templates/zerver/emails/invitation.html:12
 #, python-format
 msgid ""
-"%(referrer_name)s wants you to join them on Zulip &mdash; the team "
+"%(referrer_name)s wants you to join them on RM-connect &mdash; the team "
 "communication tool designed for productivity."
 msgstr "%(referrer_name)s علاقمند است که شما به آنها در زولیپ بپیوندید —ابزار ارتباط تیمی، طراحی شده برای بهره‌وری"
 
@@ -2198,7 +2198,7 @@ msgstr "%(referrer_full_name)s از شما دعوت کرده است که به %(
 #: templates/zerver/emails/invitation.txt:3
 #, python-format
 msgid ""
-"%(referrer_full_name)s (%(referrer_email)s) wants you to join them on Zulip "
+"%(referrer_full_name)s (%(referrer_email)s) wants you to join them on RM-connect "
 "-- the team communication tool designed for productivity."
 msgstr "%(referrer_full_name)s (%(referrer_email)s) می خواهند شما آنها را در زولیپ -- ابزار طراحی شده برای بهره‌وری تیم؛ عضو کنید. "
 
@@ -2216,7 +2216,7 @@ msgstr "سلام دوباره، "
 #, python-format
 msgid ""
 "This is a friendly reminder that %(referrer_name)s wants you to join them on"
-" Zulip &mdash; the team communication tool designed for productivity."
+" RM-connect &mdash; the team communication tool designed for productivity."
 msgstr "این یک یادآوری دوستانه است که %(referrer_name)s از شما خواسته است تا به زولیپ بپیوندید  — ابزار ارتباط تیمی، طراحی شده برای بهره‌وری"
 
 #: templates/zerver/emails/invitation_reminder.html:18
@@ -2242,7 +2242,7 @@ msgstr "یادآوری: %(referrer_name)s را در %(referrer_realm_name)s عض
 #, python-format
 msgid ""
 "This is a friendly reminder that %(referrer_name)s (%(referrer_email)s) "
-"wants you to join them on Zulip -- the team communication tool designed for "
+"wants you to join them on RM-connect -- the team communication tool designed for "
 "productivity."
 msgstr "این یک یادآوری دوستانه است که %(referrer_name)s (%(referrer_email)s) از شما می خواهند شما آنها را در زولیپ -- ابزار طراحی شده برای بهره‌وری تیم؛ عضو کنید. "
 
@@ -2256,7 +2256,7 @@ msgstr "این دعوت طی دو روز آینده منقضی خواهد شد،
 #: templates/zerver/emails/macros.html:14
 #, python-format
 msgid ""
-"If you have any questions, please contact this Zulip server's administrators"
+"If you have any questions, please contact this RM-connect server's administrators"
 " at <a href=\"mailto:%(email)s\">%(email)s</a>."
 msgstr "اگر سؤالی دارید، لطفاً با ادمین‌های این سرور زولیپ در آدرس <a href=\"mailto:%(email)s\">%(email)s</a> تماس بگیرید."
 
@@ -2338,21 +2338,21 @@ msgstr "شما این را دریافت کرده‌اید چرا که اطلاع
 #, python-format
 msgid ""
 "Reply to this email directly, <a href=\"%(narrow_url)s\">view it in "
-"%(realm_name)s Zulip</a>, or <a href=\"%(notif_url)s\">manage email "
+"%(realm_name)s RM-connect</a>, or <a href=\"%(notif_url)s\">manage email "
 "preferences</a>."
 msgstr "به این ایمیل مستقیماً پاسخ دهید،‌<a href=\"%(narrow_url)s\">آن را در زولیپ %(realm_name)s ببینید</a>، یا <a href=\"%(notif_url)s\">اولویت‌های ایمیل را مدیریت کنید</a>."
 
 #: templates/zerver/emails/missed_message.html:48
 #, python-format
 msgid ""
-"<a href=\"%(narrow_url)s\">View or reply in %(realm_name)s Zulip</a>, or <a "
+"<a href=\"%(narrow_url)s\">View or reply in %(realm_name)s RM-connect</a>, or <a "
 "href=\"%(notif_url)s\">manage email preferences</a>."
 msgstr "<a href=\"%(narrow_url)s\">در زولیپ %(realm_name)s ببینید یا پاسخ دهید</a>، یا <a href=\"%(notif_url)s\">اولویت‌های ایمیل را مدیریت کنید</a>."
 
 #: templates/zerver/emails/missed_message.html:50
 #, python-format
 msgid ""
-"<a href=\"%(narrow_url)s\">Reply in %(realm_name)s Zulip</a>, or <a "
+"<a href=\"%(narrow_url)s\">Reply in %(realm_name)s RM-connect</a>, or <a "
 "href=\"%(notif_url)s\">manage email preferences</a>."
 msgstr "<a href=\"%(narrow_url)s\">در زولیپ %(realm_name)s پاسخ دهید</a>، یا <a href=\"%(notif_url)s\">اولویت‌های ایمیل را مدیریت کنید</a>."
 
@@ -2360,7 +2360,7 @@ msgstr "<a href=\"%(narrow_url)s\">در زولیپ %(realm_name)s پاسخ ده�
 #, python-format
 msgid ""
 "\n"
-"    Do not reply to this email. This Zulip server is not configured to accept incoming emails (<a href=\"%(url)s\">help</a>).\n"
+"    Do not reply to this email. This RM-connect server is not configured to accept incoming emails (<a href=\"%(url)s\">help</a>).\n"
 "    "
 msgstr "\n    به این ایمیل پاسخ ندهید. این سرور زولیپ برای دریافت پاسخ ایمیل‌ها پیکربندی نشده است (<a href=\"%(url)s\">راهنما</a>).\n    "
 
@@ -2401,23 +2401,23 @@ msgstr "\nاین ایمیل شامل محتوای پیام نیست چرا که 
 
 #: templates/zerver/emails/missed_message.txt:43
 #, python-format
-msgid "Reply to this email directly, or view it in %(realm_name)s Zulip:"
+msgid "Reply to this email directly, or view it in %(realm_name)s RM-connect:"
 msgstr "به این ایمیل مستقیم پاسخ دهید یا آن را در زولیپ %(realm_name)s ببینید:"
 
 #: templates/zerver/emails/missed_message.txt:47
 #, python-format
-msgid "View or reply in %(realm_name)s Zulip:"
+msgid "View or reply in %(realm_name)s RM-connect:"
 msgstr "مشاهده یا پاسخ دادن در زولیپ %(realm_name)s:"
 
 #: templates/zerver/emails/missed_message.txt:51
 #, python-format
-msgid "Reply in %(realm_name)s Zulip:"
+msgid "Reply in %(realm_name)s RM-connect:"
 msgstr "پاسخ‌دادن در زولیپ %(realm_name)s:"
 
 #: templates/zerver/emails/missed_message.txt:55
 msgid ""
 "\n"
-"Do not reply to this email. This Zulip server is not configured to accept\n"
+"Do not reply to this email. This RM-connect server is not configured to accept\n"
 "incoming emails. Help:\n"
 msgstr "\n    به این ایمیل پاسخ ندهید. این سرور زولیپ برای دریافت پاسخ ایمیل‌ها پیکربندی نشده است. راهنما:\n    \n"
 
@@ -2428,7 +2428,7 @@ msgstr "مدیریت اولویت‌های ایمیل:"
 #: templates/zerver/emails/notify_change_in_email.html:10
 #, python-format
 msgid ""
-"The email associated with your Zulip account was recently changed to "
+"The email associated with your RM-connect account was recently changed to "
 "%(new_email)s. If you did not request this change, please contact us "
 "immediately at %(support_email)s."
 msgstr "ایمیلی که با اکانت زولیپ شما درارتباط بوده اخیراً به %(new_email)s تغییر کرده است. اگر شما این تغییر را نداده‌اید لطفاً سریعا با ما به آدرس %(support_email)sتماس بگیرید."
@@ -2440,18 +2440,18 @@ msgstr "بهترین٬ "
 
 #: templates/zerver/emails/notify_change_in_email.html:14
 #: templates/zerver/emails/notify_change_in_email.txt:7
-msgid "Team Zulip"
+msgid "Team RM-connect"
 msgstr "زولیپ تیم"
 
 #: templates/zerver/emails/notify_change_in_email.subject.txt:1
 #, python-format
-msgid "Zulip email changed for %(realm_name)s"
+msgid "RM-connect email changed for %(realm_name)s"
 msgstr "ایمیل زولیپ به %(realm_name)s تغییر کرد"
 
 #: templates/zerver/emails/notify_change_in_email.txt:3
 #, python-format
 msgid ""
-"The email associated with your Zulip account was recently changed to "
+"The email associated with your RM-connect account was recently changed to "
 "%(new_email)s. If you did not request this change, please contact us "
 "immediately at <%(support_email)s>."
 msgstr "ایمیل مرتبط با حساب کاربری زولیپ شما اخیرا به %(new_email)s تغییر کرد. اگر شما درخواست این تغییر را نداده اید لطفا سریعاً در <%(support_email)s> به ما اطلاع دهید. "
@@ -2465,7 +2465,7 @@ msgstr "سازمان:‌%(organization_url)s زمان: %(login_time)s ایمیل
 
 #: templates/zerver/emails/notify_new_login.html:12
 #: templates/zerver/emails/notify_new_login.txt:1
-msgid "We noticed a recent login for the following Zulip account."
+msgid "We noticed a recent login for the following RM-connect account."
 msgstr "ما اخیرا متوجه یک ورود به این حساب کاربری زولیپ شدیم."
 
 #: templates/zerver/emails/notify_new_login.html:16
@@ -2517,7 +2517,7 @@ msgstr "ممنون، "
 
 #: templates/zerver/emails/notify_new_login.html:41
 #: templates/zerver/emails/notify_new_login.txt:21
-msgid "Zulip Security"
+msgid "RM-connect Security"
 msgstr "امنیت زولیپ"
 
 #: templates/zerver/emails/notify_new_login.html:46
@@ -2544,9 +2544,9 @@ msgstr "\nاگر شما این ورود را تشخیص نمی دهید یا ف�
 #: templates/zerver/emails/onboarding_team_to_zulip.html:10
 #, python-format
 msgid ""
-"If you've already decided to use Zulip for your organization, welcome! You "
+"If you've already decided to use RM-connect for your organization, welcome! You "
 "can use our <a href=\"%(get_organization_started)s\">guide for moving to "
-"Zulip</a> to get started."
+"RM-connect</a> to get started."
 msgstr ""
 
 #: templates/zerver/emails/onboarding_team_to_zulip.html:13
@@ -2578,7 +2578,7 @@ msgstr "بدون استفاده از هیچ ابزار چت دیگری، <a href
 #: templates/zerver/emails/onboarding_team_to_zulip.html:23
 #, python-format
 msgid ""
-"Zulip is designed to <a href=\"%(why_zulip)s\">enable efficient "
+"RM-connect is designed to <a href=\"%(why_zulip)s\">enable efficient "
 "communication</a>, and we hope these tips help your team experience it in "
 "action."
 msgstr "زولیپ به گونه‌ای طراحی شده است که <a href=\"%(why_zulip)s\">ارتباط کارآمدی را ایجاد می‌کند</a>، و امیدواریم این نکات به تیم شما کمک کند تا آن را در عمل تجربه کنند."
@@ -2599,8 +2599,8 @@ msgstr "انتخاب نرم‌افزار مکالمه برای تیم شما"
 
 #: templates/zerver/emails/onboarding_team_to_zulip.txt:1
 msgid ""
-"If you've already decided to use Zulip for your organization, welcome! You "
-"can use our guide for moving to Zulip to get started."
+"If you've already decided to use RM-connect for your organization, welcome! You "
+"can use our guide for moving to RM-connect to get started."
 msgstr ""
 
 #: templates/zerver/emails/onboarding_team_to_zulip.txt:3
@@ -2624,103 +2624,103 @@ msgstr "بدون استفاده از هیچ ابزار چت دیگری، یک ه
 
 #: templates/zerver/emails/onboarding_team_to_zulip.txt:10
 msgid ""
-"Zulip is designed to enable efficient communication, and we hope these tips "
+"RM-connect is designed to enable efficient communication, and we hope these tips "
 "help your team experience it in action."
 msgstr "زولیپ به گونه‌ای طراحی شده است که ارتباط کارآمدی را ایجاد می‌کند، و امیدواریم این نکات به تیم شما کمک کند تا آن را در عمل تجربه کنند."
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:9
 #: templates/zerver/emails/onboarding_zulip_guide.txt:1
 msgid ""
-"As you are getting started with Zulip, we'd love to help you discover how it"
-" can work best for your needs. Check out this guide to key Zulip features "
+"As you are getting started with RM-connect, we'd love to help you discover how it"
+" can work best for your needs. Check out this guide to key RM-connect features "
 "for organizations like yours!"
 msgstr "درحالیکه شما کار کردن با زولیپ را شروع می‌کنید، ما علاقمندیم به شما در کشف اینکه چطور برای نیازهای شما مناسب است،‌ کمک کنیم. این راهنمای ویژگی‌های کلیدی زولیپ برای سازمان‌های مانند خودتان را نگاه کنید ."
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:13
 #: templates/zerver/emails/onboarding_zulip_guide.txt:4
-msgid "View Zulip guide for businesses"
+msgid "View RM-connect guide for businesses"
 msgstr "راهنمای زولیپ برای کسب و کارها را ببینید"
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:15
 #: templates/zerver/emails/onboarding_zulip_guide.txt:6
-msgid "View Zulip guide for open-source projects"
+msgid "View RM-connect guide for open-source projects"
 msgstr "راهنمای زولیپ برای پروژه‌های متن باز را مشاهده کنید"
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:17
 #: templates/zerver/emails/onboarding_zulip_guide.txt:8
-msgid "View Zulip guide for education"
+msgid "View RM-connect guide for education"
 msgstr "راهنمای زولیپ برای آموزش را ببینید"
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:19
 #: templates/zerver/emails/onboarding_zulip_guide.txt:10
-msgid "View Zulip guide for research"
+msgid "View RM-connect guide for research"
 msgstr "راهنمای زولیپ برای پژوهش را ببینید"
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:21
 #: templates/zerver/emails/onboarding_zulip_guide.txt:12
-msgid "View Zulip guide for events and conferences"
+msgid "View RM-connect guide for events and conferences"
 msgstr "راهنمای زولیپ برای رویدادها و کنفرانس‌ها را مشاهده کنید"
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:23
 #: templates/zerver/emails/onboarding_zulip_guide.txt:14
-msgid "View Zulip guide for non-profits"
+msgid "View RM-connect guide for non-profits"
 msgstr "راهنمای زولیپ برای غیرانتفاعی‌ها را ببینید"
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:25
 #: templates/zerver/emails/onboarding_zulip_guide.txt:16
-msgid "View Zulip guide for communities"
+msgid "View RM-connect guide for communities"
 msgstr "راهنمای زولیپ برای انجمن‌ها را ببینید"
 
 #: templates/zerver/emails/onboarding_zulip_guide.subject.txt:2
-msgid "Zulip guide for businesses"
+msgid "RM-connect guide for businesses"
 msgstr "راهنمای زولیپ برای کسب و کارها"
 
 #: templates/zerver/emails/onboarding_zulip_guide.subject.txt:4
-msgid "Zulip guide for open-source projects"
+msgid "RM-connect guide for open-source projects"
 msgstr "راهنمای زولیپ برای پروژه‌های متن باز را ببینید"
 
 #: templates/zerver/emails/onboarding_zulip_guide.subject.txt:6
-msgid "Zulip guide for education"
+msgid "RM-connect guide for education"
 msgstr "راهنمای زولیپ برای آموزش"
 
 #: templates/zerver/emails/onboarding_zulip_guide.subject.txt:8
-msgid "Zulip guide for research"
+msgid "RM-connect guide for research"
 msgstr "راهنمای زولیپ برای پژوهش"
 
 #: templates/zerver/emails/onboarding_zulip_guide.subject.txt:10
-msgid "Zulip guide for events and conferences"
+msgid "RM-connect guide for events and conferences"
 msgstr "راهنمای زولیپ برای رویدادها و کنفرانس‌ها را مشاهده کنید"
 
 #: templates/zerver/emails/onboarding_zulip_guide.subject.txt:12
-msgid "Zulip guide for non-profits"
+msgid "RM-connect guide for non-profits"
 msgstr "راهنمای زولیپ برای غیر انتفاعی‌ها"
 
 #: templates/zerver/emails/onboarding_zulip_guide.subject.txt:14
-msgid "Zulip guide for communities"
+msgid "RM-connect guide for communities"
 msgstr "راهنمای زولیپ برای انجمن‌ها"
 
 #: templates/zerver/emails/onboarding_zulip_topics.html:9
 #: templates/zerver/emails/onboarding_zulip_topics.txt:1
 msgid ""
-"Here are some tips for keeping your Zulip conversations organized with "
+"Here are some tips for keeping your RM-connect conversations organized with "
 "topics."
 msgstr "اینجا چند نکته برای سازماندهی مکالمات زولیپ شما توسط موضوعات مختلف، ارائه شده است."
 
 #: templates/zerver/emails/onboarding_zulip_topics.html:13
 msgid ""
-"In Zulip, <b>channels</b> determine who gets a message. <b>Topics</b> tell "
+"In RM-connect, <b>channels</b> determine who gets a message. <b>Topics</b> tell "
 "you what the message is about."
 msgstr "در زولیپ <b>کانال</b> مشخص می‌کند که چه کسی یک پیام را دریافت خواهد کرد. <b>موضوع</b> به شما می‌گوید که پیام درباره چه چیزی است."
 
 #: templates/zerver/emails/onboarding_zulip_topics.html:13
 #: templates/zerver/emails/onboarding_zulip_topics.txt:3
 msgid ""
-"Using topics, you can read Zulip one conversation at a time. You'll see each"
+"Using topics, you can read RM-connect one conversation at a time. You'll see each"
 " message in context, no matter how many different discussions are going on."
 msgstr "با استفاده از موضوعات، شما می توانید هر بار یک مکالمه زولیپ را بخوانید. شما هر پیام را در متن خواهید دید و مهم نیست که چه بحث‌های مختلفی در جریان باشد. "
 
 #: templates/zerver/emails/onboarding_zulip_topics.html:16
-msgid "Channels and topics in the Zulip app"
+msgid "Channels and topics in the RM-connect app"
 msgstr "کانال‌ها و موضوعات در اپ زولیپ"
 
 #: templates/zerver/emails/onboarding_zulip_topics.html:19
@@ -2748,7 +2748,7 @@ msgstr "برای انتخاب یک نام عالی برای موضوعات، ا�
 #: templates/zerver/emails/onboarding_zulip_topics.html:28
 #: templates/zerver/emails/onboarding_zulip_topics.txt:10
 #: templates/zerver/portico-header-dropdown.html:3
-msgid "Go to Zulip"
+msgid "Go to RM-connect"
 msgstr "رفتن به زولیپ "
 
 #: templates/zerver/emails/onboarding_zulip_topics.subject.txt:1
@@ -2757,7 +2757,7 @@ msgstr "مکالمات خود را به کمک موضوعات سازماندهی
 
 #: templates/zerver/emails/onboarding_zulip_topics.txt:3
 msgid ""
-"In Zulip, channels determine who gets a message. Topics tell you what the "
+"In RM-connect, channels determine who gets a message. Topics tell you what the "
 "message is about."
 msgstr "در زولیپ کانال مشخص می‌کند که چه کسی یک پیام را دریافت خواهد کرد. موضوع به شما می‌گوید که پیام درباره چه چیزی است."
 
@@ -2774,7 +2774,7 @@ msgstr "برای انتخاب یک نام عالی برای موضوعات، ا�
 #: templates/zerver/emails/password_reset.txt:1
 #, python-format
 msgid ""
-"Somebody (possibly you) requested a new password for the Zulip account "
+"Somebody (possibly you) requested a new password for the RM-connect account "
 "%(email)s on %(realm_url)s."
 msgstr "کسی (احتمالاً خود شما) برای حساب کاربری زولیپ %(email)s بر روی %(realm_url)s، درخواست کلمه عبور جدید کرده‌است. "
 
@@ -2796,7 +2796,7 @@ msgstr "شما قبلاً حساب کاربری در %(organization_url)s داش
 
 #: templates/zerver/emails/password_reset.html:21
 #: templates/zerver/emails/password_reset.txt:11
-msgid "You do not have an account in that Zulip organization."
+msgid "You do not have an account in that RM-connect organization."
 msgstr "شما در این سازمان زولیپ حساب کاربری ندارید."
 
 #: templates/zerver/emails/password_reset.html:26
@@ -2837,7 +2837,7 @@ msgstr "شما قبلاً یک حساب کاربری در %(realm_url)s داشت
 #, python-format
 msgid ""
 "\n"
-"    Your organization, %(organization_name_with_link)s, has been downgraded to the Zulip Cloud\n"
+"    Your organization, %(organization_name_with_link)s, has been downgraded to the RM-connect Cloud\n"
 "    Free plan because of unpaid invoices. The unpaid invoices have been voided.\n"
 "    "
 msgstr "\n    سازمان شما،%(organization_name_with_link)s، به خاطر فاکتورهای پرداخت نشده به طرح \n      رایگان زولیپ ابری تنزل داده شده است. فاکتورهای پرداخت‌ نشده باطل شده است.\n    "
@@ -2846,7 +2846,7 @@ msgstr "\n    سازمان شما،%(organization_name_with_link)s، به خاط
 #, python-format
 msgid ""
 "\n"
-"    To continue on the Zulip Cloud Standard plan, please upgrade again by going to %(upgrade_url)s.\n"
+"    To continue on the RM-connect Cloud Standard plan, please upgrade again by going to %(upgrade_url)s.\n"
 "    "
 msgstr "\n    برای ادامه دادن طرح استاندارد زولیپ ابری، با رفتن به %(upgrade_url)s زدوباره ارتقا بدهید. .\n    "
 
@@ -2862,7 +2862,7 @@ msgstr "\n    اگر فکر می‌کنید اشتباهی رخ داده و نی
 #: templates/zerver/emails/realm_deactivated.txt:3
 #, python-format
 msgid ""
-"You have deactivated your Zulip organization, %(realm_name)s, on "
+"You have deactivated your RM-connect organization, %(realm_name)s, on "
 "%(localized_date)s."
 msgstr "شما سازمان زولیپ %(realm_name)sرا در تاریخ %(localized_date)s، غیرفعال کرده‌اید."
 
@@ -2870,7 +2870,7 @@ msgstr "شما سازمان زولیپ %(realm_name)sرا در تاریخ %(loca
 #: templates/zerver/emails/realm_deactivated.txt:5
 #, python-format
 msgid ""
-"Your Zulip organization, %(realm_name)s, was deactivated by "
+"Your RM-connect organization, %(realm_name)s, was deactivated by "
 "%(deactivating_owner)s on %(localized_date)s."
 msgstr "سازمان زولیپ %(realm_name)s توسط %(deactivating_owner)s در تاریخ %(localized_date)s غیرفعال شده‌است."
 
@@ -2878,7 +2878,7 @@ msgstr "سازمان زولیپ %(realm_name)s توسط %(deactivating_owner)s �
 #: templates/zerver/emails/realm_deactivated.txt:7
 #, python-format
 msgid ""
-"Your Zulip organization, %(realm_name)s, was deactivated on "
+"Your RM-connect organization, %(realm_name)s, was deactivated on "
 "%(localized_date)s."
 msgstr "سازمان زولیپ %(realm_name)s در تاریخ %(localized_date)s غیرفعال شده‌است."
 
@@ -2891,7 +2891,7 @@ msgstr "اگر سوال یا نگرانی دارید، در اسرع وقت به
 
 #: templates/zerver/emails/realm_deactivated.subject.txt:1
 #, python-format
-msgid "Your Zulip organization %(realm_name)s has been deactivated"
+msgid "Your RM-connect organization %(realm_name)s has been deactivated"
 msgstr "سازمان زولیپ %(realm_name)s غیرفعال شده‌است"
 
 #: templates/zerver/emails/realm_reactivation.html:8
@@ -2905,7 +2905,7 @@ msgstr "ادمین‌های قبلی عزیز %(realm_name)s. "
 #, python-format
 msgid ""
 "One of your administrators requested reactivation of the previously "
-"deactivated Zulip organization hosted at %(realm_url)s."
+"deactivated RM-connect organization hosted at %(realm_url)s."
 msgstr "یکی‌ از ادمین‌های  شما درخواست فعال‌سازی سازمان زولیپ غیرفعال‌شده شما بر روی %(realm_url)s، را داده است."
 
 #: templates/zerver/emails/realm_reactivation.html:13
@@ -2924,7 +2924,7 @@ msgid ""
 msgstr "اگر درخواست اشتباه است می توانید اقدامی نکنید و این لینک بعد از 24 ساعت منقضی می شود. "
 
 #: templates/zerver/emails/realm_reactivation.subject.txt:1
-msgid "Reactivate your Zulip organization"
+msgid "Reactivate your RM-connect organization"
 msgstr "دوباره فعال‌سازی سازمان زولیپ شما"
 
 #: templates/zerver/emails/realm_reactivation.txt:7
@@ -2935,7 +2935,7 @@ msgstr "بر روی لینک زیر کلیک کنید تا سازمان خود �
 #, python-format
 msgid ""
 "Either you, or someone on your behalf, has requested a log in link to manage"
-" the Zulip plan for <b>%(remote_server_hostname)s</b>."
+" the RM-connect plan for <b>%(remote_server_hostname)s</b>."
 msgstr "شما یا کسی به نمایندگی شما، درخواستی برای دریافت لینک ورود به مدیریت طرح زولیپ برای <b>%(remote_server_hostname)s</b> داده است."
 
 #: templates/zerver/emails/remote_billing_legacy_server_confirm_login.html:12
@@ -2962,14 +2962,14 @@ msgid ""
 msgstr "سوال دارید؟ <a href=\"%(billing_help_link)s\">بیشتر بدانید</a> یا با %(billing_contact_email)s تماس بگیرید."
 
 #: templates/zerver/emails/remote_billing_legacy_server_confirm_login.subject.txt:1
-msgid "Log in to Zulip plan management"
+msgid "Log in to RM-connect plan management"
 msgstr "ورود به مدیریت طرح‌های زولیپ"
 
 #: templates/zerver/emails/remote_billing_legacy_server_confirm_login.txt:1
 #, python-format
 msgid ""
 "Either you, or someone on your behalf, has requested a log in link to manage"
-" the Zulip plan for %(remote_server_hostname)s."
+" the RM-connect plan for %(remote_server_hostname)s."
 msgstr "شما یا کسی به نمایندگی شما، درخواستی برای دریافت لینک ورود به مدیریت طرح زولیپ برای %(remote_server_hostname)s داده است."
 
 #: templates/zerver/emails/remote_billing_legacy_server_confirm_login.txt:4
@@ -2993,7 +2993,7 @@ msgstr "سوال دارید؟ در %(billing_help_link)s بیشتر بدانید
 #, python-format
 msgid ""
 "\n"
-"    Click the button below to confirm your email and log in to Zulip plan management for <b>%(remote_realm_host)s</b>.\n"
+"    Click the button below to confirm your email and log in to RM-connect plan management for <b>%(remote_realm_host)s</b>.\n"
 "    "
 msgstr "\nکلیک کنید تا ایمیل خود را تأیید کنید و وارد مدیریت طرح زولیپ برای <b>%(remote_realm_host)s</b> شوید."
 
@@ -3003,27 +3003,27 @@ msgid "Confirm and log in"
 msgstr "تأیید و ورود به سیستم"
 
 #: templates/zerver/emails/remote_realm_billing_confirm_login.subject.txt:1
-msgid "Confirm email for Zulip plan management"
+msgid "Confirm email for RM-connect plan management"
 msgstr "تأیید ایمیل برای مدیریت طرح زولیپ"
 
 #: templates/zerver/emails/remote_realm_billing_confirm_login.txt:1
 #, python-format
 msgid ""
-"Click the link below to confirm your email and log in to Zulip plan "
+"Click the link below to confirm your email and log in to RM-connect plan "
 "management for %(remote_realm_host)s."
 msgstr "برای تأیید ایمیل خود و ورود به مدیریت طرح زولیپ %(remote_realm_host)s،  روی لینک زیر کلیک کنید."
 
 #: templates/zerver/emails/sponsorship_approved_community_plan.html:9
 #, python-format
 msgid ""
-"Your request for Zulip sponsorship has been approved! Your organization has "
-"been upgraded to the <a href=\"%(plans_link)s\">Zulip Community plan</a>."
+"Your request for RM-connect sponsorship has been approved! Your organization has "
+"been upgraded to the <a href=\"%(plans_link)s\">RM-connect Community plan</a>."
 msgstr "درخواست شما برای حمایت از زولیپ تایید شده است! سازمان شما به <a href=\"%(plans_link)s\">طرح جامعه زولیپ</a> ارتقا یافته است."
 
 #: templates/zerver/emails/sponsorship_approved_community_plan.html:12
 #, python-format
 msgid ""
-"If you could <a href=\"%(link_to_zulip)s\">list Zulip as a sponsor on your "
+"If you could <a href=\"%(link_to_zulip)s\">list RM-connect as a sponsor on your "
 "website</a>, we would really appreciate it!"
 msgstr "اگر شما بتوانید <a href=\"%(link_to_zulip)s\">زولیپ را به عنوان یک حامی در وبسایت خود لیست کنید</a>، ما واقعاً از آن قدردانی می‌کنیم!"
 
@@ -3034,13 +3034,13 @@ msgstr "طرح حمایت از جامعه برای %(billing_entity)s تأیید
 
 #: templates/zerver/emails/sponsorship_approved_community_plan.txt:1
 msgid ""
-"Your request for Zulip sponsorship has been approved! Your organization has "
-"been upgraded to the Zulip Community plan."
+"Your request for RM-connect sponsorship has been approved! Your organization has "
+"been upgraded to the RM-connect Community plan."
 msgstr "درخواست شما برای حمایت از زولیپ تایید شده است! سازمان شما به طرح جامعه زولیپ ارتقا یافته است."
 
 #: templates/zerver/emails/sponsorship_approved_community_plan.txt:4
 msgid ""
-"If you could list Zulip as a sponsor on your website, we would really "
+"If you could list RM-connect as a sponsor on your website, we would really "
 "appreciate it!"
 msgstr "اگر بتوانید زولیپ را به عنوان یک حامی در وبسایت خود لیست کنید، واقعاً قدردانی می‌کنیم!"
 
@@ -3049,7 +3049,7 @@ msgid "Find your accounts"
 msgstr "یافتن حساب‌های شما"
 
 #: templates/zerver/find_account.html:12
-msgid "Find your Zulip accounts"
+msgid "Find your RM-connect accounts"
 msgstr "حساب های کاربری خود را پیدا کنید "
 
 #: templates/zerver/find_account.html:19
@@ -3070,13 +3070,13 @@ msgstr "\n                اگر ایمیلی دریافت نکردید، می�
 
 #: templates/zerver/find_account.html:42
 msgid ""
-"Enter your email address to receive an email with the URLs for all the Zulip"
+"Enter your email address to receive an email with the URLs for all the RM-connect"
 " Cloud organizations in which you have active accounts."
 msgstr ""
 
 #: templates/zerver/find_account.html:44
 msgid ""
-"Enter your email address to receive an email with the URLs for all the Zulip"
+"Enter your email address to receive an email with the URLs for all the RM-connect"
 " organizations on this server in which you have active accounts."
 msgstr ""
 
@@ -3100,7 +3100,7 @@ msgid "Product"
 msgstr "محصول"
 
 #: templates/zerver/footer.html:9
-msgid "Why Zulip"
+msgid "Why RM-connect"
 msgstr "چرا زولیپ؟"
 
 #: templates/zerver/footer.html:10
@@ -3184,19 +3184,19 @@ msgid "Community chat"
 msgstr "گفتگوی انجمن"
 
 #: templates/zerver/footer.html:45
-msgid "Zulip Cloud status"
+msgid "RM-connect Cloud status"
 msgstr "وضعیت ابر زولیپ"
 
 #: templates/zerver/footer.html:48
-msgid "Moving to Zulip"
+msgid "Moving to RM-connect"
 msgstr ""
 
 #: templates/zerver/footer.html:53
-msgid "Installing a Zulip server"
+msgid "Installing a RM-connect server"
 msgstr "نصب یک سرور زولیپ"
 
 #: templates/zerver/footer.html:58
-msgid "Upgrading a Zulip server"
+msgid "Upgrading a RM-connect server"
 msgstr "ارتقا یک سرور زولیپ"
 
 #: templates/zerver/footer.html:65
@@ -3244,7 +3244,7 @@ msgid "Blog"
 msgstr "وبلاگ"
 
 #: templates/zerver/footer.html:96
-msgid "Support Zulip"
+msgid "Support RM-connect"
 msgstr "پشتیبانی زولیپ"
 
 #: templates/zerver/footer.html:99
@@ -3260,7 +3260,7 @@ msgid "LinkedIn"
 msgstr "LinkedIn"
 
 #: templates/zerver/footer.html:111
-msgid "Powered by <a href=\"https://zulip.com\">Zulip</a>"
+msgid "Powered by <a href=\"https://zulip.com\">RM-connect</a>"
 msgstr "قدرت گرفته از <a href=\"https://zulip.com\">زولیپ</a>"
 
 #: templates/zerver/footer.html:117
@@ -3366,15 +3366,15 @@ msgstr "سازمانی یافت نشد"
 
 #: templates/zerver/invalid_realm.html:17
 #, python-format
-msgid "There is no Zulip organization at <b>%(current_url)s</b>."
+msgid "There is no RM-connect organization at <b>%(current_url)s</b>."
 msgstr "هیچ سازمان زولیپی در <b>%(current_url)s</b> نیست."
 
 #: templates/zerver/invalid_realm.html:21
 #, python-format
 msgid ""
 "Please try a different URL, <a "
-"href=\"%(root_domain_url)s/accounts/find/\">get a list of your Zulip Cloud "
-"accounts</a>, or <a href=\"mailto:%(support_email)s\">contact Zulip "
+"href=\"%(root_domain_url)s/accounts/find/\">get a list of your RM-connect Cloud "
+"accounts</a>, or <a href=\"mailto:%(support_email)s\">contact RM-connect "
 "support</a>."
 msgstr ""
 
@@ -3383,7 +3383,7 @@ msgstr ""
 msgid ""
 "Please try a different URL, <a "
 "href=\"%(root_domain_url)s/accounts/find/\">get a list of your accounts</a> "
-"on this server, or <a href=\"mailto:%(support_email)s\">contact this Zulip "
+"on this server, or <a href=\"mailto:%(support_email)s\">contact this RM-connect "
 "server's administrators</a>."
 msgstr ""
 
@@ -3396,7 +3396,7 @@ msgid "Invalid or expired login session."
 msgstr "سشن ورود نامعتبر است یا منقضی شده."
 
 #: templates/zerver/login.html:18
-msgid "Log in to Zulip"
+msgid "Log in to RM-connect"
 msgstr "ورود به زولیپ"
 
 #: templates/zerver/login.html:44
@@ -3437,25 +3437,25 @@ msgstr "هنوز حساب کاربری ندارد؟ برای متصل شدن ب�
 
 #: templates/zerver/new_user_email_address_visibility.html:5
 msgid ""
-"Administrators of this Zulip organization will be able to see this email address.\n"
+"Administrators of this RM-connect organization will be able to see this email address.\n"
 "            "
 msgstr "ادمین‌های این سازمان زولیپ می‌توانند این آدرس ایمیل را ببینند.\n            "
 
 #: templates/zerver/new_user_email_address_visibility.html:8
 msgid ""
-"Administrators and moderators of this Zulip organization will be able to see this email address.\n"
+"Administrators and moderators of this RM-connect organization will be able to see this email address.\n"
 "            "
 msgstr "ادمین‌ها و مدیران این سازمان زولیپ می‌توانند این آدرس ایمیل را ببینند.\n            "
 
 #: templates/zerver/new_user_email_address_visibility.html:11
 msgid ""
-"Nobody in this Zulip organization will be able to see this email address.\n"
+"Nobody in this RM-connect organization will be able to see this email address.\n"
 "            "
 msgstr "هیچ کس در این سازمان زولیپ نمی‌تواند این آدرس ایمیل را ببیند.\n            "
 
 #: templates/zerver/new_user_email_address_visibility.html:14
 msgid ""
-"Other users in this Zulip organization will be able to see this email address.\n"
+"Other users in this RM-connect organization will be able to see this email address.\n"
 "            "
 msgstr "سایر کاربران در این سازمان زولیپ می‌توانند این آدرس ایمیل را ببینند.\n            "
 
@@ -3475,7 +3475,7 @@ msgstr "سازمان الان نمی‌تواند عضو جدیدی قبول ک�
 #, python-format
 msgid ""
 "New members cannot currently join <a "
-"href=\"%(realm_url)s\">%(realm_name)s</a> because all Zulip Cloud licenses "
+"href=\"%(realm_url)s\">%(realm_name)s</a> because all RM-connect Cloud licenses "
 "are in use."
 msgstr "کاربران جدید در حال حاضر نمی‌توانند به<a href=\"%(realm_url)s\">%(realm_name)s</a> متصل شوند چرا که تمام مجوزهای زولیپ ابری در حال استفاده هستند."
 
@@ -3516,7 +3516,7 @@ msgstr "به‌روزرسانی لازم است"
 #: templates/zerver/portico_error_pages/insecure_desktop_app.html:13
 msgid ""
 "\n"
-"            You are using old version of the Zulip desktop\n"
+"            You are using old version of the RM-connect desktop\n"
 "            app that is no longer supported.\n"
 "            "
 msgstr "\n                        شما نسخه قدیمی زولیپ دسکتاپ را استفاده می‌کنید\n                        که دیگر پشتیبانی نمی‌شود.\n                        "
@@ -3525,7 +3525,7 @@ msgstr "\n                        شما نسخه قدیمی زولیپ دسکت
 msgid ""
 "\n"
 "            The auto-update feature in this old version of\n"
-"            Zulip desktop app no longer works.\n"
+"            RM-connect desktop app no longer works.\n"
 "            "
 msgstr "\n                        ویژگی به‌روزرسانی خودکار در این نسخه قدیمی زولیپ\n                        دسکتاپ دیگر کار نمی‌کند.\n                        "
 
@@ -3565,17 +3565,17 @@ msgid ""
 msgstr "\n                        متاسفانه این یک لینک معتبر برای ساخت سازمان جدید نیست. لطفاً یک <a href=\"/new/\">لینک جدید</a> بگیرید و دوباره تلاش کنید.\n                        "
 
 #: templates/zerver/portico_error_pages/remote_realm_server_mismatch_error.html:11
-msgid "Unexpected Zulip server registration"
+msgid "Unexpected RM-connect server registration"
 msgstr "ثبت نام غیرمنتظره سرور زولیپ"
 
 #: templates/zerver/portico_error_pages/remote_realm_server_mismatch_error.html:13
 #, python-format
 msgid ""
 "\n"
-"            Your Zulip organization is registered as associated with a\n"
-"            different Zulip server installation.\n"
+"            Your RM-connect organization is registered as associated with a\n"
+"            different RM-connect server installation.\n"
 "\n"
-"            Please <a href=\"mailto:%(support_email)s\">contact Zulip support</a>\n"
+"            Please <a href=\"mailto:%(support_email)s\">contact RM-connect support</a>\n"
 "            for assistance in resolving this issue.\n"
 "            "
 msgstr "\nسازمان زولیپ شما به عنوان یک سازمان مرتبط با \nنصب سرور زولیپ دیگری، ثبت شده است.\n\nلطفاً برای کمک در حل این مشکل با\n<a href=\"mailto:%(support_email)s\">پشتیبانی زولیپ تماس بگیرید</a>."
@@ -3589,7 +3589,7 @@ msgstr "مرورگر پشتیبانی نشده"
 #, python-format
 msgid ""
 "\n"
-"            %(browser_name)s is not supported by Zulip.\n"
+"            %(browser_name)s is not supported by RM-connect.\n"
 "            "
 msgstr "\n                        %(browser_name)s توسط زولیپ پشتیبانی نمی‌شود.\n                        "
 
@@ -3597,7 +3597,7 @@ msgstr "\n                        %(browser_name)s توسط زولیپ پشتی�
 #, python-format
 msgid ""
 "\n"
-"            Zulip supports <a href=\"%(supported_browsers_page_link)s\">modern browsers</a>\n"
+"            RM-connect supports <a href=\"%(supported_browsers_page_link)s\">modern browsers</a>\n"
 "            like Firefox, Chrome, and Edge.\n"
 "            "
 msgstr "\n                        زولیپ <a href=\"%(supported_browsers_page_link)s\">مروگرهای مدرن</a> را پشتیبانی می‌کند \n                        مانند فایرفاکس، کروم و اج.\n                        "
@@ -3606,7 +3606,7 @@ msgstr "\n                        زولیپ <a href=\"%(supported_browsers_page
 #, python-format
 msgid ""
 "\n"
-"            You can also use the <a href=\"%(apps_page_link)s\">Zulip desktop app</a>.\n"
+"            You can also use the <a href=\"%(apps_page_link)s\">RM-connect desktop app</a>.\n"
 "            "
 msgstr "\n                        شما همچنین می‌توانید <a href=\"%(apps_page_link)s\">اپ دسکتاپ زولیپ</a> را استفاده کنید.\n                        "
 
@@ -3665,7 +3665,7 @@ msgid "Log in to your organization"
 msgstr "ورود به سازمان خودتان"
 
 #: templates/zerver/realm_redirect.html:22
-msgid "Enter your organization's Zulip URL:"
+msgid "Enter your organization's RM-connect URL:"
 msgstr "آدرس سازمان خود در زولیپ را وارد کنید:"
 
 #: templates/zerver/realm_redirect.html:25
@@ -3724,7 +3724,7 @@ msgid "Don&rsquo;t import settings"
 msgstr "تنظیمات را وارد نکن"
 
 #: templates/zerver/register.html:107
-msgid "Import settings from existing Zulip account"
+msgid "Import settings from existing RM-connect account"
 msgstr "وارد کردن تنظیمات از حساب کاربری موجود در زولیپ "
 
 #: templates/zerver/register.html:119
@@ -3736,7 +3736,7 @@ msgid "Name"
 msgstr "نام"
 
 #: templates/zerver/register.html:127
-msgid "This is how your account is displayed in Zulip."
+msgid "This is how your account is displayed in RM-connect."
 msgstr "حساب کاربری شما به این شکل در زولیپ نمایش داده می‌شود."
 
 #: templates/zerver/register.html:141
@@ -3758,13 +3758,13 @@ msgid "What are you interested in?"
 msgstr "به چه چیز علاقمندید؟"
 
 #: templates/zerver/register.html:202
-msgid "How did you first hear about Zulip?"
+msgid "How did you first hear about RM-connect?"
 msgstr "اولین بار چطور در مورد زولیپ شنیده‌اید؟"
 
 #: templates/zerver/register.html:204
 msgid ""
 "This value is used only if you sign up for a plan, in which case it will be "
-"sent to the Zulip team."
+"sent to the RM-connect team."
 msgstr "این مقدار فقط وقتی استفاده می‌شود که شما برای یک طرح، ثبت نام کرده باشید، که در این صورت برای تیم زولیپ ارسال خواهد شد."
 
 #: templates/zerver/register.html:208
@@ -3864,7 +3864,7 @@ msgstr "\n            حساب گیتهاب شما همچنان دارای آد�
 #: templates/zerver/social_auth_select_email.html:73
 msgid ""
 "\n"
-"            To use one of these to log in to Zulip, you must first\n"
+"            To use one of these to log in to RM-connect, you must first\n"
 "            <a href=\"https://github.com/settings/emails\">verify it with GitHub.</a>\n"
 "            "
 msgstr "\n            برای استفاده از یکی از اینها برای ورود به زولیپ باید\n            <a href=\"https://github.com/settings/emails\">با گیتهاب تأیید کنید</a>.\n            "
@@ -3900,7 +3900,7 @@ msgstr "تنظیمات ایمیل به روزرسانی شد"
 #, python-format
 msgid ""
 "\n"
-"                    You've successfully unsubscribed from Zulip %(subscription_type)s emails for\n"
+"                    You've successfully unsubscribed from RM-connect %(subscription_type)s emails for\n"
 "                    <a href=\"%(realm_url)s\">%(realm_name)s</a>.\n"
 "                    "
 msgstr "\n                    شما با موفقیت از ایمیل‌های %(subscription_type)s زولیپ برای\n                    <a href=\"%(realm_url)s\">%(realm_name)s</a> لغو اشتراک کردید.\n                    "
@@ -3915,11 +3915,11 @@ msgid ""
 msgstr "\n                    شما می‌توانید این تغییر را بازگردانید یا اولویت‌های شخصی را در \n                    <a href=\"%(realm_url)s/#settings/notifications\">تنظیمات اطلاع‌رسانی</a> بازنگری کنید.\n                    "
 
 #: zerver/actions/create_realm.py:314
-msgid "Questions and discussion about using Zulip."
+msgid "Questions and discussion about using RM-connect."
 msgstr "سوال‌ها و گفتگو‌ها در مورد استفاده از زولیپ."
 
 #: zerver/actions/create_realm.py:320
-msgid "Experiment with Zulip here. :test_tube:"
+msgid "Experiment with RM-connect here. :test_tube:"
 msgstr "زولیپ را اینجا تجربه کنید: :test_tube:"
 
 #: zerver/actions/create_realm.py:326
@@ -3937,7 +3937,7 @@ msgstr "{user} به این سازمان وارد شد."
 
 #: zerver/actions/create_user.py:305
 #, python-brace-format
-msgid "{user} accepted your invitation to join Zulip!"
+msgid "{user} accepted your invitation to join RM-connect!"
 msgstr "{user} دعوت شما را برای پیوستن به زولیپ پذیرفت!"
 
 #: zerver/actions/create_user.py:696
@@ -4015,7 +4015,7 @@ msgstr "نام این گروه پیش‌فرض کانال از قبل '{group_na
 
 #: zerver/actions/invites.py:134
 msgid ""
-"To protect users, Zulip limits the number of invitations you can send in one"
+"To protect users, RM-connect limits the number of invitations you can send in one"
 " day. Because you have reached the limit, no invitations were sent."
 msgstr "برای محافظت کاربران، زولیپ تعدا دعوتنامه‌ای را که در یک روز می‌توانید بفرستید، محدود کرده است. چون به این محدودیت رسیده‌اید هیچ دعوتنامه‌ای ارسال نشد."
 
@@ -4490,7 +4490,7 @@ msgstr "آدرس‌های ایمیل شامل + در این سازمان مجا�
 
 #: zerver/forms.py:313
 msgid ""
-"New members cannot join this organization because all Zulip licenses are in "
+"New members cannot join this organization because all RM-connect licenses are in "
 "use. Please contact the person who invited you and ask them to increase the "
 "number of licenses, then try again."
 msgstr "کاربران جدید نمی‌توانند به این سازمان متصل شوند چرا که تمام مجوزهای زولیپ استفاده شده‌اند. لطفاً با کسی که شما را دعوت کرده است تماس بگیرید و بخواهید که تعداد مجوزها را افزایش دهند، سپس دوباره تلاش کنید."
@@ -4529,7 +4529,7 @@ msgid "Please enter at most 10 emails."
 msgstr "لطفا حداکثر 10 ایمیل وارد کنید. "
 
 #: zerver/forms.py:584
-msgid "We couldn't find that Zulip organization."
+msgid "We couldn't find that RM-connect organization."
 msgstr "ما نمی‌توانیم این سازمان زولیپ را پیدا کنیم. "
 
 #: zerver/lib/addressee.py:21
@@ -4636,7 +4636,7 @@ msgid "Email with no subject"
 msgstr "ایمیل بدون موضوع"
 
 #: zerver/lib/email_notifications.py:140 zerver/lib/email_notifications.py:162
-msgid "Open Zulip to see the spoiler content"
+msgid "Open RM-connect to see the spoiler content"
 msgstr "برای دیدن محتوای اسپویلر، زولیپ را باز کنید"
 
 #: zerver/lib/email_notifications.py:583
@@ -4871,8 +4871,8 @@ msgstr "واکنش وجود ندارد"
 
 #: zerver/lib/exceptions.py:642
 msgid ""
-"Your organization is registered to a different Zulip server. Please contact "
-"Zulip support for assistance in resolving this issue."
+"Your organization is registered to a different RM-connect server. Please contact "
+"RM-connect support for assistance in resolving this issue."
 msgstr "سازمان شما در یک سرور زولیپ متفاوت ثبت شده است. لطفاً برای کمک در حل این مشکل با پشتیبانی زولیپ تماس بگیرید."
 
 #: zerver/lib/exceptions.py:656
@@ -5032,7 +5032,7 @@ msgstr "اپراتور {operand} پشتیبانی نمی‌شود."
 #, python-brace-format
 msgid ""
 "\n"
-"To learn more, check out our [using Zulip for a class guide]({getting_started_url})!\n"
+"To learn more, check out our [using RM-connect for a class guide]({getting_started_url})!\n"
 msgstr ""
 
 #: zerver/lib/onboarding.py:57
@@ -5046,14 +5046,14 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "\n"
-"We also have a guide for [setting up Zulip for a class]({organization_setup_url}).\n"
+"We also have a guide for [setting up RM-connect for a class]({organization_setup_url}).\n"
 msgstr ""
 
 #: zerver/lib/onboarding.py:69
 #, python-brace-format
 msgid ""
 "\n"
-"We also have a guide for [moving your organization to Zulip]({organization_setup_url}).\n"
+"We also have a guide for [moving your organization to RM-connect]({organization_setup_url}).\n"
 msgstr ""
 
 #: zerver/lib/onboarding.py:76
@@ -5075,7 +5075,7 @@ msgstr "\nمن برای کمک به شروع، چند مکالمه را آماد
 #, python-brace-format
 msgid ""
 "\n"
-"Hello, and welcome to Zulip!👋 {inform_about_tracked_onboarding_messages_text}\n"
+"Hello, and welcome to RM-connect!👋 {inform_about_tracked_onboarding_messages_text}\n"
 "\n"
 "{getting_started_text} {organization_setup_text}\n"
 "\n"
@@ -5087,7 +5087,7 @@ msgstr "\nسلام، به زولیپ خوش آمدی!👋 {inform_about_tracked_
 msgid ""
 "\n"
 "You can [download](/apps/) the [mobile and desktop apps](/apps/).\n"
-"Zulip also works great in a browser.\n"
+"RM-connect also works great in a browser.\n"
 msgstr "\nمی‌توانید [برنامه‌های موبایل و دسک‌تاپ](/apps/) را [دانلود کنید](/apps/). زولیپ همچنین در یک مرورگر عالی کار می‌کند.\n"
 
 #: zerver/lib/onboarding.py:138
@@ -5102,7 +5102,7 @@ msgid ""
 "\n"
 "You can switch between [light and dark theme](/help/dark-theme), [pick your\n"
 "favorite emoji set](/help/emoji-and-emoticons#change-your-emoji-set), [change\n"
-"your language](/help/change-your-language), and otherwise customize your Zulip\n"
+"your language](/help/change-your-language), and otherwise customize your RM-connect\n"
 "experience in your [Preferences](#settings/preferences).\n"
 msgstr "\nشما می‌توانید این موارد را تغییر دهید، [زمینه روشن و تیره](/help/dark-theme)، [انتخاب\nمجموعه تم ایموجی موردعلاقه](/help/emoji-and-emoticons#change-your-emoji-set), [تغییر\nزبان](/help/change-your-language), و همچنین می‌توانید تجربه کار کردن با زولیپ را\nدر [اولویت‌ها](#settings/preferences)ی شخصی خود تغییر دهید.\n"
 
@@ -5119,8 +5119,8 @@ msgstr "\nکانال‌ها، مکالمات را بر اساس آنکه چه ک
 #: zerver/lib/onboarding.py:157
 msgid ""
 "\n"
-"[Topics](/help/introduction-to-topics) summarize what each conversation in Zulip\n"
-"is about. You can read Zulip one topic at a time, seeing each message in\n"
+"[Topics](/help/introduction-to-topics) summarize what each conversation in RM-connect\n"
+"is about. You can read RM-connect one topic at a time, seeing each message in\n"
 "context, no matter how many other conversations are going on.\n"
 "\n"
 "When you start a conversation, label it with a new topic. For a good topic name,\n"
@@ -5133,7 +5133,7 @@ msgstr "\n[موضوعات](/help/introduction-to-topics) به صورت خلاص�
 #: zerver/lib/onboarding.py:169
 msgid ""
 "\n"
-"Zulip's [keyboard shortcuts](#keyboard-shortcuts) let you navigate the app\n"
+"RM-connect's [keyboard shortcuts](#keyboard-shortcuts) let you navigate the app\n"
 "quickly and efficiently.\n"
 "\n"
 "Press `?` any time to see a [cheat sheet](#keyboard-shortcuts).\n"
@@ -5186,7 +5186,7 @@ msgstr "\n:point_right: تلاش کنید این پیام را به موضوع �
 #, python-brace-format
 msgid ""
 "\n"
-"Zulip is organized to help you communicate more efficiently. Conversations are\n"
+"RM-connect is organized to help you communicate more efficiently. Conversations are\n"
 "labeled with topics, which summarize what the conversation is about.\n"
 "\n"
 "For example, this message is in the “{topic_name}” topic in the\n"
@@ -5196,13 +5196,13 @@ msgstr "\nزولیپ به نحوی طراحی شده است که به شما ک�
 
 #: zerver/lib/onboarding.py:271 zerver/lib/onboarding.py:322
 #: zerver/lib/onboarding.py:394
-msgid "welcome to Zulip!"
+msgid "welcome to RM-connect!"
 msgstr "به زولیپ خوش آمدید!"
 
 #: zerver/lib/onboarding.py:274
 msgid ""
 "\n"
-"You can read Zulip one conversation at a time, seeing each message in context,\n"
+"You can read RM-connect one conversation at a time, seeing each message in context,\n"
 "no matter how many other conversations are going on.\n"
 msgstr "\nشما در هر لحظه می‌توانید یک مکالمه زولیپ را ببینید، هر پیغام را در زمینه خودش،\nفارغ از اینکه چند مکالمه دیگر در جریان باشد.\n"
 
@@ -5236,7 +5236,7 @@ msgstr "\n:point_right: تلاش کنید در این کانال یک مکالم
 #, python-brace-format
 msgid ""
 "\n"
-":point_right:  Use this topic to try out [Zulip's messaging features]({format_message_help_url}).\n"
+":point_right:  Use this topic to try out [RM-connect's messaging features]({format_message_help_url}).\n"
 msgstr "\n:point_right:  از این موضوع برای آزمایش [ویژگی‌های پیام‌رسانی زولیپ]({format_message_help_url}) استفاده کنید.\n"
 
 #: zerver/lib/onboarding.py:304
@@ -5358,7 +5358,7 @@ msgstr "کاربر اجازه این درخواست را ندارد "
 
 #: zerver/lib/recipient_users.py:90
 #, python-brace-format
-msgid "'{email}' is no longer using Zulip."
+msgid "'{email}' is no longer using RM-connect."
 msgstr "'{email}' دیگر از زولیپ استفاده نمی‌کند."
 
 #: zerver/lib/recipient_users.py:97
@@ -5938,7 +5938,7 @@ msgid "Custom emoji"
 msgstr "ایموجی سفارشی"
 
 #: zerver/models/messages.py:351
-msgid "Zulip extra emoji"
+msgid "RM-connect extra emoji"
 msgstr "ایموجی‌های بیشتر زولیپ"
 
 #: zerver/models/realm_emoji.py:42
@@ -5970,15 +5970,15 @@ msgid "channel events"
 msgstr "رویدادهای کانال"
 
 #: zerver/models/realms.py:406
-msgid "Zulip updates"
+msgid "RM-connect updates"
 msgstr "به‌روزرسانی‌های زولیپ"
 
 #: zerver/models/realms.py:532
-msgid "Available on Zulip Cloud Standard. Upgrade to access."
+msgid "Available on RM-connect Cloud Standard. Upgrade to access."
 msgstr "در زولیپ کلود استاندارد در دسترس است. ارتقا دهید تا دسترسی داشته باشید."
 
 #: zerver/models/realms.py:533
-msgid "Available on Zulip Cloud Plus. Upgrade to access."
+msgid "Available on RM-connect Cloud Plus. Upgrade to access."
 msgstr "بر روی زولیپ ابری پلاس در دسترس است. ارتقا دهید تا دسترسی داشته باشید."
 
 #: zerver/models/realms.py:593
@@ -6243,7 +6243,7 @@ msgstr "شما مجوز ندارید کاربران دیگر را به کانا�
 
 #: zerver/views/invite.py:143
 msgid ""
-"Some of those addresses are already using Zulip, so we didn't send them an "
+"Some of those addresses are already using RM-connect, so we didn't send them an "
 "invitation. We did send invitations to everyone else!"
 msgstr "برخی از این آدرس ها قبلا از زولیپ استفاده کرده اند، بنابراین برای آنها دعوت ارسال نکردیم. برای بقیه دعوت ارسال شد! "
 
@@ -6675,7 +6675,7 @@ msgid "Invalid email batching period: {seconds} seconds"
 msgstr "دوره دسته‌بندی ایمیل نامعتبر: {seconds} ثانیه"
 
 #: zerver/views/user_settings.py:352
-msgid "Your Zulip password is managed in LDAP"
+msgid "Your RM-connect password is managed in LDAP"
 msgstr "کلمه عبور زولیپ شما در LDAP مدیریت می‌شود"
 
 #: zerver/views/user_settings.py:362
@@ -6894,7 +6894,7 @@ msgid "Invalid subdomain for push notifications bouncer"
 msgstr "زیردامنه نامعتبر برای اعلان‌های فشاری"
 
 #: zilencer/auth.py:118
-msgid "Must validate with valid Zulip server API key"
+msgid "Must validate with valid RM-connect server API key"
 msgstr "باید با کلید صحیح API سرور زولیپ اعتبارسنجی شود"
 
 #. error

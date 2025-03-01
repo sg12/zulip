@@ -9,7 +9,7 @@
 # David Wood <heavy.spot0252@fuligin.ink>, 2019-2021
 msgid ""
 msgstr ""
-"Project-Id-Version: Zulip\n"
+"Project-Id-Version: RM-connect\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-06 19:37+0000\n"
 "PO-Revision-Date: 2015-12-06 00:18+0000\n"
@@ -68,59 +68,59 @@ msgstr "No analytics data available. Please contact your server administrator."
 #: corporate/lib/registration.py:35
 #, python-brace-format
 msgid ""
-"Your organization has no Zulip licenses remaining and can no longer accept "
+"Your organization has no RM-connect licenses remaining and can no longer accept "
 "new users. Please [increase the number of licenses]({billing_page_link}) or "
 "[deactivate inactive users]({deactivate_user_help_page_link}) to allow new "
 "users to join."
-msgstr "Your organisation has no Zulip licenses remaining and can no longer accept new users. Please [increase the number of licenses]({billing_page_link}) or [deactivate inactive users]({deactivate_user_help_page_link}) to allow new users to join."
+msgstr "Your organisation has no RM-connect licenses remaining and can no longer accept new users. Please [increase the number of licenses]({billing_page_link}) or [deactivate inactive users]({deactivate_user_help_page_link}) to allow new users to join."
 
 #: corporate/lib/registration.py:42
 #, python-brace-format
 msgid ""
-"Your organization has only one Zulip license remaining. You can [increase "
+"Your organization has only one RM-connect license remaining. You can [increase "
 "the number of licenses]({billing_page_link}) or [deactivate inactive "
 "users]({deactivate_user_help_page_link}) to allow more than one user to "
 "join."
-msgstr "Your organisation has only one Zulip license remaining. You can [increase the number of licenses]({billing_page_link}) or [deactivate inactive users]({deactivate_user_help_page_link}) to allow more than one user to join."
+msgstr "Your organisation has only one RM-connect license remaining. You can [increase the number of licenses]({billing_page_link}) or [deactivate inactive users]({deactivate_user_help_page_link}) to allow more than one user to join."
 
 #: corporate/lib/registration.py:47
 #, python-brace-format
 msgid ""
-"Your organization has only two Zulip licenses remaining. You can [increase "
+"Your organization has only two RM-connect licenses remaining. You can [increase "
 "the number of licenses]({billing_page_link}) or [deactivate inactive "
 "users]({deactivate_user_help_page_link}) to allow more than two users to "
 "join."
-msgstr "Your organisation has only two Zulip licenses remaining. You can [increase the number of licenses]({billing_page_link}) or [deactivate inactive users]({deactivate_user_help_page_link}) to allow more than two users to join."
+msgstr "Your organisation has only two RM-connect licenses remaining. You can [increase the number of licenses]({billing_page_link}) or [deactivate inactive users]({deactivate_user_help_page_link}) to allow more than two users to join."
 
 #: corporate/lib/registration.py:52
 #, python-brace-format
 msgid ""
-"Your organization has only three Zulip licenses remaining. You can [increase"
+"Your organization has only three RM-connect licenses remaining. You can [increase"
 " the number of licenses]({billing_page_link}) or [deactivate inactive "
 "users]({deactivate_user_help_page_link}) to allow more than three users to "
 "join."
-msgstr "Your organisation has only three Zulip licenses remaining. You can [increase the number of licenses]({billing_page_link}) or [deactivate inactive users]({deactivate_user_help_page_link}) to allow more than three users to join."
+msgstr "Your organisation has only three RM-connect licenses remaining. You can [increase the number of licenses]({billing_page_link}) or [deactivate inactive users]({deactivate_user_help_page_link}) to allow more than three users to join."
 
 #: corporate/lib/registration.py:63
 #, python-brace-format
 msgid ""
 "A new user ({email}) was unable to join because your organization does not "
-"have enough Zulip licenses. To allow new users to join, make sure that the "
+"have enough RM-connect licenses. To allow new users to join, make sure that the "
 "[number of licenses for the current and next billing "
 "period]({billing_page_link}) is greater than the current number of users."
-msgstr "A new user ({email}) was unable to join because your organisation does not have enough Zulip licenses. To allow new users to join, make sure that the [number of licenses for the current and next billing period]({billing_page_link}) is greater than the current number of users."
+msgstr "A new user ({email}) was unable to join because your organisation does not have enough RM-connect licenses. To allow new users to join, make sure that the [number of licenses for the current and next billing period]({billing_page_link}) is greater than the current number of users."
 
 #: corporate/lib/registration.py:119
 msgid ""
-"Your organization does not have enough Zulip licenses. Invitations were not "
+"Your organization does not have enough RM-connect licenses. Invitations were not "
 "sent."
-msgstr "Your organisation does not have enough Zulip licenses. Invitations were not sent."
+msgstr "Your organisation does not have enough RM-connect licenses. Invitations were not sent."
 
 #: corporate/lib/registration.py:133
 msgid ""
-"Your organization does not have enough Zulip licenses to change a guest "
+"Your organization does not have enough RM-connect licenses to change a guest "
 "user's role."
-msgstr "Your organisation does not have enough Zulip licenses to change a guest user's role."
+msgstr "Your organisation does not have enough RM-connect licenses to change a guest user's role."
 
 #: corporate/lib/remote_billing_util.py:133
 #: corporate/lib/remote_billing_util.py:169
@@ -260,8 +260,8 @@ msgstr "Pass stripe_session_id or stripe_invoice_id"
 msgid ""
 "Your organization's request for sponsored hosting has been approved! You have been upgraded to {plan_name}, free of charge. {emoji}\n"
 "\n"
-"If you could {begin_link}list Zulip as a sponsor on your website{end_link}, we would really appreciate it!"
-msgstr "Your organisation's request for sponsored hosting has been approved! You have been upgraded to {plan_name}, free of charge. {emoji}\n\nIf you could {begin_link}list Zulip as a sponsor on your website{end_link}, we would really appreciate it!"
+"If you could {begin_link}list RM-connect as a sponsor on your website{end_link}, we would really appreciate it!"
+msgstr "Your organisation's request for sponsored hosting has been approved! You have been upgraded to {plan_name}, free of charge. {emoji}\n\nIf you could {begin_link}list RM-connect as a sponsor on your website{end_link}, we would really appreciate it!"
 
 #: corporate/views/billing_page.py:349
 msgid "Parameter 'confirmed' is required"
@@ -292,8 +292,8 @@ msgstr "You must accept the Terms of Service to proceed."
 
 #: corporate/views/remote_billing_page.py:541
 msgid ""
-"This zulip_org_id is not registered with Zulip's billing management system."
-msgstr "This zulip_org_id is not registered with Zulip's billing management system."
+"This zulip_org_id is not registered with RM-connect's billing management system."
+msgstr "This zulip_org_id is not registered with RM-connect's billing management system."
 
 #: corporate/views/remote_billing_page.py:548
 msgid "Invalid zulip_org_key for this zulip_org_id."
@@ -367,9 +367,9 @@ msgstr "Internal server error"
 #: templates/500.html:18
 msgid ""
 "\n"
-"            Your Zulip chat cannot be loaded because the server is experiencing technical difficulties.\n"
+"            Your RM-connect chat cannot be loaded because the server is experiencing technical difficulties.\n"
 "            "
-msgstr "\n            Your Zulip chat cannot be loaded because the server is experiencing technical difficulties.\n            "
+msgstr "\n            Your RM-connect chat cannot be loaded because the server is experiencing technical difficulties.\n            "
 
 #: templates/500.html:23
 msgid ""
@@ -382,9 +382,9 @@ msgstr "\n            This page will reload automatically when service is restor
 #, python-format
 msgid ""
 "\n"
-"                In the meantime, you can <a href=\"mailto:%(support_email)s\">contact Zulip support</a>.\n"
+"                In the meantime, you can <a href=\"mailto:%(support_email)s\">contact RM-connect support</a>.\n"
 "                "
-msgstr "\n                In the meantime, you can <a href=\"mailto:%(support_email)s\">contact Zulip support</a>.\n                "
+msgstr "\n                In the meantime, you can <a href=\"mailto:%(support_email)s\">contact RM-connect support</a>.\n                "
 
 #: templates/500.html:31
 #, python-format
@@ -400,17 +400,17 @@ msgstr "\n                In the meantime, you can <a href=\"mailto:%(support_em
 msgid ""
 "\n"
 "                If you administer this server, you may want to check out the\n"
-"                <a href=\"%(troubleshooting_url)s\">Zulip server troubleshooting guide</a>.\n"
+"                <a href=\"%(troubleshooting_url)s\">RM-connect server troubleshooting guide</a>.\n"
 "                "
-msgstr "\n                If you administer this server, you may want to check out the\n                <a href=\"%(troubleshooting_url)s\">Zulip server troubleshooting guide</a>.\n                "
+msgstr "\n                If you administer this server, you may want to check out the\n                <a href=\"%(troubleshooting_url)s\">RM-connect server troubleshooting guide</a>.\n                "
 
 #: templates/analytics/stats.html:6
 #, python-format
 msgid ""
 "\n"
-"    Analytics for %(target_name)s | Zulip\n"
+"    Analytics for %(target_name)s | RM-connect\n"
 "    "
-msgstr "\n    Analytics for %(target_name)s | Zulip\n    "
+msgstr "\n    Analytics for %(target_name)s | RM-connect\n    "
 
 #: templates/analytics/stats.html:18
 msgid "Analytics are fully available 24 hours after organization creation."
@@ -418,8 +418,8 @@ msgstr "Analytics are fully available 24 hours after organisation creation."
 
 #: templates/analytics/stats.html:23
 #, python-format
-msgid "Zulip analytics for %(target_name)s"
-msgstr "Zulip analytics for %(target_name)s"
+msgid "RM-connect analytics for %(target_name)s"
+msgstr "RM-connect analytics for %(target_name)s"
 
 #: templates/analytics/stats.html:25
 msgid "Organization summary"
@@ -554,10 +554,10 @@ msgstr "Email changed!"
 #, python-format
 msgid ""
 "\n"
-"            This confirms that the email address for your Zulip account has changed\n"
+"            This confirms that the email address for your RM-connect account has changed\n"
 "            from %(old_email_html_tag)s to %(new_email_html_tag)s\n"
 "            "
-msgstr "\n            This confirms that the email address for your Zulip account has changed\n            from %(old_email_html_tag)s to %(new_email_html_tag)s\n            "
+msgstr "\n            This confirms that the email address for your RM-connect account has changed\n            from %(old_email_html_tag)s to %(new_email_html_tag)s\n            "
 
 #: templates/confirmation/confirm_preregistrationuser.html:5
 msgid "Confirming your email address"
@@ -674,14 +674,14 @@ msgstr "Plan management not available"
 #, python-format
 msgid ""
 " Plan management is not available for this\n"
-"            organization, because your Zulip server is already on a\n"
+"            organization, because your RM-connect server is already on a\n"
 "            %(server_plan_name)s plan, which covers all\n"
 "            organizations on this server. See the <b>All versions</b> tab of the\n"
 "            <a href=\"https://zulip.com/help/self-hosted-billing#manage-billing\">log\n"
 "            in instructions</a> to administer the plan for your\n"
-"            Zulip server.\n"
+"            RM-connect server.\n"
 "            "
-msgstr " Plan management is not available for this\n            organisation, because your Zulip server is already on a\n            %(server_plan_name)s plan, which covers all\n            organisations on this server. See the <b>All versions</b> tab of the\n            <a href=\"https://zulip.com/help/self-hosted-billing#manage-billing\">log\n            in instructions</a> to administer the plan for your\n            Zulip server.\n            "
+msgstr " Plan management is not available for this\n            organisation, because your RM-connect server is already on a\n            %(server_plan_name)s plan, which covers all\n            organisations on this server. See the <b>All versions</b> tab of the\n            <a href=\"https://zulip.com/help/self-hosted-billing#manage-billing\">log\n            in instructions</a> to administer the plan for your\n            RM-connect server.\n            "
 
 #: templates/corporate/billing/remote_realm_login_error_for_server_on_active_plan.html:23
 msgid ""
@@ -1224,8 +1224,8 @@ msgid "Not available"
 msgstr "Not available"
 
 #: templates/corporate/development-community.html:23
-msgid "The Zulip development community"
-msgstr "The Zulip development community"
+msgid "The RM-connect development community"
+msgstr "The RM-connect development community"
 
 #: templates/corporate/development-community.html:30
 #: templates/corporate/development-community.html:55
@@ -1274,8 +1274,8 @@ msgstr "Get a demo"
 #: templates/corporate/for/research.html:42
 #: templates/corporate/for/research.html:446
 #: templates/corporate/for/use-cases.html:29
-msgid "Self-host Zulip"
-msgstr "Self-host Zulip"
+msgid "Self-host RM-connect"
+msgstr "Self-host RM-connect"
 
 #: templates/corporate/for/communities.html:38
 #: templates/corporate/for/communities.html:67
@@ -1297,8 +1297,8 @@ msgid "View pricing"
 msgstr "View pricing"
 
 #: templates/corporate/self-hosting.html:33
-msgid "Zulip for business"
-msgstr "Zulip for business"
+msgid "RM-connect for business"
+msgstr "RM-connect for business"
 
 #: templates/corporate/support/support_request.html:9
 #: templates/zerver/footer.html:43
@@ -1341,24 +1341,24 @@ msgstr "We will be in touch with you soon."
 msgid ""
 "\n"
 "            You can find answers to frequently asked questions in the\n"
-"            <a href=\"/help/\">Zulip help center</a>.\n"
+"            <a href=\"/help/\">RM-connect help center</a>.\n"
 "            "
-msgstr "\n            You can find answers to frequently asked questions in the\n            <a href=\"/help/\">Zulip help center</a>.\n            "
+msgstr "\n            You can find answers to frequently asked questions in the\n            <a href=\"/help/\">RM-connect help center</a>.\n            "
 
 #: templates/corporate/team.html:139
 msgid "Avatar"
 msgstr "Avatar"
 
 #: templates/corporate/try-zulip.html:36
-msgid "Try Zulip now"
-msgstr "Try Zulip now"
+msgid "Try RM-connect now"
+msgstr "Try RM-connect now"
 
 #: templates/corporate/zulipchat_migration_tos.html:3
 msgid ""
 "\n"
-"        This team chat is now being hosted on Zulip Cloud. Please accept the <a href=\"https://zulip.com/policies/terms\">Zulip Terms of Service</a> to continue.\n"
+"        This team chat is now being hosted on RM-connect Cloud. Please accept the <a href=\"https://zulip.com/policies/terms\">RM-connect Terms of Service</a> to continue.\n"
 "        "
-msgstr "\n        This team chat is now being hosted on Zulip Cloud. Please accept the <a href=\"https://zulip.com/policies/terms\">Zulip Terms of Service</a> to continue.\n        "
+msgstr "\n        This team chat is now being hosted on RM-connect Cloud. Please accept the <a href=\"https://zulip.com/policies/terms\">RM-connect Terms of Service</a> to continue.\n        "
 
 #: templates/two_factor/_wizard_forms.html:26
 msgid "Or, alternatively, use one of your backup phones:"
@@ -1377,8 +1377,8 @@ msgid "Accept the Terms of Service"
 msgstr "Accept the Terms of Service"
 
 #: templates/zerver/accounts_accept_terms.html:18
-msgid "Welcome to Zulip"
-msgstr "Welcome to Zulip"
+msgid "Welcome to RM-connect"
+msgstr "Welcome to RM-connect"
 
 #: templates/zerver/accounts_accept_terms.html:25
 #: templates/zerver/login.html:102 templates/zerver/register.html:83
@@ -1396,8 +1396,8 @@ msgstr "I agree to the <a href=\"%(root_domain_url)s/policies/terms\" target=\"_
 
 #: templates/zerver/accounts_accept_terms.html:68
 #: templates/zerver/register.html:250
-msgid "Subscribe me to Zulip's low-traffic newsletter (a few emails a year)."
-msgstr "Subscribe me to Zulip's low-traffic newsletter (a few emails a year)."
+msgid "Subscribe me to RM-connect's low-traffic newsletter (a few emails a year)."
+msgstr "Subscribe me to RM-connect's low-traffic newsletter (a few emails a year)."
 
 #: templates/zerver/accounts_accept_terms.html:74
 msgid "Continue"
@@ -1410,8 +1410,8 @@ msgid "Sign up"
 msgstr "Sign up"
 
 #: templates/zerver/accounts_home.html:18
-msgid "Sign up for Zulip"
-msgstr "Sign up for Zulip"
+msgid "Sign up for RM-connect"
+msgstr "Sign up for RM-connect"
 
 #: templates/zerver/accounts_home.html:37
 msgid "You need an invitation to join this organization."
@@ -1453,8 +1453,8 @@ msgstr "Confirm your email address"
 msgid ""
 "To complete your registration, check your email account (<span "
 "class=\"user_email semi-bold\">%(email)s</span>) for a confirmation email "
-"from Zulip."
-msgstr "To complete your registration, check your email account (<span class=\"user_email semi-bold\">%(email)s</span>) for a confirmation email from Zulip."
+"from RM-connect."
+msgstr "To complete your registration, check your email account (<span class=\"user_email semi-bold\">%(email)s</span>) for a confirmation email from RM-connect."
 
 #: templates/zerver/accounts_send_confirm.html:25
 msgid ""
@@ -1469,12 +1469,12 @@ msgid ""
 msgstr "If this message does not go away, try <a class=\"reload-lnk\">reloading</a> the page."
 
 #: templates/zerver/app/index.html:135
-msgid "Error loading Zulip. Try <a class=\"reload-lnk\">reloading</a> the page."
-msgstr "Error loading Zulip. Try <a class=\"reload-lnk\">reloading</a> the page."
+msgid "Error loading RM-connect. Try <a class=\"reload-lnk\">reloading</a> the page."
+msgstr "Error loading RM-connect. Try <a class=\"reload-lnk\">reloading</a> the page."
 
 #: templates/zerver/app/index.html:183
-msgid "Unable to connect to Zulip."
-msgstr "Unable to connect to Zulip."
+msgid "Unable to connect to RM-connect."
+msgstr "Unable to connect to RM-connect."
 
 #: templates/zerver/app/index.html:184
 msgid "Updates may be delayed."
@@ -1506,9 +1506,9 @@ msgstr "Configure email address privacy"
 
 #: templates/zerver/change_email_address_visibility_modal.html:12
 msgid ""
-"Zulip lets you control which roles in the organization can view your email "
+"RM-connect lets you control which roles in the organization can view your email "
 "address."
-msgstr "Zulip lets you control which roles in the organisation can view your email address."
+msgstr "RM-connect lets you control which roles in the organisation can view your email address."
 
 #: templates/zerver/change_email_address_visibility_modal.html:13
 msgid ""
@@ -1565,8 +1565,8 @@ msgid "Account not found"
 msgstr "Account not found"
 
 #: templates/zerver/confirm_continue_registration.html:14
-msgid "Zulip account not found."
-msgstr "Zulip account not found."
+msgid "RM-connect account not found."
+msgstr "RM-connect account not found."
 
 #: templates/zerver/confirm_continue_registration.html:18
 #, python-format
@@ -1589,8 +1589,8 @@ msgid "Create a new organization"
 msgstr "Create a new organisation"
 
 #: templates/zerver/create_realm.html:16
-msgid "Create a new Zulip organization"
-msgstr "Create a new Zulip organisation"
+msgid "Create a new RM-connect organization"
+msgstr "Create a new RM-connect organisation"
 
 #: templates/zerver/create_realm.html:27 templates/zerver/reset.html:27
 msgid "Enter your email address"
@@ -1636,17 +1636,17 @@ msgstr "\n                        This organisation has been deactivated.\n     
 #, python-format
 msgid ""
 "\n"
-"                            If you are an owner of this organization, you can <a href=\"mailto:%(support_email)s\">contact Zulip support</a> to reactivate it.\n"
+"                            If you are an owner of this organization, you can <a href=\"mailto:%(support_email)s\">contact RM-connect support</a> to reactivate it.\n"
 "                            "
-msgstr "\n                            If you are an owner of this organisation, you can <a href=\"mailto:%(support_email)s\">contact Zulip support</a> to reactivate it.\n                            "
+msgstr "\n                            If you are an owner of this organisation, you can <a href=\"mailto:%(support_email)s\">contact RM-connect support</a> to reactivate it.\n                            "
 
 #: templates/zerver/deactivated.html:41
 #, python-format
 msgid ""
 "\n"
-"                            If you are an owner of this organization, you can <a href=\"mailto:%(support_email)s\">contact this Zulip server's administrators</a> to reactivate it.\n"
+"                            If you are an owner of this organization, you can <a href=\"mailto:%(support_email)s\">contact this RM-connect server's administrators</a> to reactivate it.\n"
 "                            "
-msgstr "\n                            If you are an owner of this organisation, you can <a href=\"mailto:%(support_email)s\">contact this Zulip server's administrators</a> to reactivate it.\n                            "
+msgstr "\n                            If you are an owner of this organisation, you can <a href=\"mailto:%(support_email)s\">contact this RM-connect server's administrators</a> to reactivate it.\n                            "
 
 #: templates/zerver/desktop_login.html:5
 msgid "Finish desktop app login"
@@ -1684,8 +1684,8 @@ msgstr "Log in to desktop app"
 
 #: templates/zerver/desktop_redirect.html:12
 msgid ""
-"Copy this login token and return to your Zulip app to finish logging in:"
-msgstr "Copy this login token and return to your Zulip app to finish logging in:"
+"Copy this login token and return to your RM-connect app to finish logging in:"
+msgstr "Copy this login token and return to your RM-connect app to finish logging in:"
 
 #: templates/zerver/desktop_redirect.html:17
 msgid "Copy"
@@ -1738,8 +1738,8 @@ msgstr "Update"
 #: templates/zerver/development/integrations_dev_panel.html:19
 #: templates/zerver/portico-header.html:8
 #: templates/zerver/portico-header.html:12 zerver/models/realms.py:387
-msgid "Zulip"
-msgstr "Zulip"
+msgid "RM-connect"
+msgstr "RM-connect"
 
 #: templates/zerver/digest_base.html:5
 msgid "Digest"
@@ -1748,38 +1748,38 @@ msgstr "Digest"
 #: templates/zerver/emails/account_registered.html:11
 #, python-format
 msgid ""
-"Congratulations, you have created a new Zulip demo organization. Note\n"
+"Congratulations, you have created a new RM-connect demo organization. Note\n"
 "    that this organization will be automatically deleted in 30 days. Learn more\n"
 "    about demo organizations <a\n"
 "    href=\"%(demo_organizations_help_link)s\">here</a>!\n"
 "    "
-msgstr "Congratulations, you have created a new Zulip demo organisation. Note\n    that this organisation will be automatically deleted in 30 days. Learn more\n    about demo organisations <a\n    href=\"%(demo_organizations_help_link)s\">here</a>!\n    "
+msgstr "Congratulations, you have created a new RM-connect demo organisation. Note\n    that this organisation will be automatically deleted in 30 days. Learn more\n    about demo organisations <a\n    href=\"%(demo_organizations_help_link)s\">here</a>!\n    "
 
 #: templates/zerver/emails/account_registered.html:19
 #, python-format
 msgid ""
-"Congratulations, you have created a new Zulip\n"
+"Congratulations, you have created a new RM-connect\n"
 "    organization: <b>%(realm_name)s</b>."
-msgstr "Congratulations, you have created a new Zulip\n    organisation: <b>%(realm_name)s</b>."
+msgstr "Congratulations, you have created a new RM-connect\n    organisation: <b>%(realm_name)s</b>."
 
 #: templates/zerver/emails/account_registered.html:24
 #: templates/zerver/emails/account_registered.txt:1
-msgid "Welcome to Zulip!"
-msgstr "Welcome to Zulip!"
+msgid "Welcome to RM-connect!"
+msgstr "Welcome to RM-connect!"
 
 #: templates/zerver/emails/account_registered.html:26
 #, python-format
 msgid ""
-"You've joined the Zulip organization <b>%(realm_name)s</b>.\n"
+"You've joined the RM-connect organization <b>%(realm_name)s</b>.\n"
 "    "
-msgstr "You've joined the Zulip organisation <b>%(realm_name)s</b>.\n    "
+msgstr "You've joined the RM-connect organisation <b>%(realm_name)s</b>.\n    "
 
 #: templates/zerver/emails/account_registered.html:32
 #, python-format
 msgid ""
-"You will use the following info to log into the Zulip web, <a "
+"You will use the following info to log into the RM-connect web, <a "
 "href=\"%(apps_page_link)s\">mobile and desktop</a> apps:"
-msgstr "You will use the following info to log into the Zulip web, <a href=\"%(apps_page_link)s\">mobile and desktop</a> apps:"
+msgstr "You will use the following info to log into the RM-connect web, <a href=\"%(apps_page_link)s\">mobile and desktop</a> apps:"
 
 #: templates/zerver/emails/account_registered.html:34
 #: templates/zerver/emails/account_registered.txt:16
@@ -1813,17 +1813,17 @@ msgstr "Go to organisation"
 #: templates/zerver/emails/account_registered.html:49
 #, python-format
 msgid ""
-"If you are new to Zulip, check out our <a "
+"If you are new to RM-connect, check out our <a "
 "href=\"%(getting_user_started_link)s\">getting started guide</a>!"
-msgstr "If you are new to Zulip, check out our <a href=\"%(getting_user_started_link)s\">getting started guide</a>!"
+msgstr "If you are new to RM-connect, check out our <a href=\"%(getting_user_started_link)s\">getting started guide</a>!"
 
 #: templates/zerver/emails/account_registered.html:51
 #, python-format
 msgid ""
 "We also have a guide for <a "
 "href=\"%(getting_organization_started_link)s\">moving your organization to "
-"Zulip</a>."
-msgstr "We also have a guide for <a href=\"%(getting_organization_started_link)s\">moving your organisation to Zulip</a>."
+"RM-connect</a>."
+msgstr "We also have a guide for <a href=\"%(getting_organization_started_link)s\">moving your organisation to RM-connect</a>."
 
 #: templates/zerver/emails/account_registered.html:57
 #, python-format
@@ -1834,53 +1834,53 @@ msgstr "Questions? <a href=\"mailto:%(support_email)s\">Contact us</a> — we'd 
 
 #: templates/zerver/emails/account_registered.subject.txt:2
 #, python-format
-msgid "%(realm_name)s on Zulip: Your new organization details"
-msgstr "%(realm_name)s on Zulip: Your new organisation details"
+msgid "%(realm_name)s on RM-connect: Your new organization details"
+msgstr "%(realm_name)s on RM-connect: Your new organisation details"
 
 #: templates/zerver/emails/account_registered.subject.txt:4
 #, python-format
-msgid "%(realm_name)s on Zulip: Your new account details"
-msgstr "%(realm_name)s on Zulip: Your new account details"
+msgid "%(realm_name)s on RM-connect: Your new account details"
+msgstr "%(realm_name)s on RM-connect: Your new account details"
 
 #: templates/zerver/emails/account_registered.txt:5
 #, python-format
 msgid ""
-" Congratulations, you have created a new demo Zulip organization. Note that "
+" Congratulations, you have created a new demo RM-connect organization. Note that "
 "this organization will be automatically deleted in 30 days. Learn more about"
 " demo organizations here: %(demo_organizations_help_link)s!"
-msgstr " Congratulations, you have created a new demo Zulip organisation. Note that this organisation will be automatically deleted in 30 days. Learn more about demo organisations here: %(demo_organizations_help_link)s!"
+msgstr " Congratulations, you have created a new demo RM-connect organisation. Note that this organisation will be automatically deleted in 30 days. Learn more about demo organisations here: %(demo_organizations_help_link)s!"
 
 #: templates/zerver/emails/account_registered.txt:7
 #, python-format
 msgid ""
-"Congratulations, you have created a new Zulip organization: %(realm_name)s."
-msgstr "Congratulations, you have created a new Zulip organisation: %(realm_name)s."
+"Congratulations, you have created a new RM-connect organization: %(realm_name)s."
+msgstr "Congratulations, you have created a new RM-connect organisation: %(realm_name)s."
 
 #: templates/zerver/emails/account_registered.txt:10
 #, python-format
-msgid "You've joined the Zulip organization %(realm_name)s."
-msgstr "You've joined the Zulip organisation %(realm_name)s."
+msgid "You've joined the RM-connect organization %(realm_name)s."
+msgstr "You've joined the RM-connect organisation %(realm_name)s."
 
 #: templates/zerver/emails/account_registered.txt:14
 #, python-format
 msgid ""
-"You will use the following info to log into the Zulip web, mobile and "
+"You will use the following info to log into the RM-connect web, mobile and "
 "desktop apps (%(apps_page_link)s):"
-msgstr "You will use the following info to log into the Zulip web, mobile and desktop apps (%(apps_page_link)s):"
+msgstr "You will use the following info to log into the RM-connect web, mobile and desktop apps (%(apps_page_link)s):"
 
 #: templates/zerver/emails/account_registered.txt:29
 #, python-format
 msgid ""
-"If you are new to Zulip, check out our getting started guide "
+"If you are new to RM-connect, check out our getting started guide "
 "(%(getting_user_started_link)s)!"
-msgstr "If you are new to Zulip, check out our getting started guide (%(getting_user_started_link)s)!"
+msgstr "If you are new to RM-connect, check out our getting started guide (%(getting_user_started_link)s)!"
 
 #: templates/zerver/emails/account_registered.txt:31
 #, python-format
 msgid ""
-" We also have a guide for moving your organization to Zulip "
+" We also have a guide for moving your organization to RM-connect "
 "(%(getting_organization_started_link)s)."
-msgstr " We also have a guide for moving your organisation to Zulip (%(getting_organization_started_link)s)."
+msgstr " We also have a guide for moving your organisation to RM-connect (%(getting_organization_started_link)s)."
 
 #: templates/zerver/emails/account_registered.txt:36
 #, python-format
@@ -1895,9 +1895,9 @@ msgstr "Questions? Contact us at %(support_email)s — we'd love to help!"
 #: templates/zerver/emails/realm_reactivation.txt:16
 #, python-format
 msgid ""
-"If you have any questions, please contact this Zulip server's administrators"
+"If you have any questions, please contact this RM-connect server's administrators"
 " at %(support_email)s."
-msgstr "If you have any questions, please contact this Zulip server's administrators at %(support_email)s."
+msgstr "If you have any questions, please contact this RM-connect server's administrators at %(support_email)s."
 
 #: templates/zerver/emails/confirm_demo_organization_email.html:8
 #: templates/zerver/emails/confirm_demo_organization_email.txt:1
@@ -1912,10 +1912,10 @@ msgstr "Hi,"
 #: templates/zerver/emails/confirm_demo_organization_email.txt:4
 #, python-format
 msgid ""
-"We received a request to add the email address %(new_email)s to your Zulip "
+"We received a request to add the email address %(new_email)s to your RM-connect "
 "demo organization account on %(realm_url)s. To confirm this update and set a"
 " password for this account, please click below:"
-msgstr "We received a request to add the email address %(new_email)s to your Zulip demo organisation account on %(realm_url)s. To confirm this update and set a password for this account, please click below:"
+msgstr "We received a request to add the email address %(new_email)s to your RM-connect demo organisation account on %(realm_url)s. To confirm this update and set a password for this account, please click below:"
 
 #: templates/zerver/emails/confirm_demo_organization_email.html:11
 msgid "Confirm and set password"
@@ -1930,8 +1930,8 @@ msgid ""
 msgstr "If you did not request this change, please contact us immediately at %(support_email)s."
 
 #: templates/zerver/emails/confirm_demo_organization_email.subject.txt:1
-msgid "Verify your new email address for your demo Zulip organization"
-msgstr "Verify your new email address for your demo Zulip organisation"
+msgid "Verify your new email address for your demo RM-connect organization"
+msgstr "Verify your new email address for your demo RM-connect organisation"
 
 #: templates/zerver/emails/confirm_demo_organization_email.txt:9
 #: templates/zerver/emails/confirm_new_email.txt:9
@@ -1945,10 +1945,10 @@ msgstr "If you did not request this change, please contact us immediately at <%(
 #: templates/zerver/emails/confirm_new_email.txt:4
 #, python-format
 msgid ""
-"We received a request to change the email address for the Zulip account on "
+"We received a request to change the email address for the RM-connect account on "
 "%(realm_url)s from %(old_email)s to %(new_email)s. To confirm this change, "
 "please click below:"
-msgstr "We received a request to change the email address for the Zulip account on %(realm_url)s from %(old_email)s to %(new_email)s. To confirm this change, please click below:"
+msgstr "We received a request to change the email address for the RM-connect account on %(realm_url)s from %(old_email)s to %(new_email)s. To confirm this change, please click below:"
 
 #: templates/zerver/emails/confirm_new_email.html:11
 msgid "Confirm email change"
@@ -1961,8 +1961,8 @@ msgstr "Verify your new email address for %(organization_host)s"
 
 #: templates/zerver/emails/confirm_registration.html:10
 #: templates/zerver/emails/confirm_registration.txt:2
-msgid "You have requested a new Zulip organization:"
-msgstr "You have requested a new Zulip organisation:"
+msgid "You have requested a new RM-connect organization:"
+msgstr "You have requested a new RM-connect organisation:"
 
 #: templates/zerver/emails/confirm_registration.html:13
 #: templates/zerver/emails/confirm_registration.txt:5
@@ -1972,8 +1972,8 @@ msgstr "Organisation type: %(organization_type)s"
 
 #: templates/zerver/emails/confirm_registration.html:16
 #: templates/zerver/emails/confirm_registration.txt:7
-msgid "You recently signed up for Zulip. Awesome!"
-msgstr "You recently signed up for Zulip. Awesome!"
+msgid "You recently signed up for RM-connect. Awesome!"
+msgstr "You recently signed up for RM-connect. Awesome!"
 
 #: templates/zerver/emails/confirm_registration.html:21
 #: templates/zerver/emails/confirm_registration.txt:12
@@ -1993,12 +1993,12 @@ msgid "Complete registration"
 msgstr "Complete registration"
 
 #: templates/zerver/emails/confirm_registration.subject.txt:2
-msgid "Create your Zulip organization"
-msgstr "Create your Zulip organisation"
+msgid "Create your RM-connect organization"
+msgstr "Create your RM-connect organisation"
 
 #: templates/zerver/emails/confirm_registration.subject.txt:4
-msgid "Activate your Zulip account"
-msgstr "Activate your Zulip account"
+msgid "Activate your RM-connect account"
+msgstr "Activate your RM-connect account"
 
 #: templates/zerver/emails/confirm_registration.txt:14
 msgid "Click the link below to complete registration."
@@ -2031,8 +2031,8 @@ msgstr "Unsubscribe from marketing emails"
 #, python-format
 msgid ""
 "\n"
-"Your Zulip account on <a href=\"%(realm_url)s\">%(realm_url)s</a> has been deactivated, and you will no longer be able to log in.\n"
-msgstr "\nYour Zulip account on <a href=\"%(realm_url)s\">%(realm_url)s</a> has been deactivated, and you will no longer be able to log in.\n"
+"Your RM-connect account on <a href=\"%(realm_url)s\">%(realm_url)s</a> has been deactivated, and you will no longer be able to log in.\n"
+msgstr "\nYour RM-connect account on <a href=\"%(realm_url)s\">%(realm_url)s</a> has been deactivated, and you will no longer be able to log in.\n"
 
 #: templates/zerver/emails/deactivate.html:15
 #: templates/zerver/emails/deactivate.txt:6
@@ -2048,16 +2048,16 @@ msgstr "Notification of account deactivation on %(realm_name)s"
 #, python-format
 msgid ""
 "\n"
-"Your Zulip account on %(realm_url)s has been deactivated, and you will no longer be able to log in.\n"
-msgstr "\nYour Zulip account on %(realm_url)s has been deactivated, and you will no longer be able to log in.\n"
+"Your RM-connect account on %(realm_url)s has been deactivated, and you will no longer be able to log in.\n"
+msgstr "\nYour RM-connect account on %(realm_url)s has been deactivated, and you will no longer be able to log in.\n"
 
 #: templates/zerver/emails/digest.html:27 templates/zerver/emails/digest.txt:8
 msgid "New channels"
 msgstr "New channels"
 
 #: templates/zerver/emails/digest.html:34
-msgid "Click here to log in to Zulip and catch up."
-msgstr "Click here to log in to Zulip and catch up."
+msgid "Click here to log in to RM-connect and catch up."
+msgstr "Click here to log in to RM-connect and catch up."
 
 #: templates/zerver/emails/digest.html:40
 msgid "Unsubscribe from digest emails"
@@ -2065,13 +2065,13 @@ msgstr "Unsubscribe from digest emails"
 
 #: templates/zerver/emails/digest.subject.txt:1
 #, python-format
-msgid "Zulip digest for %(realm_name)s"
-msgstr "Zulip digest for %(realm_name)s"
+msgid "RM-connect digest for %(realm_name)s"
+msgstr "RM-connect digest for %(realm_name)s"
 
 #: templates/zerver/emails/digest.txt:12
 #, python-format
-msgid "Click here to log in to Zulip and catch up: %(organization_url)s."
-msgstr "Click here to log in to Zulip and catch up: %(organization_url)s."
+msgid "Click here to log in to RM-connect and catch up: %(organization_url)s."
+msgstr "Click here to log in to RM-connect and catch up: %(organization_url)s."
 
 #: templates/zerver/emails/digest.txt:15
 msgid "Manage email preferences:"
@@ -2095,17 +2095,17 @@ msgstr "Thanks for your request!"
 #: templates/zerver/emails/find_team.txt:5
 #, python-format
 msgid ""
-"Your email address %(email)s has accounts with the following Zulip Cloud "
+"Your email address %(email)s has accounts with the following RM-connect Cloud "
 "organizations:"
-msgstr "Your email address %(email)s has accounts with the following Zulip Cloud organisations:"
+msgstr "Your email address %(email)s has accounts with the following RM-connect Cloud organisations:"
 
 #: templates/zerver/emails/find_team.html:14
 #: templates/zerver/emails/find_team.txt:7
 #, python-format
 msgid ""
-"Your email address %(email)s has accounts with the following Zulip "
+"Your email address %(email)s has accounts with the following RM-connect "
 "organizations hosted by %(external_host)s:"
-msgstr "Your email address %(email)s has accounts with the following Zulip organisations hosted by %(external_host)s:"
+msgstr "Your email address %(email)s has accounts with the following RM-connect organisations hosted by %(external_host)s:"
 
 #: templates/zerver/emails/find_team.html:24
 #, python-format
@@ -2117,21 +2117,21 @@ msgstr "If you have trouble logging in, you can <a href=\"%(help_reset_password_
 #: templates/zerver/emails/find_team.html:28
 #: templates/zerver/emails/find_team.txt:21
 #: templates/zerver/emails/find_team.txt:28
-msgid "You have requested a list of Zulip accounts for this email address."
-msgstr "You have requested a list of Zulip accounts for this email address."
+msgid "You have requested a list of RM-connect accounts for this email address."
+msgstr "You have requested a list of RM-connect accounts for this email address."
 
 #: templates/zerver/emails/find_team.html:30
 #: templates/zerver/emails/find_team.txt:21
-msgid "Unfortunately, no Zulip Cloud accounts were found."
-msgstr "Unfortunately, no Zulip Cloud accounts were found."
+msgid "Unfortunately, no RM-connect Cloud accounts were found."
+msgstr "Unfortunately, no RM-connect Cloud accounts were found."
 
 #: templates/zerver/emails/find_team.html:32
 #: templates/zerver/emails/find_team.txt:28
 #, python-format
 msgid ""
-"Unfortunately, no accounts were found in Zulip organizations hosted by "
+"Unfortunately, no accounts were found in RM-connect organizations hosted by "
 "%(external_host)s."
-msgstr "Unfortunately, no accounts were found in Zulip organisations hosted by %(external_host)s."
+msgstr "Unfortunately, no accounts were found in RM-connect organisations hosted by %(external_host)s."
 
 #: templates/zerver/emails/find_team.html:37
 #, python-format
@@ -2149,12 +2149,12 @@ msgid ""
 msgstr "If you do not recognize this request, you can safely ignore this email."
 
 #: templates/zerver/emails/find_team.subject.txt:2
-msgid "Your Zulip accounts"
-msgstr "Your Zulip accounts"
+msgid "Your RM-connect accounts"
+msgstr "Your RM-connect accounts"
 
 #: templates/zerver/emails/find_team.subject.txt:4
-msgid "No Zulip accounts found"
-msgstr "No Zulip accounts found"
+msgid "No RM-connect accounts found"
+msgstr "No RM-connect accounts found"
 
 #: templates/zerver/emails/find_team.txt:15
 msgid "If you have trouble logging in, you can reset your password."
@@ -2176,9 +2176,9 @@ msgstr "Hi there,"
 #: templates/zerver/emails/invitation.html:12
 #, python-format
 msgid ""
-"%(referrer_name)s wants you to join them on Zulip &mdash; the team "
+"%(referrer_name)s wants you to join them on RM-connect &mdash; the team "
 "communication tool designed for productivity."
-msgstr "%(referrer_name)s wants you to join them on Zulip &mdash; the team communication tool designed for productivity."
+msgstr "%(referrer_name)s wants you to join them on RM-connect &mdash; the team communication tool designed for productivity."
 
 #: templates/zerver/emails/invitation.html:15
 #: templates/zerver/emails/invitation_reminder.html:13
@@ -2193,9 +2193,9 @@ msgstr "%(referrer_full_name)s has invited you to join %(referrer_realm_name)s"
 #: templates/zerver/emails/invitation.txt:3
 #, python-format
 msgid ""
-"%(referrer_full_name)s (%(referrer_email)s) wants you to join them on Zulip "
+"%(referrer_full_name)s (%(referrer_email)s) wants you to join them on RM-connect "
 "-- the team communication tool designed for productivity."
-msgstr "%(referrer_full_name)s (%(referrer_email)s) wants you to join them on Zulip -- the team communication tool designed for productivity."
+msgstr "%(referrer_full_name)s (%(referrer_email)s) wants you to join them on RM-connect -- the team communication tool designed for productivity."
 
 #: templates/zerver/emails/invitation.txt:5
 #: templates/zerver/emails/invitation_reminder.txt:5
@@ -2211,8 +2211,8 @@ msgstr "Hi again,"
 #, python-format
 msgid ""
 "This is a friendly reminder that %(referrer_name)s wants you to join them on"
-" Zulip &mdash; the team communication tool designed for productivity."
-msgstr "This is a friendly reminder that %(referrer_name)s wants you to join them on Zulip &mdash; the team communication tool designed for productivity."
+" RM-connect &mdash; the team communication tool designed for productivity."
+msgstr "This is a friendly reminder that %(referrer_name)s wants you to join them on RM-connect &mdash; the team communication tool designed for productivity."
 
 #: templates/zerver/emails/invitation_reminder.html:18
 #: templates/zerver/emails/invitation_reminder.txt:8
@@ -2237,9 +2237,9 @@ msgstr "Reminder: Join %(referrer_name)s at %(referrer_realm_name)s"
 #, python-format
 msgid ""
 "This is a friendly reminder that %(referrer_name)s (%(referrer_email)s) "
-"wants you to join them on Zulip -- the team communication tool designed for "
+"wants you to join them on RM-connect -- the team communication tool designed for "
 "productivity."
-msgstr "This is a friendly reminder that %(referrer_name)s (%(referrer_email)s) wants you to join them on Zulip -- the team communication tool designed for productivity."
+msgstr "This is a friendly reminder that %(referrer_name)s (%(referrer_email)s) wants you to join them on RM-connect -- the team communication tool designed for productivity."
 
 #: templates/zerver/emails/invitation_reminder.txt:10
 #, python-format
@@ -2251,9 +2251,9 @@ msgstr "This invitation expires in two days. If the invitation expires, you'll n
 #: templates/zerver/emails/macros.html:14
 #, python-format
 msgid ""
-"If you have any questions, please contact this Zulip server's administrators"
+"If you have any questions, please contact this RM-connect server's administrators"
 " at <a href=\"mailto:%(email)s\">%(email)s</a>."
-msgstr "If you have any questions, please contact this Zulip server's administrators at <a href=\"mailto:%(email)s\">%(email)s</a>."
+msgstr "If you have any questions, please contact this RM-connect server's administrators at <a href=\"mailto:%(email)s\">%(email)s</a>."
 
 #: templates/zerver/emails/macros.html:18
 #, python-format
@@ -2333,31 +2333,31 @@ msgstr "You are receiving this because you have email notifications enabled for 
 #, python-format
 msgid ""
 "Reply to this email directly, <a href=\"%(narrow_url)s\">view it in "
-"%(realm_name)s Zulip</a>, or <a href=\"%(notif_url)s\">manage email "
+"%(realm_name)s RM-connect</a>, or <a href=\"%(notif_url)s\">manage email "
 "preferences</a>."
-msgstr "Reply to this email directly, <a href=\"%(narrow_url)s\">view it in %(realm_name)s Zulip</a>, or <a href=\"%(notif_url)s\">manage email preferences</a>."
+msgstr "Reply to this email directly, <a href=\"%(narrow_url)s\">view it in %(realm_name)s RM-connect</a>, or <a href=\"%(notif_url)s\">manage email preferences</a>."
 
 #: templates/zerver/emails/missed_message.html:48
 #, python-format
 msgid ""
-"<a href=\"%(narrow_url)s\">View or reply in %(realm_name)s Zulip</a>, or <a "
+"<a href=\"%(narrow_url)s\">View or reply in %(realm_name)s RM-connect</a>, or <a "
 "href=\"%(notif_url)s\">manage email preferences</a>."
-msgstr "<a href=\"%(narrow_url)s\">View or reply in %(realm_name)s Zulip</a>, or <a href=\"%(notif_url)s\">manage email preferences</a>."
+msgstr "<a href=\"%(narrow_url)s\">View or reply in %(realm_name)s RM-connect</a>, or <a href=\"%(notif_url)s\">manage email preferences</a>."
 
 #: templates/zerver/emails/missed_message.html:50
 #, python-format
 msgid ""
-"<a href=\"%(narrow_url)s\">Reply in %(realm_name)s Zulip</a>, or <a "
+"<a href=\"%(narrow_url)s\">Reply in %(realm_name)s RM-connect</a>, or <a "
 "href=\"%(notif_url)s\">manage email preferences</a>."
-msgstr "<a href=\"%(narrow_url)s\">Reply in %(realm_name)s Zulip</a>, or <a href=\"%(notif_url)s\">manage email preferences</a>."
+msgstr "<a href=\"%(narrow_url)s\">Reply in %(realm_name)s RM-connect</a>, or <a href=\"%(notif_url)s\">manage email preferences</a>."
 
 #: templates/zerver/emails/missed_message.html:52
 #, python-format
 msgid ""
 "\n"
-"    Do not reply to this email. This Zulip server is not configured to accept incoming emails (<a href=\"%(url)s\">help</a>).\n"
+"    Do not reply to this email. This RM-connect server is not configured to accept incoming emails (<a href=\"%(url)s\">help</a>).\n"
 "    "
-msgstr "\n    Do not reply to this email. This Zulip server is not configured to accept incoming emails (<a href=\"%(url)s\">help</a>).\n    "
+msgstr "\n    Do not reply to this email. This RM-connect server is not configured to accept incoming emails (<a href=\"%(url)s\">help</a>).\n    "
 
 #: templates/zerver/emails/missed_message.subject.txt:2
 #, python-format
@@ -2396,25 +2396,25 @@ msgstr "\nThis email does not include message content because you have disabled 
 
 #: templates/zerver/emails/missed_message.txt:43
 #, python-format
-msgid "Reply to this email directly, or view it in %(realm_name)s Zulip:"
-msgstr "Reply to this email directly, or view it in %(realm_name)s Zulip:"
+msgid "Reply to this email directly, or view it in %(realm_name)s RM-connect:"
+msgstr "Reply to this email directly, or view it in %(realm_name)s RM-connect:"
 
 #: templates/zerver/emails/missed_message.txt:47
 #, python-format
-msgid "View or reply in %(realm_name)s Zulip:"
-msgstr "View or reply in %(realm_name)s Zulip:"
+msgid "View or reply in %(realm_name)s RM-connect:"
+msgstr "View or reply in %(realm_name)s RM-connect:"
 
 #: templates/zerver/emails/missed_message.txt:51
 #, python-format
-msgid "Reply in %(realm_name)s Zulip:"
-msgstr "Reply in %(realm_name)s Zulip:"
+msgid "Reply in %(realm_name)s RM-connect:"
+msgstr "Reply in %(realm_name)s RM-connect:"
 
 #: templates/zerver/emails/missed_message.txt:55
 msgid ""
 "\n"
-"Do not reply to this email. This Zulip server is not configured to accept\n"
+"Do not reply to this email. This RM-connect server is not configured to accept\n"
 "incoming emails. Help:\n"
-msgstr "\nDo not reply to this email. This Zulip server is not configured to accept\nincoming emails. Help:\n"
+msgstr "\nDo not reply to this email. This RM-connect server is not configured to accept\nincoming emails. Help:\n"
 
 #: templates/zerver/emails/missed_message.txt:62
 msgid "Manage email preferences: "
@@ -2423,10 +2423,10 @@ msgstr "Manage email preferences: "
 #: templates/zerver/emails/notify_change_in_email.html:10
 #, python-format
 msgid ""
-"The email associated with your Zulip account was recently changed to "
+"The email associated with your RM-connect account was recently changed to "
 "%(new_email)s. If you did not request this change, please contact us "
 "immediately at %(support_email)s."
-msgstr "The email associated with your Zulip account was recently changed to %(new_email)s. If you did not request this change, please contact us immediately at %(support_email)s."
+msgstr "The email associated with your RM-connect account was recently changed to %(new_email)s. If you did not request this change, please contact us immediately at %(support_email)s."
 
 #: templates/zerver/emails/notify_change_in_email.html:13
 #: templates/zerver/emails/notify_change_in_email.txt:6
@@ -2435,21 +2435,21 @@ msgstr "Best,"
 
 #: templates/zerver/emails/notify_change_in_email.html:14
 #: templates/zerver/emails/notify_change_in_email.txt:7
-msgid "Team Zulip"
-msgstr "Team Zulip"
+msgid "Team RM-connect"
+msgstr "Team RM-connect"
 
 #: templates/zerver/emails/notify_change_in_email.subject.txt:1
 #, python-format
-msgid "Zulip email changed for %(realm_name)s"
-msgstr "Zulip email changed for %(realm_name)s"
+msgid "RM-connect email changed for %(realm_name)s"
+msgstr "RM-connect email changed for %(realm_name)s"
 
 #: templates/zerver/emails/notify_change_in_email.txt:3
 #, python-format
 msgid ""
-"The email associated with your Zulip account was recently changed to "
+"The email associated with your RM-connect account was recently changed to "
 "%(new_email)s. If you did not request this change, please contact us "
 "immediately at <%(support_email)s>."
-msgstr "The email associated with your Zulip account was recently changed to %(new_email)s. If you did not request this change, please contact us immediately at <%(support_email)s>."
+msgstr "The email associated with your RM-connect account was recently changed to %(new_email)s. If you did not request this change, please contact us immediately at <%(support_email)s>."
 
 #: templates/zerver/emails/notify_new_login.html:4
 #, python-format
@@ -2460,8 +2460,8 @@ msgstr "Organisation: %(organization_url)s Time: %(login_time)s Email: %(user_em
 
 #: templates/zerver/emails/notify_new_login.html:12
 #: templates/zerver/emails/notify_new_login.txt:1
-msgid "We noticed a recent login for the following Zulip account."
-msgstr "We noticed a recent login for the following Zulip account."
+msgid "We noticed a recent login for the following RM-connect account."
+msgstr "We noticed a recent login for the following RM-connect account."
 
 #: templates/zerver/emails/notify_new_login.html:16
 #, python-format
@@ -2512,8 +2512,8 @@ msgstr "Thanks,"
 
 #: templates/zerver/emails/notify_new_login.html:41
 #: templates/zerver/emails/notify_new_login.txt:21
-msgid "Zulip Security"
-msgstr "Zulip Security"
+msgid "RM-connect Security"
+msgstr "RM-connect Security"
 
 #: templates/zerver/emails/notify_new_login.html:46
 msgid "Unsubscribe from login notifications"
@@ -2539,10 +2539,10 @@ msgstr "\nIf you do not recognize this login, or think your account may have bee
 #: templates/zerver/emails/onboarding_team_to_zulip.html:10
 #, python-format
 msgid ""
-"If you've already decided to use Zulip for your organization, welcome! You "
+"If you've already decided to use RM-connect for your organization, welcome! You "
 "can use our <a href=\"%(get_organization_started)s\">guide for moving to "
-"Zulip</a> to get started."
-msgstr "If you've already decided to use Zulip for your organisation, welcome! You can use our <a href=\"%(get_organization_started)s\">guide for moving to Zulip</a> to get started."
+"RM-connect</a> to get started."
+msgstr "If you've already decided to use RM-connect for your organisation, welcome! You can use our <a href=\"%(get_organization_started)s\">guide for moving to RM-connect</a> to get started."
 
 #: templates/zerver/emails/onboarding_team_to_zulip.html:13
 msgid ""
@@ -2573,10 +2573,10 @@ msgstr "<a href=\"%(trying_out_zulip)s\"><b>Run a week-long trial</b></a> with y
 #: templates/zerver/emails/onboarding_team_to_zulip.html:23
 #, python-format
 msgid ""
-"Zulip is designed to <a href=\"%(why_zulip)s\">enable efficient "
+"RM-connect is designed to <a href=\"%(why_zulip)s\">enable efficient "
 "communication</a>, and we hope these tips help your team experience it in "
 "action."
-msgstr "Zulip is designed to <a href=\"%(why_zulip)s\">enable efficient communication</a>, and we hope these tips help your team experience it in action."
+msgstr "RM-connect is designed to <a href=\"%(why_zulip)s\">enable efficient communication</a>, and we hope these tips help your team experience it in action."
 
 #: templates/zerver/emails/onboarding_team_to_zulip.html:38
 #: templates/zerver/emails/onboarding_team_to_zulip.txt:19
@@ -2594,9 +2594,9 @@ msgstr "Choosing the chat app for your team"
 
 #: templates/zerver/emails/onboarding_team_to_zulip.txt:1
 msgid ""
-"If you've already decided to use Zulip for your organization, welcome! You "
-"can use our guide for moving to Zulip to get started."
-msgstr "If you've already decided to use Zulip for your organisation, welcome! You can use our guide for moving to Zulip to get started."
+"If you've already decided to use RM-connect for your organization, welcome! You "
+"can use our guide for moving to RM-connect to get started."
+msgstr "If you've already decided to use RM-connect for your organisation, welcome! You can use our guide for moving to RM-connect to get started."
 
 #: templates/zerver/emails/onboarding_team_to_zulip.txt:3
 msgid ""
@@ -2619,104 +2619,104 @@ msgstr "Run a week-long trial with your team, without using any other chat tools
 
 #: templates/zerver/emails/onboarding_team_to_zulip.txt:10
 msgid ""
-"Zulip is designed to enable efficient communication, and we hope these tips "
+"RM-connect is designed to enable efficient communication, and we hope these tips "
 "help your team experience it in action."
-msgstr "Zulip is designed to enable efficient communication, and we hope these tips help your team experience it in action."
+msgstr "RM-connect is designed to enable efficient communication, and we hope these tips help your team experience it in action."
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:9
 #: templates/zerver/emails/onboarding_zulip_guide.txt:1
 msgid ""
-"As you are getting started with Zulip, we'd love to help you discover how it"
-" can work best for your needs. Check out this guide to key Zulip features "
+"As you are getting started with RM-connect, we'd love to help you discover how it"
+" can work best for your needs. Check out this guide to key RM-connect features "
 "for organizations like yours!"
-msgstr "As you are getting started with Zulip, we'd love to help you discover how it can work best for your needs. Check out this guide to key Zulip features for organisations like yours!"
+msgstr "As you are getting started with RM-connect, we'd love to help you discover how it can work best for your needs. Check out this guide to key RM-connect features for organisations like yours!"
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:13
 #: templates/zerver/emails/onboarding_zulip_guide.txt:4
-msgid "View Zulip guide for businesses"
-msgstr "View Zulip guide for businesses"
+msgid "View RM-connect guide for businesses"
+msgstr "View RM-connect guide for businesses"
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:15
 #: templates/zerver/emails/onboarding_zulip_guide.txt:6
-msgid "View Zulip guide for open-source projects"
-msgstr "View Zulip guide for open-source projects"
+msgid "View RM-connect guide for open-source projects"
+msgstr "View RM-connect guide for open-source projects"
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:17
 #: templates/zerver/emails/onboarding_zulip_guide.txt:8
-msgid "View Zulip guide for education"
-msgstr "View Zulip guide for education"
+msgid "View RM-connect guide for education"
+msgstr "View RM-connect guide for education"
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:19
 #: templates/zerver/emails/onboarding_zulip_guide.txt:10
-msgid "View Zulip guide for research"
-msgstr "View Zulip guide for research"
+msgid "View RM-connect guide for research"
+msgstr "View RM-connect guide for research"
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:21
 #: templates/zerver/emails/onboarding_zulip_guide.txt:12
-msgid "View Zulip guide for events and conferences"
-msgstr "View Zulip guide for events and conferences"
+msgid "View RM-connect guide for events and conferences"
+msgstr "View RM-connect guide for events and conferences"
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:23
 #: templates/zerver/emails/onboarding_zulip_guide.txt:14
-msgid "View Zulip guide for non-profits"
-msgstr "View Zulip guide for non-profits"
+msgid "View RM-connect guide for non-profits"
+msgstr "View RM-connect guide for non-profits"
 
 #: templates/zerver/emails/onboarding_zulip_guide.html:25
 #: templates/zerver/emails/onboarding_zulip_guide.txt:16
-msgid "View Zulip guide for communities"
-msgstr "View Zulip guide for communities"
+msgid "View RM-connect guide for communities"
+msgstr "View RM-connect guide for communities"
 
 #: templates/zerver/emails/onboarding_zulip_guide.subject.txt:2
-msgid "Zulip guide for businesses"
-msgstr "Zulip guide for businesses"
+msgid "RM-connect guide for businesses"
+msgstr "RM-connect guide for businesses"
 
 #: templates/zerver/emails/onboarding_zulip_guide.subject.txt:4
-msgid "Zulip guide for open-source projects"
-msgstr "Zulip guide for open-source projects"
+msgid "RM-connect guide for open-source projects"
+msgstr "RM-connect guide for open-source projects"
 
 #: templates/zerver/emails/onboarding_zulip_guide.subject.txt:6
-msgid "Zulip guide for education"
-msgstr "Zulip guide for education"
+msgid "RM-connect guide for education"
+msgstr "RM-connect guide for education"
 
 #: templates/zerver/emails/onboarding_zulip_guide.subject.txt:8
-msgid "Zulip guide for research"
-msgstr "Zulip guide for research"
+msgid "RM-connect guide for research"
+msgstr "RM-connect guide for research"
 
 #: templates/zerver/emails/onboarding_zulip_guide.subject.txt:10
-msgid "Zulip guide for events and conferences"
-msgstr "Zulip guide for events and conferences"
+msgid "RM-connect guide for events and conferences"
+msgstr "RM-connect guide for events and conferences"
 
 #: templates/zerver/emails/onboarding_zulip_guide.subject.txt:12
-msgid "Zulip guide for non-profits"
-msgstr "Zulip guide for non-profits"
+msgid "RM-connect guide for non-profits"
+msgstr "RM-connect guide for non-profits"
 
 #: templates/zerver/emails/onboarding_zulip_guide.subject.txt:14
-msgid "Zulip guide for communities"
-msgstr "Zulip guide for communities"
+msgid "RM-connect guide for communities"
+msgstr "RM-connect guide for communities"
 
 #: templates/zerver/emails/onboarding_zulip_topics.html:9
 #: templates/zerver/emails/onboarding_zulip_topics.txt:1
 msgid ""
-"Here are some tips for keeping your Zulip conversations organized with "
+"Here are some tips for keeping your RM-connect conversations organized with "
 "topics."
-msgstr "Here are some tips for keeping your Zulip conversations organised with topics."
+msgstr "Here are some tips for keeping your RM-connect conversations organised with topics."
 
 #: templates/zerver/emails/onboarding_zulip_topics.html:13
 msgid ""
-"In Zulip, <b>channels</b> determine who gets a message. <b>Topics</b> tell "
+"In RM-connect, <b>channels</b> determine who gets a message. <b>Topics</b> tell "
 "you what the message is about."
-msgstr "In Zulip, <b>channels</b> determine who gets a message. <b>Topics</b> tell you what the message is about."
+msgstr "In RM-connect, <b>channels</b> determine who gets a message. <b>Topics</b> tell you what the message is about."
 
 #: templates/zerver/emails/onboarding_zulip_topics.html:13
 #: templates/zerver/emails/onboarding_zulip_topics.txt:3
 msgid ""
-"Using topics, you can read Zulip one conversation at a time. You'll see each"
+"Using topics, you can read RM-connect one conversation at a time. You'll see each"
 " message in context, no matter how many different discussions are going on."
-msgstr "Using topics, you can read Zulip one conversation at a time. You'll see each message in context, no matter how many different discussions are going on."
+msgstr "Using topics, you can read RM-connect one conversation at a time. You'll see each message in context, no matter how many different discussions are going on."
 
 #: templates/zerver/emails/onboarding_zulip_topics.html:16
-msgid "Channels and topics in the Zulip app"
-msgstr "Channels and topics in the Zulip app"
+msgid "Channels and topics in the RM-connect app"
+msgstr "Channels and topics in the RM-connect app"
 
 #: templates/zerver/emails/onboarding_zulip_topics.html:19
 #: templates/zerver/emails/onboarding_zulip_topics.txt:5
@@ -2743,8 +2743,8 @@ msgstr "Don't stress about picking the perfect name for your topic. If anything 
 #: templates/zerver/emails/onboarding_zulip_topics.html:28
 #: templates/zerver/emails/onboarding_zulip_topics.txt:10
 #: templates/zerver/portico-header-dropdown.html:3
-msgid "Go to Zulip"
-msgstr "Go to Zulip"
+msgid "Go to RM-connect"
+msgstr "Go to RM-connect"
 
 #: templates/zerver/emails/onboarding_zulip_topics.subject.txt:1
 msgid "Keep your conversations organized with topics"
@@ -2752,9 +2752,9 @@ msgstr "Keep your conversations organised with topics"
 
 #: templates/zerver/emails/onboarding_zulip_topics.txt:3
 msgid ""
-"In Zulip, channels determine who gets a message. Topics tell you what the "
+"In RM-connect, channels determine who gets a message. Topics tell you what the "
 "message is about."
-msgstr "In Zulip, channels determine who gets a message. Topics tell you what the message is about."
+msgstr "In RM-connect, channels determine who gets a message. Topics tell you what the message is about."
 
 #: templates/zerver/emails/onboarding_zulip_topics.txt:7
 #, python-format
@@ -2769,9 +2769,9 @@ msgstr "Don't stress about picking the perfect name for your topic. If anything 
 #: templates/zerver/emails/password_reset.txt:1
 #, python-format
 msgid ""
-"Somebody (possibly you) requested a new password for the Zulip account "
+"Somebody (possibly you) requested a new password for the RM-connect account "
 "%(email)s on %(realm_url)s."
-msgstr "Somebody (possibly you) requested a new password for the Zulip account %(email)s on %(realm_url)s."
+msgstr "Somebody (possibly you) requested a new password for the RM-connect account %(email)s on %(realm_url)s."
 
 #: templates/zerver/emails/password_reset.html:13
 msgid "Click the button below to reset your password."
@@ -2791,8 +2791,8 @@ msgstr "You previously had an account on %(organization_url)s, but it has been d
 
 #: templates/zerver/emails/password_reset.html:21
 #: templates/zerver/emails/password_reset.txt:11
-msgid "You do not have an account in that Zulip organization."
-msgstr "You do not have an account in that Zulip organisation."
+msgid "You do not have an account in that RM-connect organization."
+msgstr "You do not have an account in that RM-connect organisation."
 
 #: templates/zerver/emails/password_reset.html:26
 #: templates/zerver/emails/password_reset.txt:16
@@ -2832,18 +2832,18 @@ msgstr "You previously had an account on %(realm_url)s, but it has been deactiva
 #, python-format
 msgid ""
 "\n"
-"    Your organization, %(organization_name_with_link)s, has been downgraded to the Zulip Cloud\n"
+"    Your organization, %(organization_name_with_link)s, has been downgraded to the RM-connect Cloud\n"
 "    Free plan because of unpaid invoices. The unpaid invoices have been voided.\n"
 "    "
-msgstr "\n    Your organisation, %(organization_name_with_link)s, has been downgraded to the Zulip Cloud\n    Free plan because of unpaid invoices. The unpaid invoices have been voided.\n    "
+msgstr "\n    Your organisation, %(organization_name_with_link)s, has been downgraded to the RM-connect Cloud\n    Free plan because of unpaid invoices. The unpaid invoices have been voided.\n    "
 
 #: templates/zerver/emails/realm_auto_downgraded.html:15
 #, python-format
 msgid ""
 "\n"
-"    To continue on the Zulip Cloud Standard plan, please upgrade again by going to %(upgrade_url)s.\n"
+"    To continue on the RM-connect Cloud Standard plan, please upgrade again by going to %(upgrade_url)s.\n"
 "    "
-msgstr "\n    To continue on the Zulip Cloud Standard plan, please upgrade again by going to %(upgrade_url)s.\n    "
+msgstr "\n    To continue on the RM-connect Cloud Standard plan, please upgrade again by going to %(upgrade_url)s.\n    "
 
 #: templates/zerver/emails/realm_auto_downgraded.html:22
 #, python-format
@@ -2857,25 +2857,25 @@ msgstr "\n    If you think this was a mistake or need more details, please reach
 #: templates/zerver/emails/realm_deactivated.txt:3
 #, python-format
 msgid ""
-"You have deactivated your Zulip organization, %(realm_name)s, on "
+"You have deactivated your RM-connect organization, %(realm_name)s, on "
 "%(localized_date)s."
-msgstr "You have deactivated your Zulip organisation, %(realm_name)s, on %(localized_date)s."
+msgstr "You have deactivated your RM-connect organisation, %(realm_name)s, on %(localized_date)s."
 
 #: templates/zerver/emails/realm_deactivated.html:13
 #: templates/zerver/emails/realm_deactivated.txt:5
 #, python-format
 msgid ""
-"Your Zulip organization, %(realm_name)s, was deactivated by "
+"Your RM-connect organization, %(realm_name)s, was deactivated by "
 "%(deactivating_owner)s on %(localized_date)s."
-msgstr "Your Zulip organisation, %(realm_name)s, was deactivated by %(deactivating_owner)s on %(localized_date)s."
+msgstr "Your RM-connect organisation, %(realm_name)s, was deactivated by %(deactivating_owner)s on %(localized_date)s."
 
 #: templates/zerver/emails/realm_deactivated.html:15
 #: templates/zerver/emails/realm_deactivated.txt:7
 #, python-format
 msgid ""
-"Your Zulip organization, %(realm_name)s, was deactivated on "
+"Your RM-connect organization, %(realm_name)s, was deactivated on "
 "%(localized_date)s."
-msgstr "Your Zulip organisation, %(realm_name)s, was deactivated on %(localized_date)s."
+msgstr "Your RM-connect organisation, %(realm_name)s, was deactivated on %(localized_date)s."
 
 #: templates/zerver/emails/realm_deactivated.html:19
 #: templates/zerver/emails/realm_deactivated.txt:10
@@ -2886,8 +2886,8 @@ msgstr "If you have any questions or concerns, please reply to this email as soo
 
 #: templates/zerver/emails/realm_deactivated.subject.txt:1
 #, python-format
-msgid "Your Zulip organization %(realm_name)s has been deactivated"
-msgstr "Your Zulip organisation %(realm_name)s has been deactivated"
+msgid "Your RM-connect organization %(realm_name)s has been deactivated"
+msgstr "Your RM-connect organisation %(realm_name)s has been deactivated"
 
 #: templates/zerver/emails/realm_reactivation.html:8
 #: templates/zerver/emails/realm_reactivation.txt:1
@@ -2900,8 +2900,8 @@ msgstr "Dear former administrators of %(realm_name)s,"
 #, python-format
 msgid ""
 "One of your administrators requested reactivation of the previously "
-"deactivated Zulip organization hosted at %(realm_url)s."
-msgstr "One of your administrators requested reactivation of the previously deactivated Zulip organisation hosted at %(realm_url)s."
+"deactivated RM-connect organization hosted at %(realm_url)s."
+msgstr "One of your administrators requested reactivation of the previously deactivated RM-connect organisation hosted at %(realm_url)s."
 
 #: templates/zerver/emails/realm_reactivation.html:13
 msgid "Click the button below to reactivate your organization."
@@ -2919,8 +2919,8 @@ msgid ""
 msgstr "If the request was in error, you can take no action and this link will expire in 24 hours."
 
 #: templates/zerver/emails/realm_reactivation.subject.txt:1
-msgid "Reactivate your Zulip organization"
-msgstr "Reactivate your Zulip organisation"
+msgid "Reactivate your RM-connect organization"
+msgstr "Reactivate your RM-connect organisation"
 
 #: templates/zerver/emails/realm_reactivation.txt:7
 msgid "Click the link below to reactivate your organization."
@@ -2930,8 +2930,8 @@ msgstr "Click the link below to reactivate your organisation."
 #, python-format
 msgid ""
 "Either you, or someone on your behalf, has requested a log in link to manage"
-" the Zulip plan for <b>%(remote_server_hostname)s</b>."
-msgstr "Either you, or someone on your behalf, has requested a log in link to manage the Zulip plan for <b>%(remote_server_hostname)s</b>."
+" the RM-connect plan for <b>%(remote_server_hostname)s</b>."
+msgstr "Either you, or someone on your behalf, has requested a log in link to manage the RM-connect plan for <b>%(remote_server_hostname)s</b>."
 
 #: templates/zerver/emails/remote_billing_legacy_server_confirm_login.html:12
 msgid ""
@@ -2957,15 +2957,15 @@ msgid ""
 msgstr "Questions? <a href=\"%(billing_help_link)s\">Learn more</a> or contact %(billing_contact_email)s."
 
 #: templates/zerver/emails/remote_billing_legacy_server_confirm_login.subject.txt:1
-msgid "Log in to Zulip plan management"
-msgstr "Log in to Zulip plan management"
+msgid "Log in to RM-connect plan management"
+msgstr "Log in to RM-connect plan management"
 
 #: templates/zerver/emails/remote_billing_legacy_server_confirm_login.txt:1
 #, python-format
 msgid ""
 "Either you, or someone on your behalf, has requested a log in link to manage"
-" the Zulip plan for %(remote_server_hostname)s."
-msgstr "Either you, or someone on your behalf, has requested a log in link to manage the Zulip plan for %(remote_server_hostname)s."
+" the RM-connect plan for %(remote_server_hostname)s."
+msgstr "Either you, or someone on your behalf, has requested a log in link to manage the RM-connect plan for %(remote_server_hostname)s."
 
 #: templates/zerver/emails/remote_billing_legacy_server_confirm_login.txt:4
 msgid "Click the link below to log in."
@@ -2988,9 +2988,9 @@ msgstr "Questions? Learn more at %(billing_help_link)s or contact %(billing_cont
 #, python-format
 msgid ""
 "\n"
-"    Click the button below to confirm your email and log in to Zulip plan management for <b>%(remote_realm_host)s</b>.\n"
+"    Click the button below to confirm your email and log in to RM-connect plan management for <b>%(remote_realm_host)s</b>.\n"
 "    "
-msgstr "\n    Click the button below to confirm your email and log in to Zulip plan management for <b>%(remote_realm_host)s</b>.\n    "
+msgstr "\n    Click the button below to confirm your email and log in to RM-connect plan management for <b>%(remote_realm_host)s</b>.\n    "
 
 #: templates/zerver/emails/remote_realm_billing_confirm_login.html:14
 #: templates/zerver/emails/remote_realm_billing_confirm_login.txt:4
@@ -2998,29 +2998,29 @@ msgid "Confirm and log in"
 msgstr "Confirm and log in"
 
 #: templates/zerver/emails/remote_realm_billing_confirm_login.subject.txt:1
-msgid "Confirm email for Zulip plan management"
-msgstr "Confirm email for Zulip plan management"
+msgid "Confirm email for RM-connect plan management"
+msgstr "Confirm email for RM-connect plan management"
 
 #: templates/zerver/emails/remote_realm_billing_confirm_login.txt:1
 #, python-format
 msgid ""
-"Click the link below to confirm your email and log in to Zulip plan "
+"Click the link below to confirm your email and log in to RM-connect plan "
 "management for %(remote_realm_host)s."
-msgstr "Click the link below to confirm your email and log in to Zulip plan management for %(remote_realm_host)s."
+msgstr "Click the link below to confirm your email and log in to RM-connect plan management for %(remote_realm_host)s."
 
 #: templates/zerver/emails/sponsorship_approved_community_plan.html:9
 #, python-format
 msgid ""
-"Your request for Zulip sponsorship has been approved! Your organization has "
-"been upgraded to the <a href=\"%(plans_link)s\">Zulip Community plan</a>."
-msgstr "Your request for Zulip sponsorship has been approved! Your organisation has been upgraded to the <a href=\"%(plans_link)s\">Zulip Community plan</a>."
+"Your request for RM-connect sponsorship has been approved! Your organization has "
+"been upgraded to the <a href=\"%(plans_link)s\">RM-connect Community plan</a>."
+msgstr "Your request for RM-connect sponsorship has been approved! Your organisation has been upgraded to the <a href=\"%(plans_link)s\">RM-connect Community plan</a>."
 
 #: templates/zerver/emails/sponsorship_approved_community_plan.html:12
 #, python-format
 msgid ""
-"If you could <a href=\"%(link_to_zulip)s\">list Zulip as a sponsor on your "
+"If you could <a href=\"%(link_to_zulip)s\">list RM-connect as a sponsor on your "
 "website</a>, we would really appreciate it!"
-msgstr "If you could <a href=\"%(link_to_zulip)s\">list Zulip as a sponsor on your website</a>, we would really appreciate it!"
+msgstr "If you could <a href=\"%(link_to_zulip)s\">list RM-connect as a sponsor on your website</a>, we would really appreciate it!"
 
 #: templates/zerver/emails/sponsorship_approved_community_plan.subject.txt:1
 #, python-format
@@ -3029,23 +3029,23 @@ msgstr "Community plan sponsorship approved for %(billing_entity)s!"
 
 #: templates/zerver/emails/sponsorship_approved_community_plan.txt:1
 msgid ""
-"Your request for Zulip sponsorship has been approved! Your organization has "
-"been upgraded to the Zulip Community plan."
-msgstr "Your request for Zulip sponsorship has been approved! Your organisation has been upgraded to the Zulip Community plan."
+"Your request for RM-connect sponsorship has been approved! Your organization has "
+"been upgraded to the RM-connect Community plan."
+msgstr "Your request for RM-connect sponsorship has been approved! Your organisation has been upgraded to the RM-connect Community plan."
 
 #: templates/zerver/emails/sponsorship_approved_community_plan.txt:4
 msgid ""
-"If you could list Zulip as a sponsor on your website, we would really "
+"If you could list RM-connect as a sponsor on your website, we would really "
 "appreciate it!"
-msgstr "If you could list Zulip as a sponsor on your website, we would really appreciate it!"
+msgstr "If you could list RM-connect as a sponsor on your website, we would really appreciate it!"
 
 #: templates/zerver/find_account.html:4
 msgid "Find your accounts"
 msgstr "Find your accounts"
 
 #: templates/zerver/find_account.html:12
-msgid "Find your Zulip accounts"
-msgstr "Find your Zulip accounts"
+msgid "Find your RM-connect accounts"
+msgstr "Find your RM-connect accounts"
 
 #: templates/zerver/find_account.html:19
 msgid ""
@@ -3065,15 +3065,15 @@ msgstr "\n                If you don't receive an email, you can\n              
 
 #: templates/zerver/find_account.html:42
 msgid ""
-"Enter your email address to receive an email with the URLs for all the Zulip"
+"Enter your email address to receive an email with the URLs for all the RM-connect"
 " Cloud organizations in which you have active accounts."
-msgstr "Enter your email address to receive an email with the URLs for all the Zulip Cloud organisations in which you have active accounts."
+msgstr "Enter your email address to receive an email with the URLs for all the RM-connect Cloud organisations in which you have active accounts."
 
 #: templates/zerver/find_account.html:44
 msgid ""
-"Enter your email address to receive an email with the URLs for all the Zulip"
+"Enter your email address to receive an email with the URLs for all the RM-connect"
 " organizations on this server in which you have active accounts."
-msgstr "Enter your email address to receive an email with the URLs for all the Zulip organisations on this server in which you have active accounts."
+msgstr "Enter your email address to receive an email with the URLs for all the RM-connect organisations on this server in which you have active accounts."
 
 #: templates/zerver/find_account.html:46
 msgid ""
@@ -3095,8 +3095,8 @@ msgid "Product"
 msgstr "Product"
 
 #: templates/zerver/footer.html:9
-msgid "Why Zulip"
-msgstr "Why Zulip"
+msgid "Why RM-connect"
+msgstr "Why RM-connect"
 
 #: templates/zerver/footer.html:10
 msgid "Features"
@@ -3179,20 +3179,20 @@ msgid "Community chat"
 msgstr "Community chat"
 
 #: templates/zerver/footer.html:45
-msgid "Zulip Cloud status"
-msgstr "Zulip Cloud status"
+msgid "RM-connect Cloud status"
+msgstr "RM-connect Cloud status"
 
 #: templates/zerver/footer.html:48
-msgid "Moving to Zulip"
-msgstr "Moving to Zulip"
+msgid "Moving to RM-connect"
+msgstr "Moving to RM-connect"
 
 #: templates/zerver/footer.html:53
-msgid "Installing a Zulip server"
-msgstr "Installing a Zulip server"
+msgid "Installing a RM-connect server"
+msgstr "Installing a RM-connect server"
 
 #: templates/zerver/footer.html:58
-msgid "Upgrading a Zulip server"
-msgstr "Upgrading a Zulip server"
+msgid "Upgrading a RM-connect server"
+msgstr "Upgrading a RM-connect server"
 
 #: templates/zerver/footer.html:65
 msgid "Contributing"
@@ -3239,8 +3239,8 @@ msgid "Blog"
 msgstr "Blog"
 
 #: templates/zerver/footer.html:96
-msgid "Support Zulip"
-msgstr "Support Zulip"
+msgid "Support RM-connect"
+msgstr "Support RM-connect"
 
 #: templates/zerver/footer.html:99
 msgid "X (Twitter)"
@@ -3255,8 +3255,8 @@ msgid "LinkedIn"
 msgstr "LinkedIn"
 
 #: templates/zerver/footer.html:111
-msgid "Powered by <a href=\"https://zulip.com\">Zulip</a>"
-msgstr "Powered by <a href=\"https://zulip.com\">Zulip</a>"
+msgid "Powered by <a href=\"https://zulip.com\">RM-connect</a>"
+msgstr "Powered by <a href=\"https://zulip.com\">RM-connect</a>"
 
 #: templates/zerver/footer.html:117
 msgid "Terms of Service"
@@ -3361,26 +3361,26 @@ msgstr "No organisation found"
 
 #: templates/zerver/invalid_realm.html:17
 #, python-format
-msgid "There is no Zulip organization at <b>%(current_url)s</b>."
-msgstr "There is no Zulip organisation at <b>%(current_url)s</b>."
+msgid "There is no RM-connect organization at <b>%(current_url)s</b>."
+msgstr "There is no RM-connect organisation at <b>%(current_url)s</b>."
 
 #: templates/zerver/invalid_realm.html:21
 #, python-format
 msgid ""
 "Please try a different URL, <a "
-"href=\"%(root_domain_url)s/accounts/find/\">get a list of your Zulip Cloud "
-"accounts</a>, or <a href=\"mailto:%(support_email)s\">contact Zulip "
+"href=\"%(root_domain_url)s/accounts/find/\">get a list of your RM-connect Cloud "
+"accounts</a>, or <a href=\"mailto:%(support_email)s\">contact RM-connect "
 "support</a>."
-msgstr "Please try a different URL, <a href=\"%(root_domain_url)s/accounts/find/\">get a list of your Zulip Cloud accounts</a>, or <a href=\"mailto:%(support_email)s\">contact Zulip support</a>."
+msgstr "Please try a different URL, <a href=\"%(root_domain_url)s/accounts/find/\">get a list of your RM-connect Cloud accounts</a>, or <a href=\"mailto:%(support_email)s\">contact RM-connect support</a>."
 
 #: templates/zerver/invalid_realm.html:23
 #, python-format
 msgid ""
 "Please try a different URL, <a "
 "href=\"%(root_domain_url)s/accounts/find/\">get a list of your accounts</a> "
-"on this server, or <a href=\"mailto:%(support_email)s\">contact this Zulip "
+"on this server, or <a href=\"mailto:%(support_email)s\">contact this RM-connect "
 "server's administrators</a>."
-msgstr "Please try a different URL, <a href=\"%(root_domain_url)s/accounts/find/\">get a list of your accounts</a> on this server, or <a href=\"mailto:%(support_email)s\">contact this Zulip server's administrators</a>."
+msgstr "Please try a different URL, <a href=\"%(root_domain_url)s/accounts/find/\">get a list of your accounts</a> on this server, or <a href=\"mailto:%(support_email)s\">contact this RM-connect server's administrators</a>."
 
 #: templates/zerver/log_into_subdomain_token_invalid.html:4
 msgid "Invalid or expired login session"
@@ -3391,8 +3391,8 @@ msgid "Invalid or expired login session."
 msgstr "Invalid or expired login session."
 
 #: templates/zerver/login.html:18
-msgid "Log in to Zulip"
-msgstr "Log in to Zulip"
+msgid "Log in to RM-connect"
+msgstr "Log in to RM-connect"
 
 #: templates/zerver/login.html:44
 msgid "View without an account"
@@ -3432,27 +3432,27 @@ msgstr "Don't have an account yet? You need to be invited to join this organisat
 
 #: templates/zerver/new_user_email_address_visibility.html:5
 msgid ""
-"Administrators of this Zulip organization will be able to see this email address.\n"
+"Administrators of this RM-connect organization will be able to see this email address.\n"
 "            "
-msgstr "Administrators of this Zulip organisation will be able to see this email address.\n            "
+msgstr "Administrators of this RM-connect organisation will be able to see this email address.\n            "
 
 #: templates/zerver/new_user_email_address_visibility.html:8
 msgid ""
-"Administrators and moderators of this Zulip organization will be able to see this email address.\n"
+"Administrators and moderators of this RM-connect organization will be able to see this email address.\n"
 "            "
-msgstr "Administrators and moderators of this Zulip organisation will be able to see this email address.\n            "
+msgstr "Administrators and moderators of this RM-connect organisation will be able to see this email address.\n            "
 
 #: templates/zerver/new_user_email_address_visibility.html:11
 msgid ""
-"Nobody in this Zulip organization will be able to see this email address.\n"
+"Nobody in this RM-connect organization will be able to see this email address.\n"
 "            "
-msgstr "Nobody in this Zulip organisation will be able to see this email address.\n            "
+msgstr "Nobody in this RM-connect organisation will be able to see this email address.\n            "
 
 #: templates/zerver/new_user_email_address_visibility.html:14
 msgid ""
-"Other users in this Zulip organization will be able to see this email address.\n"
+"Other users in this RM-connect organization will be able to see this email address.\n"
 "            "
-msgstr "Other users in this Zulip organisation will be able to see this email address.\n            "
+msgstr "Other users in this RM-connect organisation will be able to see this email address.\n            "
 
 #: templates/zerver/new_user_email_address_visibility.html:18
 msgid "Change"
@@ -3470,9 +3470,9 @@ msgstr "Organisation cannot accept new members right now"
 #, python-format
 msgid ""
 "New members cannot currently join <a "
-"href=\"%(realm_url)s\">%(realm_name)s</a> because all Zulip Cloud licenses "
+"href=\"%(realm_url)s\">%(realm_name)s</a> because all RM-connect Cloud licenses "
 "are in use."
-msgstr "New members cannot currently join <a href=\"%(realm_url)s\">%(realm_name)s</a> because all Zulip Cloud licenses are in use."
+msgstr "New members cannot currently join <a href=\"%(realm_url)s\">%(realm_name)s</a> because all RM-connect Cloud licenses are in use."
 
 #: templates/zerver/no_spare_licenses.html:19
 msgid ""
@@ -3511,18 +3511,18 @@ msgstr "Update required"
 #: templates/zerver/portico_error_pages/insecure_desktop_app.html:13
 msgid ""
 "\n"
-"            You are using old version of the Zulip desktop\n"
+"            You are using old version of the RM-connect desktop\n"
 "            app that is no longer supported.\n"
 "            "
-msgstr "\n            You are using old version of the Zulip desktop\n            app that is no longer supported.\n            "
+msgstr "\n            You are using old version of the RM-connect desktop\n            app that is no longer supported.\n            "
 
 #: templates/zerver/portico_error_pages/insecure_desktop_app.html:21
 msgid ""
 "\n"
 "            The auto-update feature in this old version of\n"
-"            Zulip desktop app no longer works.\n"
+"            RM-connect desktop app no longer works.\n"
 "            "
-msgstr "\n            The auto-update feature in this old version of\n            Zulip desktop app no longer works.\n            "
+msgstr "\n            The auto-update feature in this old version of\n            RM-connect desktop app no longer works.\n            "
 
 #: templates/zerver/portico_error_pages/insecure_desktop_app.html:30
 msgid "Download the latest release."
@@ -3560,20 +3560,20 @@ msgid ""
 msgstr "\n            Unfortunately, this is not a valid link for creating an organisation. Please <a href=\"/new/\">obtain a new link</a> and try again.\n            "
 
 #: templates/zerver/portico_error_pages/remote_realm_server_mismatch_error.html:11
-msgid "Unexpected Zulip server registration"
-msgstr "Unexpected Zulip server registration"
+msgid "Unexpected RM-connect server registration"
+msgstr "Unexpected RM-connect server registration"
 
 #: templates/zerver/portico_error_pages/remote_realm_server_mismatch_error.html:13
 #, python-format
 msgid ""
 "\n"
-"            Your Zulip organization is registered as associated with a\n"
-"            different Zulip server installation.\n"
+"            Your RM-connect organization is registered as associated with a\n"
+"            different RM-connect server installation.\n"
 "\n"
-"            Please <a href=\"mailto:%(support_email)s\">contact Zulip support</a>\n"
+"            Please <a href=\"mailto:%(support_email)s\">contact RM-connect support</a>\n"
 "            for assistance in resolving this issue.\n"
 "            "
-msgstr "\n            Your Zulip organisation is registered as associated with a\n            different Zulip server installation.\n\n            Please <a href=\"mailto:%(support_email)s\">contact Zulip support</a>\n            for assistance in resolving this issue.\n            "
+msgstr "\n            Your RM-connect organisation is registered as associated with a\n            different RM-connect server installation.\n\n            Please <a href=\"mailto:%(support_email)s\">contact RM-connect support</a>\n            for assistance in resolving this issue.\n            "
 
 #: templates/zerver/portico_error_pages/unsupported_browser.html:4
 #: templates/zerver/portico_error_pages/unsupported_browser.html:11
@@ -3584,26 +3584,26 @@ msgstr "Unsupported browser"
 #, python-format
 msgid ""
 "\n"
-"            %(browser_name)s is not supported by Zulip.\n"
+"            %(browser_name)s is not supported by RM-connect.\n"
 "            "
-msgstr "\n            %(browser_name)s is not supported by Zulip.\n            "
+msgstr "\n            %(browser_name)s is not supported by RM-connect.\n            "
 
 #: templates/zerver/portico_error_pages/unsupported_browser.html:18
 #, python-format
 msgid ""
 "\n"
-"            Zulip supports <a href=\"%(supported_browsers_page_link)s\">modern browsers</a>\n"
+"            RM-connect supports <a href=\"%(supported_browsers_page_link)s\">modern browsers</a>\n"
 "            like Firefox, Chrome, and Edge.\n"
 "            "
-msgstr "\n            Zulip supports <a href=\"%(supported_browsers_page_link)s\">modern browsers</a>\n            like Firefox, Chrome, and Edge.\n            "
+msgstr "\n            RM-connect supports <a href=\"%(supported_browsers_page_link)s\">modern browsers</a>\n            like Firefox, Chrome, and Edge.\n            "
 
 #: templates/zerver/portico_error_pages/unsupported_browser.html:24
 #, python-format
 msgid ""
 "\n"
-"            You can also use the <a href=\"%(apps_page_link)s\">Zulip desktop app</a>.\n"
+"            You can also use the <a href=\"%(apps_page_link)s\">RM-connect desktop app</a>.\n"
 "            "
-msgstr "\n            You can also use the <a href=\"%(apps_page_link)s\">Zulip desktop app</a>.\n            "
+msgstr "\n            You can also use the <a href=\"%(apps_page_link)s\">RM-connect desktop app</a>.\n            "
 
 #: templates/zerver/realm_creation_form.html:9
 #: templates/zerver/register.html:48
@@ -3660,8 +3660,8 @@ msgid "Log in to your organization"
 msgstr "Log in to your organisation"
 
 #: templates/zerver/realm_redirect.html:22
-msgid "Enter your organization's Zulip URL:"
-msgstr "Enter your organisation's Zulip URL:"
+msgid "Enter your organization's RM-connect URL:"
+msgstr "Enter your organisation's RM-connect URL:"
 
 #: templates/zerver/realm_redirect.html:25
 msgid "your-organization-url"
@@ -3719,8 +3719,8 @@ msgid "Don&rsquo;t import settings"
 msgstr "Don&rsquo;t import settings"
 
 #: templates/zerver/register.html:107
-msgid "Import settings from existing Zulip account"
-msgstr "Import settings from existing Zulip account"
+msgid "Import settings from existing RM-connect account"
+msgstr "Import settings from existing RM-connect account"
 
 #: templates/zerver/register.html:119
 msgid "Your full name"
@@ -3731,8 +3731,8 @@ msgid "Name"
 msgstr "Name"
 
 #: templates/zerver/register.html:127
-msgid "This is how your account is displayed in Zulip."
-msgstr "This is how your account is displayed in Zulip."
+msgid "This is how your account is displayed in RM-connect."
+msgstr "This is how your account is displayed in RM-connect."
 
 #: templates/zerver/register.html:141
 msgid "Enter your LDAP/Active Directory password."
@@ -3753,14 +3753,14 @@ msgid "What are you interested in?"
 msgstr "What are you interested in?"
 
 #: templates/zerver/register.html:202
-msgid "How did you first hear about Zulip?"
-msgstr "How did you first hear about Zulip?"
+msgid "How did you first hear about RM-connect?"
+msgstr "How did you first hear about RM-connect?"
 
 #: templates/zerver/register.html:204
 msgid ""
 "This value is used only if you sign up for a plan, in which case it will be "
-"sent to the Zulip team."
-msgstr "This value is used only if you sign up for a plan, in which case it will be sent to the Zulip team."
+"sent to the RM-connect team."
+msgstr "This value is used only if you sign up for a plan, in which case it will be sent to the RM-connect team."
 
 #: templates/zerver/register.html:208
 msgid "Select an option"
@@ -3859,10 +3859,10 @@ msgstr "\n            Your GitHub account also has unverified email addresses\n 
 #: templates/zerver/social_auth_select_email.html:73
 msgid ""
 "\n"
-"            To use one of these to log in to Zulip, you must first\n"
+"            To use one of these to log in to RM-connect, you must first\n"
 "            <a href=\"https://github.com/settings/emails\">verify it with GitHub.</a>\n"
 "            "
-msgstr "\n            To use one of these to log in to Zulip, you must first\n            <a href=\"https://github.com/settings/emails\">verify it with GitHub.</a>\n            "
+msgstr "\n            To use one of these to log in to RM-connect, you must first\n            <a href=\"https://github.com/settings/emails\">verify it with GitHub.</a>\n            "
 
 #: templates/zerver/unsubscribe_link_error.html:4
 msgid "Error unsubscribing email"
@@ -3895,10 +3895,10 @@ msgstr "Email settings updated"
 #, python-format
 msgid ""
 "\n"
-"                    You've successfully unsubscribed from Zulip %(subscription_type)s emails for\n"
+"                    You've successfully unsubscribed from RM-connect %(subscription_type)s emails for\n"
 "                    <a href=\"%(realm_url)s\">%(realm_name)s</a>.\n"
 "                    "
-msgstr "\n                    You've successfully unsubscribed from Zulip %(subscription_type)s emails for\n                    <a href=\"%(realm_url)s\">%(realm_name)s</a>.\n                    "
+msgstr "\n                    You've successfully unsubscribed from RM-connect %(subscription_type)s emails for\n                    <a href=\"%(realm_url)s\">%(realm_name)s</a>.\n                    "
 
 #: templates/zerver/unsubscribe_success.html:27
 #, python-format
@@ -3910,12 +3910,12 @@ msgid ""
 msgstr "\n                    You can undo this change or review your preferences in your\n                    <a href=\"%(realm_url)s/#settings/notifications\">notification settings</a>.\n                    "
 
 #: zerver/actions/create_realm.py:314
-msgid "Questions and discussion about using Zulip."
-msgstr "Questions and discussion about using Zulip."
+msgid "Questions and discussion about using RM-connect."
+msgstr "Questions and discussion about using RM-connect."
 
 #: zerver/actions/create_realm.py:320
-msgid "Experiment with Zulip here. :test_tube:"
-msgstr "Experiment with Zulip here. :test_tube:"
+msgid "Experiment with RM-connect here. :test_tube:"
+msgstr "Experiment with RM-connect here. :test_tube:"
 
 #: zerver/actions/create_realm.py:326
 msgid "For team-wide conversations"
@@ -3932,8 +3932,8 @@ msgstr "{user} joined this organisation."
 
 #: zerver/actions/create_user.py:305
 #, python-brace-format
-msgid "{user} accepted your invitation to join Zulip!"
-msgstr "{user} accepted your invitation to join Zulip!"
+msgid "{user} accepted your invitation to join RM-connect!"
+msgstr "{user} accepted your invitation to join RM-connect!"
 
 #: zerver/actions/create_user.py:696
 msgid ""
@@ -4010,9 +4010,9 @@ msgstr "This default channel group is already named '{group_name}'"
 
 #: zerver/actions/invites.py:134
 msgid ""
-"To protect users, Zulip limits the number of invitations you can send in one"
+"To protect users, RM-connect limits the number of invitations you can send in one"
 " day. Because you have reached the limit, no invitations were sent."
-msgstr "To protect users, Zulip limits the number of invitations you can send in one day. Because you have reached the limit, no invitations were sent."
+msgstr "To protect users, RM-connect limits the number of invitations you can send in one day. Because you have reached the limit, no invitations were sent."
 
 #: zerver/actions/invites.py:211
 msgid ""
@@ -4485,10 +4485,10 @@ msgstr "Email addresses containing + are not allowed in this organisation."
 
 #: zerver/forms.py:313
 msgid ""
-"New members cannot join this organization because all Zulip licenses are in "
+"New members cannot join this organization because all RM-connect licenses are in "
 "use. Please contact the person who invited you and ask them to increase the "
 "number of licenses, then try again."
-msgstr "New members cannot join this organisation because all Zulip licenses are in use. Please contact the person who invited you and ask them to increase the number of licenses, then try again."
+msgstr "New members cannot join this organisation because all RM-connect licenses are in use. Please contact the person who invited you and ask them to increase the number of licenses, then try again."
 
 #: zerver/forms.py:332
 msgid "New password"
@@ -4524,8 +4524,8 @@ msgid "Please enter at most 10 emails."
 msgstr "Please enter at most 10 emails."
 
 #: zerver/forms.py:584
-msgid "We couldn't find that Zulip organization."
-msgstr "We couldn't find that Zulip organisation."
+msgid "We couldn't find that RM-connect organization."
+msgstr "We couldn't find that RM-connect organisation."
 
 #: zerver/lib/addressee.py:21
 #, python-brace-format
@@ -4631,8 +4631,8 @@ msgid "Email with no subject"
 msgstr "Email with no subject"
 
 #: zerver/lib/email_notifications.py:140 zerver/lib/email_notifications.py:162
-msgid "Open Zulip to see the spoiler content"
-msgstr "Open Zulip to see the spoiler content"
+msgid "Open RM-connect to see the spoiler content"
+msgstr "Open RM-connect to see the spoiler content"
 
 #: zerver/lib/email_notifications.py:583
 #, python-brace-format
@@ -4866,9 +4866,9 @@ msgstr "Reaction doesn't exist."
 
 #: zerver/lib/exceptions.py:642
 msgid ""
-"Your organization is registered to a different Zulip server. Please contact "
-"Zulip support for assistance in resolving this issue."
-msgstr "Your organisation is registered to a different Zulip server. Please contact Zulip support for assistance in resolving this issue."
+"Your organization is registered to a different RM-connect server. Please contact "
+"RM-connect support for assistance in resolving this issue."
+msgstr "Your organisation is registered to a different RM-connect server. Please contact RM-connect support for assistance in resolving this issue."
 
 #: zerver/lib/exceptions.py:656
 msgid "Organization not registered"
@@ -5027,8 +5027,8 @@ msgstr "Operand {operand} not supported."
 #, python-brace-format
 msgid ""
 "\n"
-"To learn more, check out our [using Zulip for a class guide]({getting_started_url})!\n"
-msgstr "\nTo learn more, check out our [using Zulip for a class guide]({getting_started_url})!\n"
+"To learn more, check out our [using RM-connect for a class guide]({getting_started_url})!\n"
+msgstr "\nTo learn more, check out our [using RM-connect for a class guide]({getting_started_url})!\n"
 
 #: zerver/lib/onboarding.py:57
 #, python-brace-format
@@ -5041,15 +5041,15 @@ msgstr "\nTo learn more, check out our [getting started guide]({getting_started_
 #, python-brace-format
 msgid ""
 "\n"
-"We also have a guide for [setting up Zulip for a class]({organization_setup_url}).\n"
-msgstr "\nWe also have a guide for [setting up Zulip for a class]({organization_setup_url}).\n"
+"We also have a guide for [setting up RM-connect for a class]({organization_setup_url}).\n"
+msgstr "\nWe also have a guide for [setting up RM-connect for a class]({organization_setup_url}).\n"
 
 #: zerver/lib/onboarding.py:69
 #, python-brace-format
 msgid ""
 "\n"
-"We also have a guide for [moving your organization to Zulip]({organization_setup_url}).\n"
-msgstr "\nWe also have a guide for [moving your organisation to Zulip]({organization_setup_url}).\n"
+"We also have a guide for [moving your organization to RM-connect]({organization_setup_url}).\n"
+msgstr "\nWe also have a guide for [moving your organisation to RM-connect]({organization_setup_url}).\n"
 
 #: zerver/lib/onboarding.py:76
 #, python-brace-format
@@ -5070,20 +5070,20 @@ msgstr "\nI've kicked off some conversations to help you get started. You can fi
 #, python-brace-format
 msgid ""
 "\n"
-"Hello, and welcome to Zulip!👋 {inform_about_tracked_onboarding_messages_text}\n"
+"Hello, and welcome to RM-connect!👋 {inform_about_tracked_onboarding_messages_text}\n"
 "\n"
 "{getting_started_text} {organization_setup_text}\n"
 "\n"
 "{demo_organization_text}\n"
 "\n"
-msgstr "\nHello, and welcome to Zulip!👋 {inform_about_tracked_onboarding_messages_text}\n\n{getting_started_text} {organization_setup_text}\n\n{demo_organization_text}\n\n"
+msgstr "\nHello, and welcome to RM-connect!👋 {inform_about_tracked_onboarding_messages_text}\n\n{getting_started_text} {organization_setup_text}\n\n{demo_organization_text}\n\n"
 
 #: zerver/lib/onboarding.py:133
 msgid ""
 "\n"
 "You can [download](/apps/) the [mobile and desktop apps](/apps/).\n"
-"Zulip also works great in a browser.\n"
-msgstr "\nYou can [download](/apps/) the [mobile and desktop apps](/apps/).\nZulip also works great in a browser.\n"
+"RM-connect also works great in a browser.\n"
+msgstr "\nYou can [download](/apps/) the [mobile and desktop apps](/apps/).\nRM-connect also works great in a browser.\n"
 
 #: zerver/lib/onboarding.py:138
 msgid ""
@@ -5097,9 +5097,9 @@ msgid ""
 "\n"
 "You can switch between [light and dark theme](/help/dark-theme), [pick your\n"
 "favorite emoji set](/help/emoji-and-emoticons#change-your-emoji-set), [change\n"
-"your language](/help/change-your-language), and otherwise customize your Zulip\n"
+"your language](/help/change-your-language), and otherwise customize your RM-connect\n"
 "experience in your [Preferences](#settings/preferences).\n"
-msgstr "\nYou can switch between [light and dark theme](/help/dark-theme), [pick your\nfavorite emoji set](/help/emoji-and-emoticons#change-your-emoji-set), [change\nyour language](/help/change-your-language), and otherwise customise your Zulip\nexperience in your [Preferences](#settings/preferences).\n"
+msgstr "\nYou can switch between [light and dark theme](/help/dark-theme), [pick your\nfavorite emoji set](/help/emoji-and-emoticons#change-your-emoji-set), [change\nyour language](/help/change-your-language), and otherwise customise your RM-connect\nexperience in your [Preferences](#settings/preferences).\n"
 
 #: zerver/lib/onboarding.py:150
 #, python-brace-format
@@ -5114,8 +5114,8 @@ msgstr "\nChannels organise conversations based on who needs to see them. For ex
 #: zerver/lib/onboarding.py:157
 msgid ""
 "\n"
-"[Topics](/help/introduction-to-topics) summarize what each conversation in Zulip\n"
-"is about. You can read Zulip one topic at a time, seeing each message in\n"
+"[Topics](/help/introduction-to-topics) summarize what each conversation in RM-connect\n"
+"is about. You can read RM-connect one topic at a time, seeing each message in\n"
 "context, no matter how many other conversations are going on.\n"
 "\n"
 "When you start a conversation, label it with a new topic. For a good topic name,\n"
@@ -5123,16 +5123,16 @@ msgid ""
 "\n"
 "Check out [Recent conversations](#recent) for a list of topics that are being\n"
 "discussed.\n"
-msgstr "\n[Topics](/help/introduction-to-topics) summarise what each conversation in Zulip\nis about. You can read Zulip one topic at a time, seeing each message in\ncontext, no matter how many other conversations are going on.\n\nWhen you start a conversation, label it with a new topic. For a good topic name,\nthink about finishing the sentence: “Hey, can we chat about…?”\n\nCheck out [Recent conversations](#recent) for a list of topics that are being\ndiscussed.\n"
+msgstr "\n[Topics](/help/introduction-to-topics) summarise what each conversation in RM-connect\nis about. You can read RM-connect one topic at a time, seeing each message in\ncontext, no matter how many other conversations are going on.\n\nWhen you start a conversation, label it with a new topic. For a good topic name,\nthink about finishing the sentence: “Hey, can we chat about…?”\n\nCheck out [Recent conversations](#recent) for a list of topics that are being\ndiscussed.\n"
 
 #: zerver/lib/onboarding.py:169
 msgid ""
 "\n"
-"Zulip's [keyboard shortcuts](#keyboard-shortcuts) let you navigate the app\n"
+"RM-connect's [keyboard shortcuts](#keyboard-shortcuts) let you navigate the app\n"
 "quickly and efficiently.\n"
 "\n"
 "Press `?` any time to see a [cheat sheet](#keyboard-shortcuts).\n"
-msgstr "\nZulip's [keyboard shortcuts](#keyboard-shortcuts) let you navigate the app\nquickly and efficiently.\n\nPress `?` any time to see a [cheat sheet](#keyboard-shortcuts).\n"
+msgstr "\nRM-connect's [keyboard shortcuts](#keyboard-shortcuts) let you navigate the app\nquickly and efficiently.\n\nPress `?` any time to see a [cheat sheet](#keyboard-shortcuts).\n"
 
 #: zerver/lib/onboarding.py:176
 msgid ""
@@ -5181,25 +5181,25 @@ msgstr "\n:point_right: Try moving this message to another topic and back.\n"
 #, python-brace-format
 msgid ""
 "\n"
-"Zulip is organized to help you communicate more efficiently. Conversations are\n"
+"RM-connect is organized to help you communicate more efficiently. Conversations are\n"
 "labeled with topics, which summarize what the conversation is about.\n"
 "\n"
 "For example, this message is in the “{topic_name}” topic in the\n"
 "#**{zulip_discussion_channel_name}** channel, as you can see in the left sidebar\n"
 "and above.\n"
-msgstr "\nZulip is organised to help you communicate more efficiently. Conversations are\nlabeled with topics, which summarise what the conversation is about.\n\nFor example, this message is in the “{topic_name}” topic in the\n#**{zulip_discussion_channel_name}** channel, as you can see in the left sidebar\nand above.\n"
+msgstr "\nRM-connect is organised to help you communicate more efficiently. Conversations are\nlabeled with topics, which summarise what the conversation is about.\n\nFor example, this message is in the “{topic_name}” topic in the\n#**{zulip_discussion_channel_name}** channel, as you can see in the left sidebar\nand above.\n"
 
 #: zerver/lib/onboarding.py:271 zerver/lib/onboarding.py:322
 #: zerver/lib/onboarding.py:394
-msgid "welcome to Zulip!"
-msgstr "welcome to Zulip!"
+msgid "welcome to RM-connect!"
+msgstr "welcome to RM-connect!"
 
 #: zerver/lib/onboarding.py:274
 msgid ""
 "\n"
-"You can read Zulip one conversation at a time, seeing each message in context,\n"
+"You can read RM-connect one conversation at a time, seeing each message in context,\n"
 "no matter how many other conversations are going on.\n"
-msgstr "\nYou can read Zulip one conversation at a time, seeing each message in context,\nno matter how many other conversations are going on.\n"
+msgstr "\nYou can read RM-connect one conversation at a time, seeing each message in context,\nno matter how many other conversations are going on.\n"
 
 #: zerver/lib/onboarding.py:279
 msgid ""
@@ -5231,8 +5231,8 @@ msgstr "\n:point_right: Try starting a new conversation in this channel.\n"
 #, python-brace-format
 msgid ""
 "\n"
-":point_right:  Use this topic to try out [Zulip's messaging features]({format_message_help_url}).\n"
-msgstr "\n:point_right:  Use this topic to try out [Zulip's messaging features]({format_message_help_url}).\n"
+":point_right:  Use this topic to try out [RM-connect's messaging features]({format_message_help_url}).\n"
+msgstr "\n:point_right:  Use this topic to try out [RM-connect's messaging features]({format_message_help_url}).\n"
 
 #: zerver/lib/onboarding.py:304
 #, python-brace-format
@@ -5353,8 +5353,8 @@ msgstr "User not authorised for this query"
 
 #: zerver/lib/recipient_users.py:90
 #, python-brace-format
-msgid "'{email}' is no longer using Zulip."
-msgstr "'{email}' is no longer using Zulip."
+msgid "'{email}' is no longer using RM-connect."
+msgstr "'{email}' is no longer using RM-connect."
 
 #: zerver/lib/recipient_users.py:97
 msgid "You can't send direct messages outside of your organization."
@@ -5933,8 +5933,8 @@ msgid "Custom emoji"
 msgstr "Custom emoji"
 
 #: zerver/models/messages.py:351
-msgid "Zulip extra emoji"
-msgstr "Zulip extra emoji"
+msgid "RM-connect extra emoji"
+msgstr "RM-connect extra emoji"
 
 #: zerver/models/realm_emoji.py:42
 msgid "Invalid characters in emoji name"
@@ -5965,16 +5965,16 @@ msgid "channel events"
 msgstr "channel events"
 
 #: zerver/models/realms.py:406
-msgid "Zulip updates"
-msgstr "Zulip updates"
+msgid "RM-connect updates"
+msgstr "RM-connect updates"
 
 #: zerver/models/realms.py:532
-msgid "Available on Zulip Cloud Standard. Upgrade to access."
-msgstr "Available on Zulip Cloud Standard. Upgrade to access."
+msgid "Available on RM-connect Cloud Standard. Upgrade to access."
+msgstr "Available on RM-connect Cloud Standard. Upgrade to access."
 
 #: zerver/models/realms.py:533
-msgid "Available on Zulip Cloud Plus. Upgrade to access."
-msgstr "Available on Zulip Cloud Plus. Upgrade to access."
+msgid "Available on RM-connect Cloud Plus. Upgrade to access."
+msgstr "Available on RM-connect Cloud Plus. Upgrade to access."
 
 #: zerver/models/realms.py:593
 msgid "GIPHY integration disabled"
@@ -6238,9 +6238,9 @@ msgstr "You do not have permission to subscribe other users to channels."
 
 #: zerver/views/invite.py:143
 msgid ""
-"Some of those addresses are already using Zulip, so we didn't send them an "
+"Some of those addresses are already using RM-connect, so we didn't send them an "
 "invitation. We did send invitations to everyone else!"
-msgstr "Some of those addresses are already using Zulip, so we didn't send them an invitation. We did send invitations to everyone else!"
+msgstr "Some of those addresses are already using RM-connect, so we didn't send them an invitation. We did send invitations to everyone else!"
 
 #: zerver/views/message_edit.py:104
 msgid "Message edit history is disabled in this organization"
@@ -6670,8 +6670,8 @@ msgid "Invalid email batching period: {seconds} seconds"
 msgstr "Invalid email batching period: {seconds} seconds"
 
 #: zerver/views/user_settings.py:352
-msgid "Your Zulip password is managed in LDAP"
-msgstr "Your Zulip password is managed in LDAP"
+msgid "Your RM-connect password is managed in LDAP"
+msgstr "Your RM-connect password is managed in LDAP"
 
 #: zerver/views/user_settings.py:362
 msgid "Wrong password!"
@@ -6889,8 +6889,8 @@ msgid "Invalid subdomain for push notifications bouncer"
 msgstr "Invalid subdomain for push notifications bouncer"
 
 #: zilencer/auth.py:118
-msgid "Must validate with valid Zulip server API key"
-msgstr "Must validate with valid Zulip server API key"
+msgid "Must validate with valid RM-connect server API key"
+msgstr "Must validate with valid RM-connect server API key"
 
 #. error
 #: zilencer/views.py:98 zilencer/views.py:100
