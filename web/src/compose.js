@@ -212,6 +212,7 @@ export let send_message = (request = create_message_object()) => {
 
     function success(data) {
         send_message_success(request, data);
+        window.scrollTo(0, document.body.scrollHeight);
     }
 
     function error(response, server_error_code) {

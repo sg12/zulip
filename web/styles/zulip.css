@@ -558,22 +558,22 @@ body.has-overlay-scrollbar {
     }
 
     .column-video {
-        flex: 1 1 auto; 
+        flex: 1 1 auto;
         min-height: 400px;
         max-height: 65vh;
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        margin-left: 5px; 
-        margin-right: 5px; 
-        width: 38%; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 5px;
+        margin-right: 5px;
+        width: 38%;
         top: calc((var(--header-padding-bottom) - 3px));
         margin-right: var(--right-sidebar-width);
         overflow: hidden;
         margin-bottom: var(--header-height);
-        position: "fixed"; 
+        position: "fixed";
     }
-/* 
+/*
     #floating-video-container {
         position: fixed;
         bottom: 20px;
@@ -1199,7 +1199,7 @@ nav {
 
 #bottom_whitespace {
     display: block;
-    height: var(--max-unmaximized-compose-height);
+    height: 83px;
 }
 
 .operator_value {
