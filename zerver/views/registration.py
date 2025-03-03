@@ -121,6 +121,8 @@ from zproject.backends import (
     password_auth_enabled,
 )
 
+from zerver.views.streams import bulk_add_subscriptions
+
 
 @typed_endpoint
 def get_prereg_key_and_redirect(
@@ -1175,7 +1177,7 @@ def accounts_home(
     return render(request, "zerver/accounts_home.html", context=context)
 
 
-def accounts_home_from_multiuse_invite(request: HttpRequest, confirmation_key: str) -> HttpResponse:
+def accounts_home_from_multiuse_invite2(request: HttpRequest, confirmation_key: str) -> HttpResponse:
     realm = get_realm_from_request(request)
     multiuse_object: MultiuseInvite | None = None
     logging.info("-------accounts_home_from_multiuse_invite-------")
@@ -1195,6 +1197,91 @@ def accounts_home_from_multiuse_invite(request: HttpRequest, confirmation_key: s
         request, multiuse_object_key=confirmation_key, multiuse_object=multiuse_object
     )
 
+def accounts_home_from_multiuse_invite3(request: HttpRequest, confirmation_key: str) -> HttpResponse:
+    realm = get_realm_from_request(request)
+    multiuse_object: MultiuseInvite | None = None
+    logging.info("-------accounts_home_from_multiuse_invite-------")
+
+    try:
+        confirmation_obj = get_object_from_key(
+            confirmation_key, [Confirmation.MULTIUSE_INVITE], mark_object_used=False
+        )
+        assert isinstance(confirmation_obj, MultiuseInvite)
+        multiuse_object = confirmation_obj
+        if realm != multiuse_object.realm:
+            return render(request, "confirmation/link_does_not_exist.html", status=404)
+    except ConfirmationKeyError as exception:
+        if realm is None or realm.invite_required:
+            return render_confirmation_key_error(request, exception)
+
+    # Проверяем, аутентифицирован ли пользователь и находится ли он в реалме
+    if request.user.is_authenticated:
+        user_profile: UserProfile = request.user
+        if user_profile.realm == multiuse_object.realm:
+            if not user_profile.is_active:
+                return render(request, "confirmation/User account is deactivated", status=404)
+            # Извлекаем каналы из приглашения
+            streams = list(multiuse_object.streams.all())
+            if streams:
+                # Подписываем пользователя на каналы
+                do_subscribe_users_to_streams(user_profile, streams)
+                return HttpResponseRedirect(mark_sanitized(user_profile.realm.url) + reverse("home"))
+            return render(request, "confirmation/No streams specified in the invite", status=404)
+
+    # Существующая логика для новых пользователей
+    return accounts_home(
+        request, multiuse_object_key=confirmation_key, multiuse_object=multiuse_object
+    )
+
+def accounts_home_from_multiuse_invite(request: HttpRequest, confirmation_key: str) -> HttpResponse:
+    realm = get_realm_from_request(request)
+    multiuse_object: MultiuseInvite | None = None
+    logging.info("-------accounts_home_from_multiuse_invite-------")
+    
+    try:
+        confirmation_obj = get_object_from_key(
+            confirmation_key, [Confirmation.MULTIUSE_INVITE], mark_object_used=False
+        )
+        assert isinstance(confirmation_obj, MultiuseInvite)
+        multiuse_object = confirmation_obj
+        if realm != multiuse_object.realm:
+            return render(request, "confirmation/link_does_not_exist.html", status=404)
+    except ConfirmationKeyError as exception:
+        if realm is None or realm.invite_required:
+            return render_confirmation_key_error(request, exception)
+
+    # Проверяем, аутентифицирован ли пользователь
+    if request.user.is_authenticated:
+        user_profile: UserProfile = request.user
+        if user_profile.realm == multiuse_object.realm:
+            if not user_profile.is_active:
+                return render(request, "confirmation/User account is deactivated", status=404)
+            
+            # Извлекаем каналы из приглашения
+            streams = list(multiuse_object.streams.all())
+            if not streams:
+                return render(request, "confirmation/No streams specified in the invite", status=404)
+            
+            # Подписываем пользователя на каналы с помощью bulk_add_subscriptions
+            subscribed, already_subscribed = bulk_add_subscriptions(
+                realm=realm,
+                streams=streams,
+                users=[user_profile],
+                acting_user=user_profile,  # Указываем текущего пользователя как инициатора
+            )
+            
+            # Формируем список подписанных стримов
+            subscribed_streams = [sub_info.stream.name for sub_info in subscribed]
+            # return json_success({
+            #     "message": f"Successfully subscribed to {len(subscribed_streams)} stream(s)",
+            #     "subscribed_streams": subscribed_streams,
+            # })
+            return HttpResponseRedirect(mark_sanitized(user_profile.realm.url) + reverse("home"))
+
+    # Для новых пользователей передаём управление в accounts_home
+    return accounts_home(
+        request, multiuse_object_key=confirmation_key, multiuse_object=multiuse_object
+    )
 
 @typed_endpoint_without_parameters
 def find_account(request: HttpRequest) -> HttpResponse:
