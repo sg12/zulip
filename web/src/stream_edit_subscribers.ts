@@ -126,7 +126,20 @@ export function enable_subscriber_management({
 
     const user_ids = peer_data.get_subscribers(stream_id);
     const user_can_remove_subscribers = stream_data.can_unsubscribe_others(sub);
+    const is_stream_owner = current_user.user_id === sub.creator_id; // Проверяем, является ли пользователь владельцем
 
+    console.log("-------is_stream_owner: " + is_stream_owner);
+
+    // Рендерим интерфейс с кнопкой "Create Invite Link"
+    $parent_container.find(".subscriber-list-box").html(
+        render_stream_members_table({
+            can_remove_subscribers: user_can_remove_subscribers,
+        }),
+    );
+
+    if (is_stream_owner != true) {
+        $parent_container.find("#generate-invite-link-btn").hide();
+    }
     // We track a single subscribers_list_widget for this module, since we
     // only ever have one list of subscribers visible at a time.
     subscribers_list_widget = make_list_widget({
@@ -475,4 +488,61 @@ export function initialize(): void {
             remove_subscriber({stream_id, target_user_id, $list_entry});
         },
     );
+
+    // Обработчик для кнопки "Create Invite Link"
+    $("#channels_overlay_container").on("click", "#generate-invite-link-btn", function () {
+        generate_stream_invite_link();
+    });
+}
+
+import ClipboardJS from "clipboard";
+import render_copy_invite_link from "../templates/copy_invite_link.hbs";
+import * as channel from "./channel.ts";
+import * as ui_report from "./ui_report.ts";
+import { show_copied_confirmation } from "./copied_tooltip.ts";
+import { csrf_token } from "./csrf.ts";
+
+function generate_stream_invite_link(): void {
+    const $invite_status = $(".stream_subscription_request_result").expectOne();
+
+    // Данные для запроса, упрощённые для текущего канала
+    const data = {
+        csrfmiddlewaretoken: csrf_token,
+        stream_ids: JSON.stringify([current_stream_id]), // Только текущий канал
+        invite_expires_in_minutes: JSON.stringify(1440), // 1 день по умолчанию
+    };
+
+    // Функция перед отправкой (аналог beforeSend из invite.ts)
+    function beforeSend(): void {
+        $invite_status.empty().text("Creating link…").addClass("text-loading");
+    }
+
+    void channel.post({
+        url: "/json/invites/multiuse",
+        data,
+        beforeSend,
+        success(data) {
+            const copy_link_html = render_copy_invite_link(data); // Используем шаблон из invite.ts
+            ui_report.success(copy_link_html, $invite_status);
+            const clipboard = new ClipboardJS("#copy_generated_invite_link");
+
+            clipboard.on("success", () => {
+                const copyButton = document.querySelector("#copy_generated_invite_link");
+                if (copyButton) {
+                    show_copied_confirmation(copyButton, {
+                        show_check_icon: true,
+                        timeout_in_ms: 800,
+                    });
+                } else {
+                    console.error("Element #copy_generated_invite_link not found in DOM");
+                }
+            });
+        },
+        error(xhr) {
+            ui_report.error("Failed to generate invite link", xhr, $invite_status);
+        },
+        complete() {
+            $invite_status.removeClass("text-loading");
+        },
+    });
 }
