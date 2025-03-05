@@ -464,13 +464,13 @@ $user_status_emoji_width: 24px;
     }
 }
 
-.right-sidebar-items:first-of-type #userlist-header {
+/* .right-sidebar-items:first-of-type #userlist-header {
     border-top: none;
 }
 .buddy-list-subsection-header,
 .empty-list-message{
     display: none;
-}
+} */
 #userlist-header {
     cursor: pointer;
     display: grid;
