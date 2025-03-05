@@ -1,15 +1,57 @@
 <div class="add_subscribers_container">
     <div class="pill-container person_picker">
         <div class="input" contenteditable="true"
-          data-placeholder="{{t 'Add subscribers. Use usergroup or #channelname to bulk add subscribers.' }}">
+            data-placeholder="{{t 'Add subscribers. Use usergroup or #channelname to bulk add subscribers.' }}">
             {{~! Squash whitespace so that placeholder is displayed when empty. ~}}
         </div>
     </div>
     {{#if (not hide_add_button)}}
-        <div class="add_subscriber_button_wrapper inline-block">
-            <button type="submit" name="add_subscriber" class="button add-subscriber-button add-users-button small rounded sea-green" tabindex="0">
-                {{t 'Add' }}
-            </button>
-        </div>
+    <div class="add_subscriber_button_wrapper inline-block">
+        <button type="submit" name="add_subscriber"
+            class="button add-subscriber-button add-users-button small rounded sea-green" tabindex="0">
+            {{t 'Add' }}
+        </button>
+        <button id="generate-invite-link-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M10 13a5 5 0 0 1 7 0l1 1a5 5 0 0 1 0 7 5 5 0 0 1-7 0" />
+                <path d="M14 11a5 5 0 0 1-7 0l-1-1a5 5 0 0 1 0-7 5 5 0 0 1 7 0" />
+            </svg>
+        </button>
+    </div>
     {{/if}}
 </div>
+
+<style>  /* Я не знаю куда ещё это пихнуть */
+    .invite-button {
+        background-color: #293649;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        /* для stroke="currentColor" */
+        padding: 8px;
+        cursor: pointer;
+        transition:
+            background-color 0.2s ease-in-out;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: inherit;
+        font-size: 16px;
+    }
+
+    .invite-button:hover {
+        background-color: #2a7c36;
+    }
+
+    .invite-button:active {
+        background-color: #2b507b;
+    }
+
+    .invite-button svg {
+        /* Если нужно масштабировать
+            иконку вместе со шрифтом */
+        width: 1em;
+        height: 1em;
+    }
+</style>
