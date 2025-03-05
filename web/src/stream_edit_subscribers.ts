@@ -136,7 +136,9 @@ export function enable_subscriber_management({
             can_remove_subscribers: user_can_remove_subscribers,
         }),
     );
-
+    
+    const $button = $parent_container.find("#generate-invite-link-btn");
+    $button.text($t({defaultMessage: "Create link"}))
     if (is_stream_owner != true) {
         $parent_container.find("#generate-invite-link-btn").hide();
     }
