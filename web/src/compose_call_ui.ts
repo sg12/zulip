@@ -420,7 +420,7 @@ function addListenersVideo() {
         document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-camera`)?.addEventListener("click", () => {toggleCameraHandler});
 
         document.querySelector(`[data-stream-id="${narrow_state.stream_id()}"][data-topic-name="${narrow_state.topic()}"] #toggle-screen`)?.addEventListener("click", () => {toggleScreenHandler});
-        
+
         const currentParticipants = api.getParticipantsInfo();
         console.log("Список участников при присоединении:", currentParticipants);
 
@@ -903,7 +903,7 @@ export function showEnterButton(url: string, topic_name: string) {
     enterButton.style.borderRadius = "5px";
     enterButton.style.cursor = "pointer";
     enterButton.style.fontSize = "16px";
-    enterButton.style.zIndex = "10001";
+    enterButton.style.zIndex = "5";
     enterButton.id = "enter-button";
 
     // Добавляем элементы в body
