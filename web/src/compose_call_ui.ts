@@ -605,8 +605,14 @@ export function clickLeftSidebar(isSameTopic: boolean) {
         if (topicLabel) topicLabel.remove();
     }
 
+    const currentTopicName = narrow_state.topic();
     if (currentVideoCallRoom && currentVideoCallRoom.streamId === narrow_state.stream_id()) {
-        updateButtonHandlers(true);
+        if (currentTopicName?.startsWith("🔊")) {
+            updateButtonHandlers(true);
+        } else if (currentTopicName?.startsWith("✏️")) {
+            //  Не удаляем customControls, если комната является текстовой
+            updateButtonHandlers();
+        }
     }
     // if (!isSameTopic && !isFloatingVideo)
     // moveVideoToCorner();
@@ -625,14 +631,18 @@ function updateButtonHandlers(force: boolean = false) {
     if (!currentVideoCallRoom) return;
 
     if (force) {
-        // Удаляем предыдущие кнопки, если они существуют
-        const previousControls = document.querySelectorAll(`[data-stream-id="${currentVideoCallRoom.streamId}"][data-topic-name="${currentVideoCallRoom.topicName}"] #custom-controls`);
-        previousControls.forEach(control => control.remove());
+        // Скрываем предыдущие кнопки, если они существуют
+        const controls = document.querySelector(`[data-stream-id="${currentVideoCallRoom.streamId}"][data-topic-name="${currentVideoCallRoom.topicName}"] #custom-controls`);
+        if (controls) {
+            controls.style.display = "none";
+        }
     }
 
-    const controls = document.querySelector(`[data-stream-id="${currentVideoCallRoom.streamId}"][data-topic-name="${currentVideoCallRoom.topicName}"] #custom-controls`);
-    if (controls) {
-        controls.style.display = "flex";
+    if (!force) {
+        const controls = document.querySelector(`[data-stream-id="${currentVideoCallRoom.streamId}"][data-topic-name="${currentVideoCallRoom.topicName}"] #custom-controls`);
+        if (controls) {
+            controls.style.display = "flex";
+        }
     }
 
     // Удаляем старые обработчики событий для кнопок
