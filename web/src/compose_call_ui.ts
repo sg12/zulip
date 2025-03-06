@@ -435,6 +435,12 @@ function addListenersVideo() {
         })
         removeLoadBar();
         videoContainer.style.display = "block";
+        setTimeout(() => {
+            api.executeCommand('setNoiseSuppressionEnabled', {
+                enabled: true
+            });
+            console.log('Noise suppression enabled after joining conference');
+        }, 1000); // Задержка 1 секунда после присоединения
     });
 
     // Подписываемся на события изменения статуса микрофона, камеры и шаринга экрана

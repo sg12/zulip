@@ -2168,7 +2168,7 @@ body:not(.hide-left-sidebar) {
 .zulip-icon-settings {
     width: 20px;
     height: 20px;
-    background-image: url('/static/images/icons/settings.svg');
+    background-image: url("../images/icons/settings.svg");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
