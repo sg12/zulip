@@ -2164,3 +2164,12 @@ body:not(.hide-left-sidebar) {
         border: 1px solid var(--color-border-personal-menu-avatar);
     }
 }
+
+.zulip-icon-settings {
+    width: 20px;
+    height: 20px;
+    background-image: url('/static/images/icons/settings.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}

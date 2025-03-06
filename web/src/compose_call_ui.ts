@@ -644,6 +644,26 @@ function updateButtonHandlers(force: boolean = false) {
             controls.style.display = "flex";
         }
     }
+	
+	
+	// Добавляем кнопку настроек-шестерёнки в header
+    const spectatorButtons = document.querySelector('.spectator_login_buttons');
+    if (spectatorButtons) {
+        // Проверяем, нет ли уже кнопки настроек
+        let settingsButton = document.querySelector('#settings-toggle-button') as HTMLElement;
+        if (!settingsButton) {
+            settingsButton = document.createElement('div');
+            settingsButton.id = 'settings-toggle-button';
+            settingsButton.className = 'header-button navbar-item';
+            settingsButton.setAttribute('role', 'button');
+            settingsButton.setAttribute('tabindex', '0');
+            settingsButton.innerHTML = '<i class="zulip-icon zulip-icon-settings"></i>';
+            spectatorButtons.appendChild(settingsButton);
+
+            // Добавляем обработчик
+            settingsButton.addEventListener('click', toggleSettingsHandler);
+        }
+    }
 
     // Удаляем старые обработчики событий для кнопок
     const micButton = document.querySelector(`[data-stream-id="${currentVideoCallRoom.streamId}"][data-topic-name="${currentVideoCallRoom.topicName}"] #toggle-mic`);
@@ -755,6 +775,10 @@ function clearButtonsAndPropsForVideo() {
     // const topicLabel = document.getElementById("video-room-overlay");
     // if (topicLabel) topicLabel.remove();
     removeLoadBar();
+	
+	// удиление кнопки настроек-шестерёнки
+	const settingsButton = document.querySelector('#settings-toggle-button');
+    if (settingsButton) settingsButton.remove();
 }
 
 function showLoadBar(loadContainer: HTMLElement) {
@@ -779,6 +803,59 @@ function removeLoadBar() {
     if (loadingBar)
         loadingBar.remove();
 }
+
+function addSettingsButton() {
+    const settingsButton = document.createElement("div");
+    settingsButton.id = 'settings-toggle-button';
+    settingsButton.className = 'header-button navbar-item';
+    settingsButton.setAttribute('role', 'button');
+    settingsButton.setAttribute('tabindex', '0');
+    settingsButton.innerHTML = '<i class="zulip-icon zulip-icon-settings"></i>';
+
+    // Стили для кнопки
+    settingsButton.style.display = 'flex';
+    settingsButton.style.alignItems = 'center';
+    settingsButton.style.justifyContent = 'center';
+    settingsButton.style.width = '30px';
+    settingsButton.style.height = '30px';
+    settingsButton.style.cursor = 'pointer';
+
+    // Стили для иконки
+    const icon = settingsButton.querySelector('i');
+    if (icon) {
+        icon.style.width = '20px';
+        icon.style.height = '20px';
+        icon.style.backgroundImage = "url('/images/icons/settings.svg')";
+        icon.style.backgroundSize = 'contain';
+        icon.style.backgroundRepeat = 'no-repeat';
+        icon.style.backgroundPosition = 'center';
+    }
+
+    // Добавляем кнопку в spectator_login_buttons
+    const spectatorButtons = document.querySelector('.spectator_login_buttons');
+    if (spectatorButtons && !document.querySelector('#settings-toggle-button')) {
+        spectatorButtons.appendChild(settingsButton);
+    }
+
+    // Обработчик для открытия настроек
+    settingsButton.addEventListener("click", () => {
+        if (api) {
+            api.executeCommand('displaySettings');
+        } else {
+            console.error('Jitsi API не инициализирован');
+        }
+    });
+
+    // Hover-эффект
+    settingsButton.addEventListener('mouseover', () => {
+        settingsButton.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+        settingsButton.style.borderRadius = '5px';
+    });
+    settingsButton.addEventListener('mouseout', () => {
+        settingsButton.style.backgroundColor = '';
+    });
+}
+
 
 function addTestButton() {
     const testButton = document.createElement("button");
