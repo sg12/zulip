@@ -18,7 +18,7 @@ let currentVideoCallRoom: { streamId: string | number, topicName: string | numbe
 // let isFloatingVideo = false;
 export let CURRENT_TOPIC_CHARNAME: string = "";
 
-const JITSI_DOMAIN = "jitsi-connectrm-test.ru:8443";
+const JITSI_DOMAIN = "jitsi-connectrm.ru:8443";
 
 function updateMicIcon() {
     // @ts-ignore
