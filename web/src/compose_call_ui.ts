@@ -654,22 +654,22 @@ function updateButtonHandlers(force: boolean = false) {
 	
 	// Добавляем кнопку настроек-шестерёнки в header
     const spectatorButtons = document.querySelector('.spectator_login_buttons');
-    if (spectatorButtons) {
-        // Проверяем, нет ли уже кнопки настроек
-        let settingsButton = document.querySelector('#settings-toggle-button') as HTMLElement;
-        if (!settingsButton) {
-            settingsButton = document.createElement('div');
-            settingsButton.id = 'settings-toggle-button';
-            settingsButton.className = 'header-button navbar-item';
-            settingsButton.setAttribute('role', 'button');
-            settingsButton.setAttribute('tabindex', '0');
-            settingsButton.innerHTML = '<i class="zulip-icon zulip-icon-settings"></i>';
-            spectatorButtons.appendChild(settingsButton);
+    // if (spectatorButtons) {
+    //     // Проверяем, нет ли уже кнопки настроек
+    //     let settingsButton = document.querySelector('#settings-toggle-button') as HTMLElement;
+    //     if (!settingsButton) {
+    //         settingsButton = document.createElement('div');
+    //         settingsButton.id = 'settings-toggle-button';
+    //         settingsButton.className = 'header-button navbar-item';
+    //         settingsButton.setAttribute('role', 'button');
+    //         settingsButton.setAttribute('tabindex', '0');
+    //         settingsButton.innerHTML = '<i class="zulip-icon zulip-icon-settings"></i>';
+    //         spectatorButtons.appendChild(settingsButton);
 
-            // Добавляем обработчик
-            settingsButton.addEventListener('click', toggleSettingsHandler);
-        }
-    }
+    //         // Добавляем обработчик
+    //         settingsButton.addEventListener('click', toggleSettingsHandler);
+    //     }
+    // }
 
     // Удаляем старые обработчики событий для кнопок
     const micButton = document.querySelector(`[data-stream-id="${currentVideoCallRoom.streamId}"][data-topic-name="${currentVideoCallRoom.topicName}"] #toggle-mic`);
