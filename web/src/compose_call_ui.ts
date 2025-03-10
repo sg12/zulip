@@ -614,7 +614,8 @@ export function clickLeftSidebar(isSameTopic: boolean) {
     const currentTopicName = narrow_state.topic();
     if (currentVideoCallRoom && currentVideoCallRoom.streamId === narrow_state.stream_id()) {
         if (currentTopicName?.startsWith("🔊")) {
-            updateButtonHandlers(true);
+            if (currentTopicName === currentVideoCallRoom.topicName) updateButtonHandlers();
+            else updateButtonHandlers(true);
         } else if (currentTopicName?.startsWith("✏️")) {
             //  Не удаляем customControls, если комната является текстовой
             updateButtonHandlers();
@@ -650,8 +651,8 @@ function updateButtonHandlers(force: boolean = false) {
             controls.style.display = "flex";
         }
     }
-	
-	
+
+
 	// Добавляем кнопку настроек-шестерёнки в header
     const spectatorButtons = document.querySelector('.spectator_login_buttons');
     // if (spectatorButtons) {
@@ -781,7 +782,7 @@ function clearButtonsAndPropsForVideo() {
     // const topicLabel = document.getElementById("video-room-overlay");
     // if (topicLabel) topicLabel.remove();
     removeLoadBar();
-	
+
 	// удиление кнопки настроек-шестерёнки
 	const settingsButton = document.querySelector('#settings-toggle-button');
     if (settingsButton) settingsButton.remove();
