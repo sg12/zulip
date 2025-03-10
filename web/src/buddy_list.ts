@@ -1,6 +1,5 @@
 import $ from "jquery";
 import assert from "minimalistic-assert";
-// import * as tippy from "tippy.js";
 
 import render_section_header from "../templates/buddy_list/section_header.hbs";
 import render_view_all_subscribers from "../templates/buddy_list/view_all_subscribers.hbs";
@@ -82,7 +81,7 @@ function get_render_data(): BuddyListRenderData {
     const total_human_subscribers_count = get_total_human_subscriber_count(current_sub, pm_ids_set);
     const other_users_count = people.get_active_human_count() - total_human_subscribers_count;
     const hide_headers = should_hide_headers(current_sub, pm_ids_set);
-    const all_participant_ids = buddy_data.get_conversation_participants();
+    let all_participant_ids = buddy_data.get_conversation_participants();
 
     return {
         current_sub,
@@ -162,6 +161,66 @@ export class BuddyList extends BuddyListConf {
     $users_matching_view_list = $(this.matching_view_list_selector);
     $other_users_list = $(this.other_user_list_selector);
     current_filter: Filter | undefined | "unset" = "unset";
+    lastCallUsers: string | null = null; // Для отслеживания изменений в localStorage
+    checkIntervalId: number | null = null; // Для периодической проверки
+    lastStreamId: number | undefined = undefined; // Последний stream_id
+    lastTopic: string | undefined = undefined; // Последний topic
+
+    constructor() {
+        super();
+        this.start_periodic_check();
+    }
+
+    // Периодическая проверка изменений в localStorage и narrow_state
+    start_periodic_check(): void {
+        if (this.checkIntervalId !== null) {
+            clearInterval(this.checkIntervalId);
+        }
+        this.checkIntervalId = window.setInterval(() => {
+            // Проверка изменений в localStorage
+            const currentCallUsers = localStorage.getItem('callUsers');
+            if (currentCallUsers !== this.lastCallUsers) {
+                console.log('callUsers in localStorage changed, updating list');
+                this.lastCallUsers = currentCallUsers;
+                this.render_data = get_render_data();
+                this.populate({ all_user_ids: this.all_user_ids });
+            }
+
+            // Проверка изменений в narrow_state
+            const currentStreamId = narrow_state.stream_id();
+            const currentTopic = narrow_state.topic();
+            if (
+                currentStreamId !== this.lastStreamId ||
+                currentTopic !== this.lastTopic
+            ) {
+                console.log('Narrow state changed:', {
+                    old: { stream_id: this.lastStreamId, topic: this.lastTopic },
+                    new: { stream_id: currentStreamId, topic: currentTopic },
+                });
+                this.lastStreamId = currentStreamId;
+                this.lastTopic = currentTopic;
+                this.update_participants(); // Обновляем участников без сброса localStorage
+                this.render_data = get_render_data();
+                this.populate({ all_user_ids: this.all_user_ids });
+            }
+        }, 5000); // Проверка каждые 5 секунд
+    }
+
+    // Обновление участников без сброса localStorage
+    update_participants(): void {
+        // Здесь можно добавить логику обновления списка участников, если нужно
+        // Например, синхронизация с buddy_data.get_conversation_participants()
+        console.log('Participants updated based on new narrow state');
+        // Если нужно что-то дополнительно обновить в данных, добавьте сюда
+    }
+
+    // Остановка периодической проверки (если нужно)
+    stop_periodic_check(): void {
+        if (this.checkIntervalId !== null) {
+            clearInterval(this.checkIntervalId);
+            this.checkIntervalId = null;
+        }
+    }
 
     initialize_tooltips(): void {
         $("#right-sidebar").on(
@@ -174,77 +233,6 @@ export class BuddyList extends BuddyListConf {
                 if (window.innerWidth < media_breakpoints_num.md) {
                     placement = "auto";
                 }
-                // tippy.default(util.the($elem), {
-                //     delay: INTERACTIVE_HOVER_DELAY,
-                //     touch: false,
-                //     arrow: true,
-                //     placement,
-                //     showOnCreate: true,
-                //     onShow(instance) {
-                //         // let tooltip_text;
-                //         const current_sub = narrow_state.stream_sub();
-                //         const pm_ids_set = narrow_state.pm_ids_set();
-                //         const total_human_subscribers_count = get_total_human_subscriber_count(
-                //             current_sub,
-                //             pm_ids_set,
-                //         );
-                //         const participant_count = Number.parseInt(
-                //             $("#buddy-list-participants-section-heading").attr("data-user-count")!,
-                //             10,
-                //         );
-                //         const elem_id = $elem.attr("id");
-                //         if (elem_id === "buddy-list-participants-section-heading") {
-                //             tooltip_text = $t(
-                //                 {
-                //                     defaultMessage:
-                //                         "{N, plural, one {# participant} other {# participants}}",
-                //                 },
-                //                 {N: participant_count},
-                //             );
-                //         } else if (elem_id === "buddy-list-users-matching-view-section-heading") {
-                //             if (participant_count) {
-                //                 tooltip_text = $t(
-                //                     {
-                //                         defaultMessage:
-                //                             "{N, plural, one {# other subscriber} other {# other subscribers}}",
-                //                     },
-                //                     {N: total_human_subscribers_count - participant_count},
-                //                 );
-                //             } else if (current_sub) {
-                //                 tooltip_text = $t(
-                //                     {
-                //                         defaultMessage:
-                //                             "{N, plural, one {# subscriber} other {# subscribers}}",
-                //                     },
-                //                     {N: total_human_subscribers_count},
-                //                 );
-                //             } else {
-                //                 tooltip_text = $t(
-                //                     {
-                //                         defaultMessage:
-                //                             "{N, plural, one {# participant} other {# participants}}",
-                //                     },
-                //                     {N: total_human_subscribers_count},
-                //                 );
-                //             }
-                //         } else {
-                //             const other_users_count =
-                //                 people.get_active_human_count() - total_human_subscribers_count;
-                //             tooltip_text = $t(
-                //                 {
-                //                     defaultMessage:
-                //                         "{N, plural, one {# other user} other {# other users}}",
-                //                 },
-                //                 {N: other_users_count},
-                //             );
-                //         }
-                //         // instance.setContent(tooltip_text);
-                //     },
-                //     onHidden(instance) {
-                //         instance.destroy();
-                //     },
-                //     appendTo: () => document.body,
-                // });
             },
         );
     }
@@ -285,13 +273,14 @@ export class BuddyList extends BuddyListConf {
 
         this.update_empty_list_placeholders();
         this.fill_screen_with_content();
+        this.render_section_headers();
+        this.display_or_hide_sections();
 
         $("#buddy-list-users-matching-view-container .view-all-subscribers-link").remove();
         $("#buddy-list-other-users-container .view-all-users-link").remove();
         if (!buddy_data.get_is_searching_users()) {
             this.render_view_user_list_links();
         }
-        this.display_or_hide_sections();
 
         $("#user-list .user-profile-picture img")
             .off("load")
@@ -414,7 +403,7 @@ export class BuddyList extends BuddyListConf {
             $(
                 render_section_header({
                     id: "buddy-list-participants-section-heading",
-                    header_text: $t({defaultMessage: "THIS CONVERSATION"}),
+                    header_text: $t({defaultMessage: "В комнате"}),
                     user_count: get_formatted_sub_count(all_participant_ids.size),
                     is_collapsed: this.participants_is_collapsed,
                 }),
@@ -427,7 +416,7 @@ export class BuddyList extends BuddyListConf {
                     id: "buddy-list-users-matching-view-section-heading",
                     header_text: current_sub
                         ? $t({defaultMessage: "В сети"})
-                        : $t({defaultMessage: "THIS CONVERSATION"}),
+                        : $t({defaultMessage: "В сети"}),
                     user_count: get_formatted_sub_count(
                         total_human_subscribers_count - all_participant_ids.size,
                     ),
@@ -503,17 +492,67 @@ export class BuddyList extends BuddyListConf {
         const offline_users = [];
         const current_sub = this.render_data.current_sub;
         const pm_ids_set = narrow_state.pm_ids_set();
+        
+        // Получаем список callUsers из локального хранилища
+        let callUserNames: string[] = [];
+        const callUsersRaw = localStorage.getItem('callUsers');
+        console.log('callUsers from localStorage:', callUsersRaw);
+        if (callUsersRaw) {
+            try {
+                const callUsers = JSON.parse(callUsersRaw);
+                console.log('Parsed callUsers:', callUsers);
+                let callUsersArray: {name: string}[] = [];
+                
+                if (Array.isArray(callUsers)) {
+                    callUsersArray = callUsers;
+                    console.log('callUsers is an array:', callUsersArray);
+                } else if (callUsers && typeof callUsers === 'object') {
+                    callUsersArray = Object.values(callUsers);
+                    console.log('Converted callUsers object to array:', callUsersArray);
+                } else {
+                    blueslip.warn('callUsers is neither an array nor an object:', callUsers);
+                    console.log('callUsers is invalid, using empty callUserNames');
+                }
+
+                callUserNames = callUsersArray
+                    .map((user: {name: string}, index: number) => {
+                        console.log(`Processing callUsers[${index}]:`, user);
+                        if (user && typeof user.name === 'string') {
+                            return user.name.toLowerCase();
+                        }
+                        console.log(`Skipping callUsers[${index}] - invalid name`);
+                        return '';
+                    })
+                    .filter(Boolean);
+                console.log('callUserNames after processing:', callUserNames);
+            } catch (error) {
+                blueslip.error('Failed to parse callUsers from localStorage:', error);
+                console.log('Error parsing callUsers, using empty callUserNames');
+            }
+        } else {
+            console.log('No callUsers found in localStorage, using empty callUserNames');
+        }
+
+        // Логируем all_participant_ids
+        console.log('all_participant_ids:', Array.from(this.render_data.all_participant_ids));
 
         for (const item of items) {
-            // Используем presence для проверки статуса присутствия
             const presence_info = presence.presence_info.get(item.user_id);
             const is_online = presence_info?.status === "active";
+            const user_name = people.get_by_user_id(item.user_id)?.full_name?.toLowerCase() || "";
+            console.log(`Processing user: id=${item.user_id}, name="${user_name}"`);
+            console.log(`Comparing user_name: "${user_name}" with callUserNames:`, callUserNames);
+            const is_call_user = callUserNames.includes(user_name);
+            const is_participant = this.render_data.all_participant_ids.has(item.user_id);
+            const is_subscriber = buddy_data.user_matches_narrow(item.user_id, pm_ids_set, current_sub?.stream_id);
+            console.log(`is_call_user: ${is_call_user}, is_participant: ${is_participant}, is_subscriber: ${is_subscriber}`);
 
-            if (this.render_data.all_participant_ids.has(item.user_id)) {
-                // Не добавляем в participants как указано в требованиях
-            } else if (
-                buddy_data.user_matches_narrow(item.user_id, pm_ids_set, current_sub?.stream_id)
-            ) {
+            // Добавляем только подписчиков канала, чьи имена есть в callUserNames
+            if (is_call_user && is_subscriber) {
+                console.log(`Adding to participants: id=${item.user_id}, name="${user_name}"`);
+                participants.push(item);
+                this.participant_user_ids.push(item.user_id);
+            } else if (is_subscriber) {
                 if (is_online) {
                     online_users.push(item);
                     this.users_matching_view_ids.push(item.user_id);
@@ -523,6 +562,8 @@ export class BuddyList extends BuddyListConf {
                 }
             }
         }
+
+        console.log('Participants after processing:', participants);
 
         this.$participants_list = $(this.participants_list_selector);
         if (participants.length > 0) {
@@ -565,11 +606,10 @@ export class BuddyList extends BuddyListConf {
         const {all_participant_ids, hide_headers, total_human_subscribers_count} = this.render_data;
 
         $("#buddy-list-users-matching-view-container").toggleClass("no-display", hide_headers);
-        const hide_participants_list = hide_headers || all_participant_ids.size === 0;
-        $("#buddy-list-participants-container").toggleClass("no-display", hide_participants_list);
+        $("#buddy-list-participants-container").toggleClass("no-display", hide_headers);
 
         if (
-            !hide_participants_list &&
+            !hide_headers &&
             total_human_subscribers_count === this.participant_user_ids.length
         ) {
             $("#buddy-list-users-matching-view-container").toggleClass("no-display", true);
