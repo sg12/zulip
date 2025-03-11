@@ -444,6 +444,10 @@ function addListenersVideo() {
         }, 1000); // Задержка 1 секунда после присоединения
     });
 
+    api.addListener('participantLeft', (participantId: string) => {
+        removeUserFromCall(participantId)
+    })
+
     // Подписываемся на события изменения статуса микрофона, камеры и шаринга экрана
     api.addListener('audioMuteStatusChanged', (event: { muted: boolean }) => {
         isMicMuted = event.muted;
