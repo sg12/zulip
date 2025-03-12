@@ -264,6 +264,13 @@ h4.user_group_setting_subsection_title {
     padding-left: 5px;
 }
 
+.add_subscriber_button_wrapper {
+    display: flex;         
+    gap: 4px;              
+    align-items: center;
+}
+
+
 .choose-subscribers-label {
     display: inline;
 }

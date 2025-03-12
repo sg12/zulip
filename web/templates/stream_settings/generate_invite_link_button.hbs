@@ -1,0 +1,43 @@
+<button class="invite-button" id="generate-invite-link-btn">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M10 13a5 5 0 0 1 7 0l1 1a5 5 0 0 1 0 7 5 5 0 0 1-7 0" />
+        <path d="M14 11a5 5 0 0 1-7 0l-1-1a5 5 0 0 1 0-7 5 5 0 0 1 7 0" />
+    </svg>
+</button>
+
+
+<style>
+    /* Я не знаю куда ещё это пихнуть */
+    .invite-button {
+        background-color: #293649;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        /* для stroke="currentColor" */
+        padding: 8px;
+        cursor: pointer;
+        transition:
+            background-color 0.2s ease-in-out;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: inherit;
+        font-size: 16px;
+    }
+
+    .invite-button:hover {
+        background-color: #2a7c36;
+    }
+
+    .invite-button:active {
+        background-color: #2b507b;
+    }
+
+    .invite-button svg {
+        /* Если нужно масштабировать
+            иконку вместе со шрифтом */
+        width: 1em;
+        height: 1em;
+    }
+</style>
