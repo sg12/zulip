@@ -137,8 +137,8 @@ export function enable_subscriber_management({
         }),
     );
     
-    const $button = $parent_container.find("#generate-invite-link-btn");
-    $button.text($t({defaultMessage: "Create link"}))
+    // const $button = $parent_container.find("#generate-invite-link-btn");
+    // $button.text($t({defaultMessage: "Create link"}))
     if (is_stream_owner != true) {
         $parent_container.find("#generate-invite-link-btn").hide();
     }
